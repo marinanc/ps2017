@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bdVentaLibros" Class="bdVentaLibrosDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MARINA-PC\SQLEXPRESS;Initial Catalog=bdVentaLibros;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bdVentaLibrosConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Autores" Member="Autores">
+    <Type Name="Autores">
+      <Column Name="idAutor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="apellidos" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="nombres" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Autores_AutorPorLibro" Member="AutorPorLibro" ThisKey="idAutor" OtherKey="idAutor" Type="AutorPorLibro" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AutorPorLibro" Member="AutorPorLibro">
+    <Type Name="AutorPorLibro">
+      <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idAutor" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Autores_AutorPorLibro" Member="Autores" ThisKey="idAutor" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
+      <Association Name="Libros_AutorPorLibro" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CalificacionPorLibro" Member="CalificacionPorLibro">
+    <Type Name="CalificacionPorLibro">
+      <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="calificacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Libros_CalificacionPorLibro" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
+      <Association Name="Usuarios_CalificacionPorLibro" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CalificacionPorUsuario" Member="CalificacionPorUsuario">
+    <Type Name="CalificacionPorUsuario">
+      <Column Name="idUsuarioCalificado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idUsuarioCalificador" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="calificacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="comentario" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Usuarios_CalificacionPorUsuario" Member="Usuarios" ThisKey="idUsuarioCalificado" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+      <Association Name="Usuarios_CalificacionPorUsuario1" Member="Usuarios1" ThisKey="idUsuarioCalificador" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ComentarioPorLibro" Member="ComentarioPorLibro">
+    <Type Name="ComentarioPorLibro">
+      <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="comentario" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="idComentario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Libros_ComentarioPorLibro" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
+      <Association Name="Usuarios_ComentarioPorLibro" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DetallePorPedido" Member="DetallePorPedido">
+    <Type Name="DetallePorPedido">
+      <Column Name="idPedido" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="precioUnitario" Type="System.Decimal" DbType="Decimal(6,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Libros_DetallePorPedido" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
+      <Association Name="Pedidos_DetallePorPedido" Member="Pedidos" ThisKey="idPedido" OtherKey="idPedido" Type="Pedidos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Editoriales" Member="Editoriales">
+    <Type Name="Editoriales">
+      <Column Name="idEditorial" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Association Name="Editoriales_Libros" Member="Libros" ThisKey="idEditorial" OtherKey="idEditorial" Type="Libros" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Estados" Member="Estados">
+    <Type Name="Estados">
+      <Column Name="idEstado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Estados_Pedidos" Member="Pedidos" ThisKey="idEstado" OtherKey="idEstadoPedido" Type="Pedidos" />
+      <Association Name="Estados_PublicacionPorUsuario" Member="PublicacionPorUsuario" ThisKey="idEstado" OtherKey="idEstado" Type="PublicacionPorUsuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Generos" Member="Generos">
+    <Type Name="Generos">
+      <Column Name="idGenero" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="Generos_Libros" Member="Libros" ThisKey="idGenero" OtherKey="idGenero" Type="Libros" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Intercambios" Member="Intercambios">
+    <Type Name="Intercambios">
+      <Column Name="idPublicacionUsuario1" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idPublicacionUsuario2" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="comentario" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="calificacionUsuario1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="calificacionUsuario2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="PublicacionPorUsuario_Intercambios" Member="PublicacionPorUsuario" ThisKey="idPublicacionUsuario1" OtherKey="idPublicacion" Type="PublicacionPorUsuario" IsForeignKey="true" />
+      <Association Name="PublicacionPorUsuario_Intercambios1" Member="PublicacionPorUsuario1" ThisKey="idPublicacionUsuario2" OtherKey="idPublicacion" Type="PublicacionPorUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Libros" Member="Libros">
+    <Type Name="Libros">
+      <Column Name="codigoBarra" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="titulo" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="idEditorial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="paginas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="edicion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idGenero" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="foto" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="precio" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
+      <Column Name="sinopsis" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Libros_AutorPorLibro" Member="AutorPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="AutorPorLibro" />
+      <Association Name="Libros_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="CalificacionPorLibro" />
+      <Association Name="Libros_ComentarioPorLibro" Member="ComentarioPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="ComentarioPorLibro" />
+      <Association Name="Libros_DetallePorPedido" Member="DetallePorPedido" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="DetallePorPedido" />
+      <Association Name="Editoriales_Libros" Member="Editoriales" ThisKey="idEditorial" OtherKey="idEditorial" Type="Editoriales" IsForeignKey="true" />
+      <Association Name="Generos_Libros" Member="Generos" ThisKey="idGenero" OtherKey="idGenero" Type="Generos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Localidades" Member="Localidades">
+    <Type Name="Localidades">
+      <Column Name="idLocalidad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProvincia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Localidades_Pedidos" Member="Pedidos" ThisKey="idLocalidad" OtherKey="idLocalidadEntrega" Type="Pedidos" />
+      <Association Name="Provincias_Localidades" Member="Provincias" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pedidos" Member="Pedidos">
+    <Type Name="Pedidos">
+      <Column Name="idPedido" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="fechaEntrega" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="direccionEntrega" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idLocalidadEntrega" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idProvinciaEntrega" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idEstadoPedido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="comentario" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Pedidos_DetallePorPedido" Member="DetallePorPedido" ThisKey="idPedido" OtherKey="idPedido" Type="DetallePorPedido" />
+      <Association Name="Estados_Pedidos" Member="Estados" ThisKey="idEstadoPedido" OtherKey="idEstado" Type="Estados" IsForeignKey="true" />
+      <Association Name="Localidades_Pedidos" Member="Localidades" ThisKey="idLocalidadEntrega" OtherKey="idLocalidad" Type="Localidades" IsForeignKey="true" />
+      <Association Name="Provincias_Pedidos" Member="Provincias" ThisKey="idProvinciaEntrega" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
+      <Association Name="Usuarios_Pedidos" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Provincias" Member="Provincias">
+    <Type Name="Provincias">
+      <Column Name="idProvincia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="Provincias_Localidades" Member="Localidades" ThisKey="idProvincia" OtherKey="idProvincia" Type="Localidades" />
+      <Association Name="Provincias_Pedidos" Member="Pedidos" ThisKey="idProvincia" OtherKey="idProvinciaEntrega" Type="Pedidos" />
+      <Association Name="Provincias_Usuarios" Member="Usuarios" ThisKey="idProvincia" OtherKey="idProvincia" Type="Usuarios" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PublicacionPorUsuario" Member="PublicacionPorUsuario">
+    <Type Name="PublicacionPorUsuario">
+      <Column Name="idPublicacion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="tituloPublicacion" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="foto1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="foto2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="foto3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idEstado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PublicacionPorUsuario_Intercambios" Member="Intercambios" ThisKey="idPublicacion" OtherKey="idPublicacionUsuario1" Type="Intercambios" />
+      <Association Name="PublicacionPorUsuario_Intercambios1" Member="Intercambios1" ThisKey="idPublicacion" OtherKey="idPublicacionUsuario2" Type="Intercambios" />
+      <Association Name="Estados_PublicacionPorUsuario" Member="Estados" ThisKey="idEstado" OtherKey="idEstado" Type="Estados" IsForeignKey="true" />
+      <Association Name="Usuarios_PublicacionPorUsuario" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuarios" Member="Usuarios">
+    <Type Name="Usuarios">
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="mail" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="contraseña" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="nombreUsuario" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="fechaHoraAlta" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="fechaHoraBaja" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="direccion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="idProvincia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Usuarios_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="CalificacionPorLibro" />
+      <Association Name="Usuarios_CalificacionPorUsuario" Member="CalificacionPorUsuario" ThisKey="idUsuario" OtherKey="idUsuarioCalificado" Type="CalificacionPorUsuario" />
+      <Association Name="Usuarios_CalificacionPorUsuario1" Member="CalificacionPorUsuario1" ThisKey="idUsuario" OtherKey="idUsuarioCalificador" Type="CalificacionPorUsuario" />
+      <Association Name="Usuarios_ComentarioPorLibro" Member="ComentarioPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="ComentarioPorLibro" />
+      <Association Name="Usuarios_Pedidos" Member="Pedidos" ThisKey="idUsuario" OtherKey="idUsuario" Type="Pedidos" />
+      <Association Name="Usuarios_PublicacionPorUsuario" Member="PublicacionPorUsuario" ThisKey="idUsuario" OtherKey="idUsuario" Type="PublicacionPorUsuario" />
+      <Association Name="Provincias_Usuarios" Member="Provincias" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
