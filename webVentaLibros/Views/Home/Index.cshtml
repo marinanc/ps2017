@@ -170,16 +170,21 @@
                                 <div class="product-f-image">
                                     <img src="@libro.foto" alt="">
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Comprar</a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
+                                        
+                                            <input type="text" name="codLibro" value="@libro.codigoBarra" style="visibility:hidden" />
+                                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Comprar</a>
+                                            <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
+                                           
+                                        
                                     </div>
                                 </div>
+                                
+                                    <h2><a href="single-product.html">@libro.titulo</a></h2>
 
-                                <h2><a href="single-product.html">@libro.titulo</a></h2>
+                                    <div class="product-carousel-price">
+                                        <ins>$@libro.precio</ins>
+                                    </div>
 
-                                <div class="product-carousel-price">
-                                    <ins>$@libro.precio</ins> 
-                                </div>
                             </div>  
                             
                             }                        

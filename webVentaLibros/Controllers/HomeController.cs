@@ -22,6 +22,7 @@ namespace webVentaLibros.Controllers
             var lista = (from libro in dbLibros.Libros
                          select new LibroModel
                          {
+                             codigoBarra = libro.codigoBarra,
                              foto = libro.foto,
                              titulo = libro.titulo, 
                              sinopsis = libro.sinopsis,
@@ -34,6 +35,7 @@ namespace webVentaLibros.Controllers
             {
                 var entidadLibro = new LibroModel
                 {
+                    codigoBarra = libro.codigoBarra,
                     foto = libro.foto,
                     titulo = libro.titulo,
                     sinopsis = libro.sinopsis,
