@@ -2091,6 +2091,8 @@ namespace webVentaLibros.Models
 		
 		private string _sinopsis;
 		
+		private System.Nullable<int> _stock;
+		
 		private EntitySet<AutorPorLibro> _AutorPorLibro;
 		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
@@ -2125,6 +2127,8 @@ namespace webVentaLibros.Models
     partial void OnprecioChanged();
     partial void OnsinopsisChanging(string value);
     partial void OnsinopsisChanged();
+    partial void OnstockChanging(System.Nullable<int> value);
+    partial void OnstockChanged();
     #endregion
 		
 		public Libros()
@@ -2322,6 +2326,26 @@ namespace webVentaLibros.Models
 					this._sinopsis = value;
 					this.SendPropertyChanged("sinopsis");
 					this.OnsinopsisChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_stock", DbType="Int")]
+		public System.Nullable<int> stock
+		{
+			get
+			{
+				return this._stock;
+			}
+			set
+			{
+				if ((this._stock != value))
+				{
+					this.OnstockChanging(value);
+					this.SendPropertyChanging();
+					this._stock = value;
+					this.SendPropertyChanged("stock");
+					this.OnstockChanged();
 				}
 			}
 		}

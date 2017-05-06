@@ -102,6 +102,7 @@
       <Column Name="foto" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
       <Column Name="precio" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
       <Column Name="sinopsis" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="stock" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Libros_AutorPorLibro" Member="AutorPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="AutorPorLibro" />
       <Association Name="Libros_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="CalificacionPorLibro" />
       <Association Name="Libros_ComentarioPorLibro" Member="ComentarioPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="ComentarioPorLibro" />

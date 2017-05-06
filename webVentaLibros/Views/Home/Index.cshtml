@@ -45,7 +45,16 @@
                             <li>
                                 @Html.ActionLink("Carrito","Index","Cart")
                             </li>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Logout", "Logout", "User")
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Login", "Login", "User")
+                                }
+                            </li>
                         </ul>
                     </div>
                 </div>
