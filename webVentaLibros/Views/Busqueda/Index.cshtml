@@ -1,12 +1,14 @@
 ﻿@{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Index";
 }
+
+@using webVentaLibros.Models;
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Product Page - Ustora Demo</title>
+    <title>Ustora Demo</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -14,15 +16,15 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/owl.carousel.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,6 +34,7 @@
     <![endif]-->
 </head>
 <body>
+
     <div class="header-area">
         <div class="container">
             <div class="row">
@@ -67,7 +70,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="../img/logo.png"></a></h1>
+                        <h1><a href="./"><img src="img/logo.png"></a></h1>
                     </div>
                 </div>
 
@@ -93,9 +96,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>
-                            @Html.ActionLink("Home", "Index", "Home")
-                        </li>
+                        <li class="active"><a href="index.html">Home</a></li>
                         <li>
                             @Html.ActionLink("Carrito", "Index", "Cart")
                         </li>
@@ -108,39 +109,65 @@
         </div>
     </div> <!-- End mainmenu area -->
 
-    <div class="product-big-title-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="product-bit-title text-center">
-                        <h2>Login</h2>
+    <div class="slider-area">
+        <div class="row">
+            <div class="single-sidebar">
+                <form action="">
+                    <input type="text" id="busqueda" placeholder="Ingresar titulo,autor,ISBN...">
+                    <input type="submit" value="Buscar">
+                </form>
+            </div>
+        </div>
+
+
+    </div> <!-- End slider area -->
+    @if (Model != null)
+    {
+        <div class="maincontent-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="latest-product">
+                            <h2 class="section-title">Novedades</h2>
+                            <div class="product-carousel">
+
+                                @foreach (var libro in Model)
+                                {
+
+                                    <div class="single-product">
+                                        <div class="product-f-image">
+                                            <img src="@libro.foto" alt="">
+                                            <div class="product-hover">
+
+                                                <input type="text" name="codLibro" value="@libro.codigoBarra" style="visibility:hidden" />
+                                                <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Comprar</a>
+                                                <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
+
+
+                                            </div>
+                                        </div>
+
+                                        <h2><a href="single-product.html">@libro.titulo</a></h2>
+
+                                        <div class="product-carousel-price">
+                                            <ins>$@libro.precio</ins>
+                                        </div>
+
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="create-account">
-        <div class="container">
-            <form action=@Url.Action("Login","User") method="POST" role="form">
-                <div class="row">
-                    <div class="form-group col-lg-4">
-                        <label for="usuario">Usuario</label>
-                        <input type="text" id="usuario" class="form-control" name="usuario" placeholder="Ingrese su email.." required>
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label for="contraseña">Contraseña</label>
-                        <input type="password" id="contraseña" class="form-control" name="contraseña" placeholder="Ingrese su contraseña.." required>
-                    </div>
-                    <div class="form-group col-lg-12">
-                        <input type="hidden" value="login" name="save">
-                        <button class="btn btn-primary" type="submit">Enviar</button>
-                    </div>
-                </div>
-            </form>
+        </div> <!-- End main content area -->
+    }
 
-            @Html.ValidationSummary(true)
-        </div>
-    </div>
+
+
+
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -160,7 +187,7 @@
 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">User Navigation </h2>
+                        <h2 class="footer-wid-title">Usuario </h2>
                         <ul>
                             <li><a href="#">Mi cuenta</a></li>
                             <li><a href="#">Historial de Pedidos</a></li>
@@ -175,11 +202,11 @@
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Categories</h2>
                         <ul>
-                            <li><a href="">Mobile Phone</a></li>
-                            <li><a href="">Home accesseries</a></li>
-                            <li><a href="">LED TV</a></li>
-                            <li><a href="">Computer</a></li>
-                            <li><a href="">Gadets</a></li>
+                            <li><a href="#">Mobile Phone</a></li>
+                            <li><a href="#">Home accesseries</a></li>
+                            <li><a href="#">LED TV</a></li>
+                            <li><a href="#">Computer</a></li>
+                            <li><a href="#">Gadets</a></li>
                         </ul>
                     </div>
                 </div>
@@ -189,14 +216,17 @@
                         <h2 class="footer-wid-title">Newsletter</h2>
                         <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
                         <div class="newsletter-form">
-                            <input type="email" placeholder="Type your email">
-                            <input type="submit" value="Subscribe">
+                            <form action="#">
+                                <input type="email" placeholder="Type your email">
+                                <input type="submit" value="Subscribe">
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- End footer top area -->
+
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
@@ -209,8 +239,7 @@
 
             </div>
         </div>
-    </div>
-
+    </div> <!-- End footer bottom area -->
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -218,13 +247,16 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <!-- jQuery sticky menu -->
-    <script src="../js/owl.carousel.min.js"></script>
-    <script src="../js/jquery.sticky.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
 
     <!-- jQuery easing -->
-    <script src="../js/jquery.easing.1.3.min.js"></script>
+    <script src="js/jquery.easing.1.3.min.js"></script>
 
     <!-- Main Script -->
-    <script src="../js/main.js"></script>
-</body>
+    <script src="js/main.js"></script>
 
+    <!-- Slider -->
+    <script type="text/javascript" src="js/bxslider.min.js"></script>
+    <script type="text/javascript" src="js/script.slider.js"></script>
+</body>

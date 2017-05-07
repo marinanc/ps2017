@@ -16,5 +16,9 @@ namespace webVentaLibros.Models
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string contraseña { get; set; }
+
+        public string nombre { get; set; }
+        public string direccion { get; set; }
+        public int idUsuario { get; set; }
     }
 }

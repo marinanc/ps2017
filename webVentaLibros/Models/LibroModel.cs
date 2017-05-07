@@ -16,6 +16,6 @@ namespace webVentaLibros.Models
         public string foto { get; set; }
         public string sinopsis { get; set; }
         public double precio { get; set; }
-
+        public int stock { get; set; }
     }
 }

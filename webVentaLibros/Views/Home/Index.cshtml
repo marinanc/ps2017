@@ -111,8 +111,8 @@
     <div class="slider-area">
         <div class="row">
             <div class="single-sidebar">
-                <form action="">
-                    <input type="text" placeholder="Ingresar titulo,autor,ISBN...">
+                <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
+                    <input type="text" name="busqueda" placeholder="Ingresar titulo,autor,ISBN..." required>
                     <input type="submit" value="Buscar">
                 </form>
             </div>
