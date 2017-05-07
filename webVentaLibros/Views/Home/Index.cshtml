@@ -48,11 +48,11 @@
                             <li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    @Html.ActionLink("Logout", "Logout", "User")
+                                    @Html.ActionLink("Cerrar sesión", "Logout", "User")
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Login", "Login", "User")
+                                    @Html.ActionLink("Ingresar", "Login", "User")
                                 }
                             </li>
                         </ul>
@@ -99,7 +99,7 @@
                         <li>
                             @Html.ActionLink("Carrito", "Index", "Cart")
                         </li>
-                        <li><a href="#">Categorias</a></li>
+                        <li><a href="#">Libros</a></li>
                         <li><a href="#">Intercambio de Libros</a></li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
@@ -398,13 +398,13 @@
 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">Categories</h2>
+                        <h2 class="footer-wid-title">Libros</h2>
                         <ul>
-                            <li><a href="#">Mobile Phone</a></li>
-                            <li><a href="#">Home accesseries</a></li>
-                            <li><a href="#">LED TV</a></li>
-                            <li><a href="#">Computer</a></li>
-                            <li><a href="#">Gadets</a></li>
+                            <li><a href="#">Más vendidos</a></li>
+                            <li><a href="#">Más visitados</a></li>
+                            <li><a href="#">Novedades</a></li>
+                            <li><a href="#">Intercambios</a></li>
+                            <li><a href="#">Consultas y sugerencias</a></li>
                         </ul>
                     </div>
                 </div>

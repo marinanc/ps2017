@@ -281,7 +281,6 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Libro\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Busqueda\Index.cshtml" />
     <Content Include="Views\Busqueda\BuscarLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
