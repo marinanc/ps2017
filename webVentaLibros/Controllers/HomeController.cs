@@ -16,8 +16,7 @@ namespace webVentaLibros.Controllers
         {
             //Creo el contexto de datos 
             var dbLibros = new bdVentaLibrosDataContext();
-            //Recupero la lista de inmuebles -> son de tipo Inmueble: entidad de dominio
-            //var listaInmuebles = dbInmuebles.Inmueble.ToList();
+            //Recupero la lista de libros -> son de tipo Libro: entidad de dominio
 
             var lista = (from libro in dbLibros.Libros
                          select new LibroModel

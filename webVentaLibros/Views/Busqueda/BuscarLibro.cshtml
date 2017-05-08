@@ -43,7 +43,7 @@
                             <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
                             <li>
-                                @Html.ActionLink("Carrito", "Index", "Cart")
+                                @Html.ActionLink("Carrito", "Carrito", "Cart")
                             </li>
                             <li>
                                 @if (Request.IsAuthenticated)
@@ -75,7 +75,7 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="../Cart/Carrito">Carrito - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                             @Html.ActionLink("Home","Index","Home")
                         </li>
                         <li>
-                            @Html.ActionLink("Carrito", "Index", "Cart")
+                           @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
                         <li class="active"><a href="#">Libros</a></li>
                         <li><a href="#">Intercambio de Libros</a></li>

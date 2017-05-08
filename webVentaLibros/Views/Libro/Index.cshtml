@@ -42,7 +42,7 @@
                             <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
                             <li>
-                                @Html.ActionLink("Carrito", "Index", "Cart")
+                                @Html.ActionLink("Carrito", "Carrito", "Cart")
                             </li>
                             <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
                         </ul>
@@ -65,7 +65,7 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="Cart/Carrito">Carrito - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                             @Html.ActionLink("Home", "Index", "Home")
                         </li>
                         <li>
-                            @Html.ActionLink("Carrito", "Index", "Cart")
+                            @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
                         <li class="active"><a href="#">Libros</a></li>
                         <li><a href="#">Intercambio de Libros</a></li>
@@ -187,10 +187,12 @@
                                         <ins>$@libro.precio</ins>
                                     </div>
 
-                                    <form action="" class="cart">
+                                    <form action=@Url.Action("Carrito","Cart") method="POST" role="form" class="cart">
+               
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                         </div>
+                                        <input type="text" name="codLibro" value="@libro.codigoBarra" hidden />
                                         <button class="add_to_cart_button" type="submit">Comprar</button>
                                     </form>
 
