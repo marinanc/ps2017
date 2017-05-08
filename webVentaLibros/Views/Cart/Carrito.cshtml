@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="single-sidebar">
-                        <h2 class="sidebar-title">Products</h2>
+                        <h2 class="sidebar-title">Sugerencias</h2>
                         <div class="thubmnail-recent">
                             <img src="../img/100x190.png" class="recent-thumb" alt="">
                             <h2><a href="single-product.html">Libro</a></h2>
@@ -199,15 +199,15 @@
                                                     </td>
 
                                                     <td class="product-quantity">
-                                                        <div class="quantity buttons_added">
-                                                            <input type="button" class="minus" value="-">
-                                                            <input type="number" name="cantidad" size="2" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                            <input type="button" class="plus" value="+">
-                                                        </div>
+                                                        
+                                                        <span class="amount">@item.Cantidad</span>
+                                                            
+                                                            
+                                                        
                                                     </td>
 
                                                     <td class="product-subtotal">
-                                                        <span class="amount">@item.Libro.precio</span>
+                                                        <span class="amount">@(item.Libro.precio * item.Cantidad)</span>
                                                     </td>
                                                 </tr>
                                             }
@@ -257,9 +257,9 @@
 
                                         <p class="form-row form-row-wide">
                                             <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
-                                                <option value="">Select a country…</option>
-                                                <option value="AX">Åland Islands</option>
-                                                <option value="AF">Afghanistan</option>
+                                                <option value="">Selecciona una provincia</option>
+                                                <option value="AX">...</option>
+                                                <option value="AF">...</option>
                                                 
                                             </select>
                                         </p>
@@ -269,7 +269,7 @@
                                         <p class="form-row form-row-wide"><input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Postcode / Zip" value="" class="input-text"></p>
 
 
-                                        <p><button class="button" value="1" name="calc_shipping" type="submit">Update Totals</button></p>
+                                        <p><button class="button" value="1" name="calc_shipping" type="submit">Actualizar total</button></p>
 
                                     </section>
                                 </form>

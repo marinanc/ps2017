@@ -18,7 +18,7 @@ namespace webVentaLibros.Controllers
         }
 
         [HttpPost]
-        public ActionResult Carrito(string codLibro)
+        public ActionResult Carrito(string codLibro, int quantity)
         {
             var bd = new bdVentaLibrosDataContext();
             var libroAgregar = from libro in bd.Libros
@@ -35,13 +35,13 @@ namespace webVentaLibros.Controllers
             if (Session["carrito"] == null)
             {
                 List<CarritoItem> compra = new List<CarritoItem>();
-                compra.Add(new CarritoItem(lista.First(), 1));
+                compra.Add(new CarritoItem(lista.First(), quantity));
                 Session["carrito"] = compra;
             }
             else
             {
                 List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
-                compra.Add(new CarritoItem(lista.First(), 1));
+                compra.Add(new CarritoItem(lista.First(), quantity));
                 Session["carrito"] = compra;
             }
 
