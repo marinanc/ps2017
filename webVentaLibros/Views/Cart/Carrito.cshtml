@@ -183,7 +183,7 @@
                                             { 
                                                 <tr class="cart_item">
                                                     <td class="product-remove">
-                                                        <a title="Remove this item" class="remove" href="#">×</a>
+                                                        <a title="Remove this item" class="remove" href="#">@Html.ActionLink("x", "Eliminar", "Cart", new { codLibro = item.Libro.codigoBarra }, null)</a>
                                                     </td>
 
                                                     <td class="product-thumbnail">

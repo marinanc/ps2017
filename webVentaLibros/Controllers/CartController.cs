@@ -41,12 +41,34 @@ namespace webVentaLibros.Controllers
             else
             {
                 List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
-                compra.Add(new CarritoItem(lista.First(), quantity));
+                int indexExistente = getIndex(codLibro);
+                if (indexExistente == -1)
+                    compra.Add(new CarritoItem(lista.First(), quantity));
+                else
+                    compra[indexExistente].Cantidad++;
                 Session["carrito"] = compra;
             }
 
             return View();
         }
 
+        public ActionResult Eliminar(string codLibro)
+        {
+            List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
+            compra.RemoveAt(getIndex(codLibro));
+            return View("Carrito");
+
+        }
+
+        private int getIndex(string codLibro)
+        {
+            List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
+            for (int i = 0; i < compra.Count; i++)
+            {
+                if (compra[i].Libro.codigoBarra == codLibro)
+                    return i;
+            }
+            return -1;
+        }
     }
 }
