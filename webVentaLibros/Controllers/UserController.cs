@@ -29,9 +29,9 @@ namespace webVentaLibros.Controllers
         {
             if (ModelState.IsValid) //Verificar que el modelo de datos sea válido en cuanto a la definición de las propiedades
             {
-                if (Isvalid(user.usuario,user.contraseña))//Verificar que el usuario y clave exista utilizando el método privado
+                if (Isvalid(user.mail,user.contraseña))//Verificar que el usuario y clave exista utilizando el método privado
                 {
-                    FormsAuthentication.SetAuthCookie(user.usuario, false); //crea variable de user con el usuario
+                    FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
                     return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }
                 else
@@ -44,7 +44,7 @@ namespace webVentaLibros.Controllers
 
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut(); //cierrar sesion
+            FormsAuthentication.SignOut(); //cerrar sesion
             return RedirectToAction("Index","Home");
         }
 
@@ -61,7 +61,7 @@ namespace webVentaLibros.Controllers
 
             var updateContraseña =
                         from user in bdVentaLibros.Usuarios
-                        where user.mail == userModel.usuario
+                        where user.mail == userModel.mail
                         select user;
 
             
@@ -83,19 +83,83 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
+        public ActionResult RegistrarUsuario()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult RegistrarUsuario(UserModel user)
+        {
+            if (ModelState.IsValid) //Verificar que el modelo de datos sea válido en cuanto a la definición de las propiedades
+            {
+                if (IsUserValid(user.mail))//Verificar si el usuario(email) existe utilizando el método privado
+                {
+                    //El usuario no existe
+                    var bd = new bdVentaLibrosDataContext();
+
+                    //Convierto el model a una entidad de dominio comentario
+                    Usuarios nuevoUsuario = new Usuarios
+                    {
+                        //idUsuario = user.idUsuario,
+                        mail = user.mail,
+                        contraseña = user.contraseña,
+                        nombreUsuario = user.nombreUsuario,
+                        //fechaHoraAlta = DateTime.Now,
+                        //fechaHoraBaja = user.fechaHoraBaja,
+                        direccion = user.direccion,
+                        //idProvincia = user.idProvincia
+                    };
+
+                    //Agregando un nuevo registro 
+                    bd.Usuarios.InsertOnSubmit(nuevoUsuario);
+                    //Agregando un nuevo registro 
+
+                    //Hacer el submit
+                    bd.SubmitChanges();
+
+                    FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
+                    return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
+                }
+                else
+                {
+                    //El usuario ya existe
+                    ModelState.AddModelError("", "Ya existe un usuario con ese email");
+                    
+                }
+            }
+
+            return View();
+        }
+
         // Metodo para validar el usuario y password del usuario, realiza la consulta a la base de datos
-        private bool Isvalid(string usuario, string contraseña)
+        private bool Isvalid(string mail, string contraseña)
         {
             bool Isvalid = false;
             using (var bd = new bdVentaLibrosDataContext())
             {
-                var user = bd.Usuarios.FirstOrDefault(u => u.mail == usuario); 
+                var user = bd.Usuarios.FirstOrDefault(u => u.mail == mail); 
                 if (user !=null)
                 {
                     if (user.contraseña == contraseña) //Verificar contraseña del usuario
                     {
                         Isvalid = true;
                     }
+                }
+            }
+            return Isvalid;
+        }
+
+        // Metodo para validar el usuario (email), realiza la consulta a la base de datos
+        private bool IsUserValid(string mail)
+        {
+            bool Isvalid = true;
+            using (var bd = new bdVentaLibrosDataContext())
+            {
+                var user = bd.Usuarios.FirstOrDefault(u => u.mail == mail);
+                if (user != null)
+                {
+                    Isvalid = false;
                 }
             }
             return Isvalid;

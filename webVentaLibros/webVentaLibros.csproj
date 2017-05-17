@@ -203,6 +203,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\owl.carousel.css" />
+    <Content Include="register_style.css" />
     <Content Include="css\responsive.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -283,6 +284,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Busqueda\BuscarLibro.cshtml" />
     <Content Include="Views\Cart\Carrito.cshtml" />
+    <Content Include="Views\User\RegistrarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
