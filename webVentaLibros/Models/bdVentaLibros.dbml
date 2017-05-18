@@ -113,9 +113,9 @@
   </Table>
   <Table Name="dbo.Localidades" Member="Localidades">
     <Type Name="Localidades">
-      <Column Name="idLocalidad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idLocalidad" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="idProvincia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Association Name="Localidades_Pedidos" Member="Pedidos" ThisKey="idLocalidad" OtherKey="idLocalidadEntrega" Type="Pedidos" />
       <Association Name="Provincias_Localidades" Member="Provincias" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
     </Type>

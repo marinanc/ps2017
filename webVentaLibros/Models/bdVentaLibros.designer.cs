@@ -2547,9 +2547,9 @@ namespace webVentaLibros.Models
 		
 		private int _idLocalidad;
 		
-		private string _nombre;
-		
 		private int _idProvincia;
+		
+		private string _nombre;
 		
 		private EntitySet<Pedidos> _Pedidos;
 		
@@ -2561,10 +2561,10 @@ namespace webVentaLibros.Models
     partial void OnCreated();
     partial void OnidLocalidadChanging(int value);
     partial void OnidLocalidadChanged();
-    partial void OnnombreChanging(string value);
-    partial void OnnombreChanged();
     partial void OnidProvinciaChanging(int value);
     partial void OnidProvinciaChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
     #endregion
 		
 		public Localidades()
@@ -2574,7 +2574,7 @@ namespace webVentaLibros.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idLocalidad", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idLocalidad", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int idLocalidad
 		{
 			get
@@ -2590,26 +2590,6 @@ namespace webVentaLibros.Models
 					this._idLocalidad = value;
 					this.SendPropertyChanged("idLocalidad");
 					this.OnidLocalidadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string nombre
-		{
-			get
-			{
-				return this._nombre;
-			}
-			set
-			{
-				if ((this._nombre != value))
-				{
-					this.OnnombreChanging(value);
-					this.SendPropertyChanging();
-					this._nombre = value;
-					this.SendPropertyChanged("nombre");
-					this.OnnombreChanged();
 				}
 			}
 		}
@@ -2634,6 +2614,26 @@ namespace webVentaLibros.Models
 					this._idProvincia = value;
 					this.SendPropertyChanged("idProvincia");
 					this.OnidProvinciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
 				}
 			}
 		}
