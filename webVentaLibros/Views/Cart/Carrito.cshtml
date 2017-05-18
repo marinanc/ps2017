@@ -45,7 +45,7 @@
                             <li>
                                 @Html.ActionLink("Carrito", "Index", "Cart")
                             </li>
-                            <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                            <li><a href="#"><i class="fa fa-user"></i>Ingresar</a></li>
                         </ul>
                     </div>
                 </div>
@@ -92,7 +92,9 @@
                         <li class="active">
                             @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
-                        <li><a href="#">Libros</a></li>
+                        <li>
+                            @Html.ActionLink("Libros", "Catalogo", "Catalogo")
+                        </li>
                         <li><a href="#">Intercambio de Libros</a></li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
