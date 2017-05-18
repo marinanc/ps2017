@@ -2093,6 +2093,8 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<int> _stock;
 		
+		private System.Nullable<System.DateTime> _fechaAlta;
+		
 		private EntitySet<AutorPorLibro> _AutorPorLibro;
 		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
@@ -2129,6 +2131,8 @@ namespace webVentaLibros.Models
     partial void OnsinopsisChanged();
     partial void OnstockChanging(System.Nullable<int> value);
     partial void OnstockChanged();
+    partial void OnfechaAltaChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaAltaChanged();
     #endregion
 		
 		public Libros()
@@ -2346,6 +2350,26 @@ namespace webVentaLibros.Models
 					this._stock = value;
 					this.SendPropertyChanged("stock");
 					this.OnstockChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaAlta", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaAlta
+		{
+			get
+			{
+				return this._fechaAlta;
+			}
+			set
+			{
+				if ((this._fechaAlta != value))
+				{
+					this.OnfechaAltaChanging(value);
+					this.SendPropertyChanging();
+					this._fechaAlta = value;
+					this.SendPropertyChanged("fechaAlta");
+					this.OnfechaAltaChanged();
 				}
 			}
 		}

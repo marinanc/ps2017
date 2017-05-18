@@ -17,5 +17,7 @@ namespace webVentaLibros.Models
         public string sinopsis { get; set; }
         public double precio { get; set; }
         public int stock { get; set; }
+        public string genero { get; set; }
+        public List<string> autores{ get ;set; }
     }
 }

@@ -41,3 +41,7 @@ D:\webVentaLibros\webVentaLibros\bin\es\System.Web.WebPages.Razor.resources.dll
 D:\webVentaLibros\webVentaLibros\obj\Debug\webVentaLibros.csprojResolveAssemblyReference.cache
 D:\webVentaLibros\webVentaLibros\obj\Debug\webVentaLibros.dll
 D:\webVentaLibros\webVentaLibros\obj\Debug\webVentaLibros.pdb
+D:\webVentaLibros\webVentaLibros\bin\PagedList.dll
+D:\webVentaLibros\webVentaLibros\bin\PagedList.Mvc.dll
+D:\webVentaLibros\webVentaLibros\bin\PagedList.xml
+D:\webVentaLibros\webVentaLibros\bin\PagedList.Mvc.xml

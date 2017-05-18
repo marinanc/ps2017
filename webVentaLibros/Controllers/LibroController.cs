@@ -17,6 +17,7 @@ namespace webVentaLibros.Controllers
             var bdVentaLibros = new bdVentaLibrosDataContext();
 
             var libroSeleccionado = from libro in bdVentaLibros.Libros
+                                    join gen in bdVentaLibros.Generos on libro.idGenero equals gen.idGenero
                                     where libro.codigoBarra == cod
                                     select new LibroModel
                                     {
@@ -28,7 +29,8 @@ namespace webVentaLibros.Controllers
                                         idEditorial = Convert.ToInt32(libro.idEditorial),
                                         sinopsis = libro.sinopsis,
                                         precio = Convert.ToDouble(libro.precio),
-                                        paginas = Convert.ToInt32(libro.paginas)
+                                        paginas = Convert.ToInt32(libro.paginas),
+                                        genero = gen.nombre
                                     };
             
             return View(libroSeleccionado);
