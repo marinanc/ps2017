@@ -298,6 +298,7 @@
     <Content Include="Views\Cart\Carrito.cshtml" />
     <Content Include="Views\User\RegistrarUsuario.cshtml" />
     <Content Include="Views\Catalogo\Catalogo.cshtml" />
+    <Content Include="Views\Catalogo\MostrarLibros.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
