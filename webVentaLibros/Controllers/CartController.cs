@@ -20,6 +20,7 @@ namespace webVentaLibros.Controllers
         [HttpPost]
         public ActionResult Carrito(string codLibro, int quantity)
         {
+            double totalCompra = 0;
             var bd = new bdVentaLibrosDataContext();
             var libroAgregar = from libro in bd.Libros
                                where libro.codigoBarra == codLibro
@@ -48,14 +49,23 @@ namespace webVentaLibros.Controllers
                     compra[indexExistente].Cantidad++;
                 Session["carrito"] = compra;
             }
-
+            foreach(var item in Session["carrito"] as List<CarritoItem>){
+                totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+            }
+            ViewBag.total = totalCompra;
             return View();
         }
 
         public ActionResult Eliminar(string codLibro)
         {
+            double totalCompra = 0;
             List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
             compra.RemoveAt(getIndex(codLibro));
+            foreach (var item in Session["carrito"] as List<CarritoItem>)
+            {
+                totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+            }
+            ViewBag.total = totalCompra;
             return View("Carrito");
 
         }
