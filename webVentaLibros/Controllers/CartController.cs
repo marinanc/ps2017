@@ -14,6 +14,15 @@ namespace webVentaLibros.Controllers
         [HttpGet]
         public ActionResult Carrito()
         {
+            double totalCompra = 0;
+            if (Session["carrito"] != null)
+            {
+                foreach (var item in Session["carrito"] as List<CarritoItem>)
+                {
+                    totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+                }
+                ViewBag.total = totalCompra;
+            }
             return View();
         }
 
@@ -68,6 +77,11 @@ namespace webVentaLibros.Controllers
             ViewBag.total = totalCompra;
             return View("Carrito");
 
+        }
+
+        public ActionResult Checkout()
+        {
+            return View();
         }
 
         private int getIndex(string codLibro)

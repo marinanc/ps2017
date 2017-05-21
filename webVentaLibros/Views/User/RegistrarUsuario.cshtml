@@ -2,6 +2,7 @@
     ViewBag.Title = "RegistrarUsuario";
 }
 
+
 <!DOCTYPE html>
 
 <head>
@@ -36,19 +37,22 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                            }
                             <li>
                                 @Html.ActionLink("Carrito", "Carrito", "Cart")
                             </li>
                             <li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    @Html.ActionLink("Logout", "Logout", "User")
+                                    @Html.ActionLink("Cerrar sesión", "Logout", "User")
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Login", "Login", "User")
+                                    @Html.ActionLink("Iniciar sesión", "Login", "User")
                                 }
                             </li>
                         </ul>
@@ -69,7 +73,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
         </div>
     </div> <!-- End site branding area -->
@@ -92,7 +96,9 @@
                         <li>
                             @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
-                        <li><a href="#">Libros</a></li>
+                        <li>
+                            @Html.ActionLink("Libros", "Catalogo", "Catalogo")
+                        </li>
                         <li><a href="#">Intercambio de Libros</a></li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
@@ -146,29 +152,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="confirm" class="cols-sm-2 control-label">Confirma tu contraseña</label>
+
+                        <label for="provincias" class="cols-sm-2 control-label">Provincia</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Ingresa nuevamente tu contraseña" />
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.DropDownList("provincias", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control" })
+                                }
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="confirm" class="cols-sm-2 control-label">Provincia</label>
+                        <label for="localidades" class="cols-sm-2 control-label">Localidad</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Ingresa nuevamente tu contraseña" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm" class="cols-sm-2 control-label">Localidad</label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Ingresa nuevamente tu contraseña" />
+                                @Html.DropDownList("localidades", new SelectList(string.Empty, "Value", "Text"), "Localidad", new { style = "width:250px", @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -263,6 +262,43 @@
     </div> <!-- End footer bottom area -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Dropdownlist Selectedchange event
+            $("#provincias").change(function () {
+                $("#localidades").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetLocalidades")', // we are calling json method
+
+                    dataType: 'json',
+
+                    data: { idProvincia: $("#provincias").val() },
+                    // here we are get value of selected country and passing same value as inputto json method GetStates.
+
+                    success: function (localidades) {
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+
+                        $.each(localidades, function (i, localidad) {
+                            $("#localidades").append('<option value="' + localidad.Value + '">' +
+                                 localidad.Text + '</option>');
+                            // here we are adding option for States
+
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+
+
+
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!--
         <script src="../js/bootstrap.min.js"></script>
@@ -270,4 +306,3 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
-

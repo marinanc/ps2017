@@ -40,19 +40,22 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                            }
                             <li>
                                 @Html.ActionLink("Carrito", "Carrito", "Cart")
                             </li>
                             <li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    @Html.ActionLink("Logout", "Logout", "User")
+                                    @Html.ActionLink("Cerrar sesión", "Logout", "User")
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Login", "Login", "User")
+                                    @Html.ActionLink("Iniciar sesión", "Login", "User")
                                 }
                             </li>
                         </ul>

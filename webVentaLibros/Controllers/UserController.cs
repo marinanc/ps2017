@@ -85,9 +85,74 @@ namespace webVentaLibros.Controllers
 
         public ActionResult RegistrarUsuario()
         {
-            return View();
+            var bd = new bdVentaLibrosDataContext();
+
+            var listadoProvincias = (from p in bd.Provincias
+                                     //join l in bd.Localidades on p.idProvincia equals l.idProvincia
+                                     select new ProvinciaModel
+                                     {
+                                         idProvincia = p.idProvincia,
+                                         nombreProvincia = p.nombre
+
+                                     }).ToList();
+            List<SelectListItem> li = new List<SelectListItem>();
+            foreach (var p in listadoProvincias) { 
+                li.Add(new SelectListItem { Text = p.nombreProvincia, Value = p.idProvincia.ToString() });
+            }
+            
+            ViewData["provincias"] = li;
+
+            //var listadoProvincias = (from p in bd.Provincias
+            //                      join l in bd.Localidades on p.idProvincia equals l.idProvincia
+            //                      select new ProvinciaModel
+            //                      {
+            //                          idProvincia = p.idProvincia,
+            //                          nombreProvincia = p.nombre
+                                      
+            //                      }).ToList();
+            //var listadoLocalidades = (from l in bd.Localidades
+            //                          select new LocalidadModel
+            //                          {
+            //                              idLocalidad = l.idLocalidad,
+            //                              idProvincia = l.idProvincia,
+            //                              nombreLocalidad = l.nombre
+            //                          }).ToList();
+            //if (listadoProvincias != null && listadoLocalidades != null)
+            //{
+
+            //    foreach (var p in listadoProvincias)
+            //    {
+            //        foreach (var l in listadoLocalidades)
+            //        {
+            //            if (p.idProvincia == l.idProvincia)
+            //            {
+            //                p.localidades.Add(l);
+            //            }
+            //        }
+            //    }
+            //}
+            
+            return View(listadoProvincias);
         }
-        
+
+        public JsonResult GetLocalidades(string idProvincia)
+        {
+            var prov = Convert.ToInt32(idProvincia);
+            var bd = new bdVentaLibrosDataContext();
+            List<SelectListItem> localidades = new List<SelectListItem>();
+            var listaLocalidades = (from l in bd.Localidades
+                where l.idProvincia == prov
+                select new LocalidadModel{
+                    idLocalidad = l.idLocalidad,
+                    nombreLocalidad = l.nombre
+                }).ToList();
+
+            foreach(var loc in listaLocalidades){
+                localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString() });
+            }                               
+            return Json(new SelectList(localidades, "Value", "Text"));
+        }
+
         [HttpPost]
         public ActionResult RegistrarUsuario(UserModel user)
         {

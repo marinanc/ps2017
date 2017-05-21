@@ -1,0 +1,4 @@
+/Users/hcasatti/dev/projects/sdk-dotnet/tests/bin/mercadopago.dll
+/Users/hcasatti/dev/projects/sdk-dotnet/tests/obj/Release/mercadopago.dll
+/Users/hcasatti/dev/projects/sdk-dotnet/tests/bin/mercadopagoTest.dll
+/Users/hcasatti/dev/projects/sdk-dotnet/tests/obj/Release/mercadopagoTest.dll

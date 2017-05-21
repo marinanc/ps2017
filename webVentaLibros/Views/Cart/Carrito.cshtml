@@ -40,12 +40,24 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                            }
                             <li>
                                 @Html.ActionLink("Carrito", "Index", "Cart")
                             </li>
-                            <li><a href="#"><i class="fa fa-user"></i>Ingresar</a></li>
+                            <li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Cerrar sesión", "Logout", "User")
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Iniciar sesión", "Login", "User")
+                                }
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -178,12 +190,13 @@
                                             <th class="product-quantity">Cantidad</th>
                                             <th class="product-subtotal">Total</th>
                                         </tr>
-                                    </thead> 
+                                    </thead>
                                     <tbody>
-                                        @if (Session["carrito"] != null) { 
-                                           
-                                            foreach(var item in Session["carrito"] as List<CarritoItem>)
-                                            { 
+                                        @if (Session["carrito"] != null)
+                                        {
+
+                                            foreach (var item in Session["carrito"] as List<CarritoItem>)
+                                            {
                                                 <tr class="cart_item">
                                                     <td class="product-remove">
                                                         <a title="Remove this item" class="remove" href="#">@Html.ActionLink("x", "Eliminar", "Cart", new { codLibro = item.Libro.codigoBarra }, null)</a>
@@ -202,26 +215,34 @@
                                                     </td>
 
                                                     <td class="product-quantity">
-                                                        
+
                                                         <span class="amount">@item.Cantidad</span>
-                                                            
-                                                            
-                                                        
+
+
+
                                                     </td>
 
                                                     <td class="product-subtotal">
                                                         <span class="amount">@(item.Libro.precio * item.Cantidad)</span>
-                                                        
+
                                                     </td>
                                                 </tr>
                                             }
-                                        <tr>
-                                            <td class="actions" colspan="6">
-                                                
-                                                
-                                                <input type="submit" value="Terminar compra" name="proceed" class="checkout-button button alt wc-forward">
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="actions" colspan="6">
+
+                                                    @if (Request.IsAuthenticated)
+                                                    {
+                                                        <input type="submit" value="Terminar compra" name="proceed" class="checkout-button button alt wc-forward">
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>
+                                                            @Html.ActionLink("Debe iniciar sesión para finalizar compra", "Login", "User")
+                                                        </span>
+                                                    }
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -229,55 +250,56 @@
 
                             <div class="cart-collaterals">
 
-                            @if (Session["carrito"] != null) {
-                                <div class="cart_totals ">
-                                    <h2>Montos de Compra</h2>
+                                @if (Session["carrito"] != null)
+                                {
+                                    <div class="cart_totals ">
+                                        <h2>Montos de Compra</h2>
 
-                                    <table cellspacing="0">
-                                        <tbody>
-                                            <tr class="cart-subtotal">
-                                                <th>Subtotal</th>
-                                                <td><span class="amount">$@ViewBag.total</span></td>
-                                            </tr>
+                                        <table cellspacing="0">
+                                            <tbody>
+                                                <tr class="cart-subtotal">
+                                                    <th>Subtotal</th>
+                                                    <td><span class="amount">$@ViewBag.total</span></td>
+                                                </tr>
 
-                                            <tr class="shipping">
-                                                <th>Envío</th>
-                                                <td>Envio gratis</td>
-                                            </tr>
+                                                <tr class="shipping">
+                                                    <th>Envío</th>
+                                                    <td>Envio gratis</td>
+                                                </tr>
 
-                                            <tr class="order-total">
-                                                <th>Total</th>
-                                                <td><strong><span class="amount">$@ViewBag.total</span></strong> </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-                                <form method="post" action="#" class="shipping_calculator">
-                                    <h2><a class="shipping-calculator-button" data-toggle="collapse" href="#calcalute-shipping-wrap" aria-expanded="false" aria-controls="calcalute-shipping-wrap">Calcular envio</a></h2>
-
-                                    <section id="calcalute-shipping-wrap" class="shipping-calculator-form collapse">
-
-                                        <p class="form-row form-row-wide">
-                                            <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
-                                                <option value="">Selecciona una provincia</option>
-                                                <option value="AX">...</option>
-                                                <option value="AF">...</option>
-                                                
-                                            </select>
-                                        </p>
-
-                                        <p class="form-row form-row-wide"><input type="text" id="calc_shipping_state" name="calc_shipping_state" placeholder="State / county" value="" class="input-text"> </p>
-
-                                        <p class="form-row form-row-wide"><input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Postcode / Zip" value="" class="input-text"></p>
+                                                <tr class="order-total">
+                                                    <th>Total</th>
+                                                    <td><strong><span class="amount">$@ViewBag.total</span></strong> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
 
-                                        <p><button class="button" value="1" name="calc_shipping" type="submit">Actualizar total</button></p>
+                                    <form method="post" action="#" class="shipping_calculator">
+                                        <h2><a class="shipping-calculator-button" data-toggle="collapse" href="#calcalute-shipping-wrap" aria-expanded="false" aria-controls="calcalute-shipping-wrap">Calcular envio</a></h2>
 
-                                    </section>
-                                </form>
-                            }
+                                        <section id="calcalute-shipping-wrap" class="shipping-calculator-form collapse">
+
+                                            <p class="form-row form-row-wide">
+                                                <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
+                                                    <option value="">Selecciona una provincia</option>
+                                                    <option value="AX">...</option>
+                                                    <option value="AF">...</option>
+
+                                                </select>
+                                            </p>
+
+                                            <p class="form-row form-row-wide"><input type="text" id="calc_shipping_state" name="calc_shipping_state" placeholder="State / county" value="" class="input-text"> </p>
+
+                                            <p class="form-row form-row-wide"><input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Postcode / Zip" value="" class="input-text"></p>
+
+
+                                            <p><button class="button" value="1" name="calc_shipping" type="submit">Actualizar total</button></p>
+
+                                        </section>
+                                    </form>
+                                }
 
                             </div>
                         </div>
