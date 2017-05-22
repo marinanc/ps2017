@@ -2577,6 +2577,8 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<Pedidos> _Pedidos;
 		
+		private EntitySet<Usuarios> _Usuarios;
+		
 		private EntityRef<Provincias> _Provincias;
 		
     #region Definiciones de métodos de extensibilidad
@@ -2594,6 +2596,7 @@ namespace webVentaLibros.Models
 		public Localidades()
 		{
 			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
+			this._Usuarios = new EntitySet<Usuarios>(new Action<Usuarios>(this.attach_Usuarios), new Action<Usuarios>(this.detach_Usuarios));
 			this._Provincias = default(EntityRef<Provincias>);
 			OnCreated();
 		}
@@ -2675,6 +2678,19 @@ namespace webVentaLibros.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Usuarios", Storage="_Usuarios", ThisKey="idLocalidad", OtherKey="idLocalidad")]
+		public EntitySet<Usuarios> Usuarios
+		{
+			get
+			{
+				return this._Usuarios;
+			}
+			set
+			{
+				this._Usuarios.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Provincias_Localidades", Storage="_Provincias", ThisKey="idProvincia", OtherKey="idProvincia", IsForeignKey=true)]
 		public Provincias Provincias
 		{
@@ -2736,6 +2752,18 @@ namespace webVentaLibros.Models
 		}
 		
 		private void detach_Pedidos(Pedidos entity)
+		{
+			this.SendPropertyChanging();
+			entity.Localidades = null;
+		}
+		
+		private void attach_Usuarios(Usuarios entity)
+		{
+			this.SendPropertyChanging();
+			entity.Localidades = this;
+		}
+		
+		private void detach_Usuarios(Usuarios entity)
 		{
 			this.SendPropertyChanging();
 			entity.Localidades = null;
@@ -3748,6 +3776,8 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<int> _idProvincia;
 		
+		private System.Nullable<int> _idLocalidad;
+		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
 		private EntitySet<CalificacionPorUsuario> _CalificacionPorUsuario;
@@ -3759,6 +3789,8 @@ namespace webVentaLibros.Models
 		private EntitySet<Pedidos> _Pedidos;
 		
 		private EntitySet<PublicacionPorUsuario> _PublicacionPorUsuario;
+		
+		private EntityRef<Localidades> _Localidades;
 		
 		private EntityRef<Provincias> _Provincias;
 		
@@ -3782,6 +3814,8 @@ namespace webVentaLibros.Models
     partial void OndireccionChanged();
     partial void OnidProvinciaChanging(System.Nullable<int> value);
     partial void OnidProvinciaChanged();
+    partial void OnidLocalidadChanging(System.Nullable<int> value);
+    partial void OnidLocalidadChanged();
     #endregion
 		
 		public Usuarios()
@@ -3792,6 +3826,7 @@ namespace webVentaLibros.Models
 			this._ComentarioPorLibro = new EntitySet<ComentarioPorLibro>(new Action<ComentarioPorLibro>(this.attach_ComentarioPorLibro), new Action<ComentarioPorLibro>(this.detach_ComentarioPorLibro));
 			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._PublicacionPorUsuario = new EntitySet<PublicacionPorUsuario>(new Action<PublicacionPorUsuario>(this.attach_PublicacionPorUsuario), new Action<PublicacionPorUsuario>(this.detach_PublicacionPorUsuario));
+			this._Localidades = default(EntityRef<Localidades>);
 			this._Provincias = default(EntityRef<Provincias>);
 			OnCreated();
 		}
@@ -3960,6 +3995,30 @@ namespace webVentaLibros.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idLocalidad", DbType="Int")]
+		public System.Nullable<int> idLocalidad
+		{
+			get
+			{
+				return this._idLocalidad;
+			}
+			set
+			{
+				if ((this._idLocalidad != value))
+				{
+					if (this._Localidades.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidLocalidadChanging(value);
+					this.SendPropertyChanging();
+					this._idLocalidad = value;
+					this.SendPropertyChanged("idLocalidad");
+					this.OnidLocalidadChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorLibro", Storage="_CalificacionPorLibro", ThisKey="idUsuario", OtherKey="idUsuario")]
 		public EntitySet<CalificacionPorLibro> CalificacionPorLibro
 		{
@@ -4035,6 +4094,40 @@ namespace webVentaLibros.Models
 			set
 			{
 				this._PublicacionPorUsuario.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Usuarios", Storage="_Localidades", ThisKey="idLocalidad", OtherKey="idLocalidad", IsForeignKey=true)]
+		public Localidades Localidades
+		{
+			get
+			{
+				return this._Localidades.Entity;
+			}
+			set
+			{
+				Localidades previousValue = this._Localidades.Entity;
+				if (((previousValue != value) 
+							|| (this._Localidades.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Localidades.Entity = null;
+						previousValue.Usuarios.Remove(this);
+					}
+					this._Localidades.Entity = value;
+					if ((value != null))
+					{
+						value.Usuarios.Add(this);
+						this._idLocalidad = value.idLocalidad;
+					}
+					else
+					{
+						this._idLocalidad = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Localidades");
+				}
 			}
 		}
 		

@@ -88,7 +88,6 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             var listadoProvincias = (from p in bd.Provincias
-                                     //join l in bd.Localidades on p.idProvincia equals l.idProvincia
                                      select new ProvinciaModel
                                      {
                                          idProvincia = p.idProvincia,
@@ -102,35 +101,7 @@ namespace webVentaLibros.Controllers
             
             ViewData["provincias"] = li;
 
-            //var listadoProvincias = (from p in bd.Provincias
-            //                      join l in bd.Localidades on p.idProvincia equals l.idProvincia
-            //                      select new ProvinciaModel
-            //                      {
-            //                          idProvincia = p.idProvincia,
-            //                          nombreProvincia = p.nombre
-                                      
-            //                      }).ToList();
-            //var listadoLocalidades = (from l in bd.Localidades
-            //                          select new LocalidadModel
-            //                          {
-            //                              idLocalidad = l.idLocalidad,
-            //                              idProvincia = l.idProvincia,
-            //                              nombreLocalidad = l.nombre
-            //                          }).ToList();
-            //if (listadoProvincias != null && listadoLocalidades != null)
-            //{
-
-            //    foreach (var p in listadoProvincias)
-            //    {
-            //        foreach (var l in listadoLocalidades)
-            //        {
-            //            if (p.idProvincia == l.idProvincia)
-            //            {
-            //                p.localidades.Add(l);
-            //            }
-            //        }
-            //    }
-            //}
+            
             
             return View(listadoProvincias);
         }
@@ -173,7 +144,8 @@ namespace webVentaLibros.Controllers
                         //fechaHoraAlta = DateTime.Now,
                         //fechaHoraBaja = user.fechaHoraBaja,
                         direccion = user.direccion,
-                        //idProvincia = user.idProvincia
+                        idProvincia = user.idProvincia,
+                        idLocalidad = user.idLocalidad
                     };
 
                     //Agregando un nuevo registro 

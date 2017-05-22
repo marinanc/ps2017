@@ -156,10 +156,9 @@
                         <label for="provincias" class="cols-sm-2 control-label">Provincia</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
-                                @using (Html.BeginForm())
-                                {
-                                    @Html.DropDownList("provincias", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control" })
-                                }
+                                
+                                    @Html.DropDownList("idProvincia", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control" })
+                                
                             </div>
                         </div>
                     </div>
@@ -167,7 +166,7 @@
                         <label for="localidades" class="cols-sm-2 control-label">Localidad</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
-                                @Html.DropDownList("localidades", new SelectList(string.Empty, "Value", "Text"), "Localidad", new { style = "width:250px", @class = "form-control" })
+                                @Html.DropDownList("idLocalidad", new SelectList(string.Empty, "Value", "Text"), new { style = "width:250px", @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -266,15 +265,15 @@
     <script type="text/javascript">
         $(document).ready(function () {
             //Dropdownlist Selectedchange event
-            $("#provincias").change(function () {
-                $("#localidades").empty();
+            $("#idProvincia").change(function () {
+                $("#idLocalidad").empty();
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetLocalidades")', // we are calling json method
 
                     dataType: 'json',
 
-                    data: { idProvincia: $("#provincias").val() },
+                    data: { idProvincia: $("#idProvincia").val() },
                     // here we are get value of selected country and passing same value as inputto json method GetStates.
 
                     success: function (localidades) {
@@ -282,7 +281,7 @@
                         // of states passed from the controller
 
                         $.each(localidades, function (i, localidad) {
-                            $("#localidades").append('<option value="' + localidad.Value + '">' +
+                            $("#idLocalidad").append('<option value="' + localidad.Value + '">' +
                                  localidad.Text + '</option>');
                             // here we are adding option for States
 
