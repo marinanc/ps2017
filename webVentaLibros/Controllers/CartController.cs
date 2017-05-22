@@ -81,6 +81,15 @@ namespace webVentaLibros.Controllers
 
         public ActionResult Checkout()
         {
+            double totalCompra = 0;
+            if (Session["carrito"] != null)
+            {
+                foreach (var item in Session["carrito"] as List<CarritoItem>)
+                {
+                    totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+                }
+                ViewBag.total = totalCompra;
+            }
             return View();
         }
 
