@@ -82,6 +82,8 @@ namespace webVentaLibros.Controllers
         public ActionResult Checkout()
         {
             double totalCompra = 0;
+            List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
+            int cantidad = compra.Count;
             if (Session["carrito"] != null)
             {
                 foreach (var item in Session["carrito"] as List<CarritoItem>)
@@ -89,6 +91,7 @@ namespace webVentaLibros.Controllers
                     totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
                 }
                 ViewBag.total = totalCompra;
+                ViewBag.cantidad = cantidad;
             }
             return View();
         }

@@ -1,0 +1,399 @@
+﻿@{
+    ViewBag.Title = "AgregarLibro";
+}
+@using webVentaLibros.Models;
+
+<head>
+    <title>Dashboard | Klorofil - Free Bootstrap Dashboard Template</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link href="../css/select2.min.css" rel="stylesheet" />
+    <script src="../js/select2.min.js"></script>
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="../assets/css/demo.css">
+    <style type="text/css">
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+
+        #img-upload {
+            width: 100%;
+        }
+
+    </style>
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('change', '.btn-file :file', function () {
+                var input = $(this),
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [label]);
+            });
+
+            $('.btn-file :file').on('fileselect', function (event, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = label;
+
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log) alert(log);
+                }
+
+            });
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#img-upload').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function () {
+                readURL(this);
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <!-- WRAPPER -->
+    <div id="wrapper">
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="brand">
+                <a href="Index"><img src="../img/logo.png" alt="#" class="img-responsive logo"></a>
+            </div>
+            <div class="container-fluid">
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                                <i class="lnr lnr-alarm"></i>
+                                <span class="badge bg-danger">5</span>
+                            </a>
+                            <ul class="dropdown-menu notifications">
+                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+                                <li><a href="#" class="more">See all notifications</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Ayuda</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Basic Use</a></li>
+                                <li><a href="#">Working With Data</a></li>
+                                <li><a href="#">Security</a></li>
+                                <li><a href="#">Troubleshooting</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="lnr lnr-user"></i> <span>Mi perfil</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-cog"></i> <span>Configuración</span></a></li>
+                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
+                            </ul>
+                        </li>
+                        <!-- <li>
+                            <a class="update-pro" href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END NAVBAR -->
+        <!-- LEFT SIDEBAR -->
+        <div id="sidebar-nav" class="sidebar">
+            <div class="sidebar-scroll">
+                <nav>
+                    <ul class="nav">
+                        <li><a href="Index" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li>
+                            <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar...</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPagesAgregar" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="page-profile.html" class="">Libro</a></li>
+                                    <li><a href="page-login.html" class="">Autor</a></li>
+                                    <li><a href="page-lockscreen.html" class="">Género</a></li>
+                                    <li><a href="page-lockscreen.html" class="">Editorial</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subPagesModificar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-pencil"></i> <span>Modificar...</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPagesModificar" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="page-profile.html" class="">Libro</a></li>
+                                    <li><a href="page-login.html" class="">Autor</a></li>
+                                    <li><a href="page-lockscreen.html" class="">Género</a></li>
+                                    <li><a href="page-lockscreen.html" class="">Editorial</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a></li>
+                        <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>
+                        <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li>
+                        <li>
+                            <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Paginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPagesPaginas" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="page-profile.html" class="">Profile</a></li>
+                                    <li><a href="page-login.html" class="">Login</a></li>
+                                    <li><a href="page-lockscreen.html" class="">Lockscreen</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Listados</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- END LEFT SIDEBAR -->
+        <!-- MAIN -->
+        <div class="main">
+            <!-- MAIN CONTENT -->
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- INPUT GROUPS -->
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">DATOS DEL NUEVO LIBRO</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <form action=@Url.Action("AgregarLibro","Admin") enctype="multipart/form-data" method="POST" role="form">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <label for="titulo">Título</label>
+                                                    <input id="titulo" name="titulo" class="form-control" type="text" required>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <label for="codigoBarra">Código de barra</label>
+                                                    <input id="codigoBarra" name="codigoBarra" class="form-control" min="0" type="number" required>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <fieldset>
+                                                    <legend>Autores</legend>
+                                                    <label for="idAutor1">1er Autor</label>
+                                                    <select id="idAutor1" name="idAutor1" class="form-control input-lg">
+                                                        <option value=@null selected>Elige un autor...</option>
+                                                        @foreach (var autor in ViewBag.listadoAutores)
+                                                        {
+                                                        <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                        }
+                                                    </select>
+                                                    <br />
+                                                    <label for="idAutor2">2do Autor</label>
+                                                    <select id="idAutor2" name="idAutor2" class="form-control input-lg">
+                                                        <option value=@null selected>Elige un autor...</option>
+                                                        @foreach (var autor in ViewBag.listadoAutores)
+                                                        {
+                                                            <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                        }
+                                                    </select>
+                                                    <br />
+                                                    <label for="idAutor3">3er Autor</label>
+                                                    <select id="idAutor3" name="idAutor3" class="form-control input-lg">
+                                                        <option value=@null selected>Elige un autor...</option>
+                                                        @foreach (var autor in ViewBag.listadoAutores)
+                                                        {
+                                                            <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                        }
+                                                    </select>
+                                                    <br />
+                                                    <label for="idAutor4">4to Autor</label>
+                                                    <select id="idAutor4" name="idAutor4" class="form-control input-lg">
+                                                        <option value=@null selected>Elige un autor...</option>
+                                                        @foreach (var autor in ViewBag.listadoAutores)
+                                                        {
+                                                            <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                        }
+                                                    </select>
+                                                </fieldset>
+                                            </div>
+                                            <br />
+                                            <div class="input-group">
+                                                <label for="idEditorial">Editorial</label>
+                                                <select id="idEditorial" name="idEditorial" class="form-control input-lg">
+                                                    <option value=@null selected>Elige una editorial...</option>
+                                                    @foreach (var editorial in ViewBag.listadoEditoriales)
+                                                    {
+                                                    <option value="@editorial.idEditorial">@editorial.nombre</option>
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <br />
+                                            <div class="input-group">
+                                                <div class="input-group">
+                                                    <label for="edicion">Año edición: </label>
+                                                    <input type="number" min="1000" max="@DateTime.Now.Year" id="edicion" name="edicion"/>
+                                                </div>
+                                            </div>
+                                            <br />
+
+                                            <div class="input-group">
+                                                <div class="input-group">
+                                                    <label for="stock">Cant. unidades: </label>
+                                                    <input type="number" min="0" id="stock" name="stock"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <label for="idGenero">Género</label>
+                                                <select id="idGenero" name="idGenero" class="form-control input-lg" required>
+                                                    <option value="" selected>Elige un género...</option>
+                                                    @foreach (var genero in ViewBag.listadoGeneros)
+                                                    {
+                                                    <option value="@genero.idGenero">@genero.nombreGenero</option>
+
+                                                    }
+
+                                                </select>
+                                            </div>
+                                            <br />
+                                            <div class="input-group">
+                                                <label for="paginas">Cant. páginas: </label>
+                                                <input type="number" min="1" id="paginas" name="paginas" />
+                                            </div>
+                                            <br />
+                                            <div class="input-group">
+                                                <label for="precio">Precio: </label>
+                                                <span class="input-group-addon">ARS $</span>
+                                                <input type="number" id="precio" name="precio" min="0" step="1" />
+                                            </div>
+                                            <br />
+                                            <div class="input-group">
+                                                <label for="sinopsis">Sinopsis/Descripción</label>
+                                                <textarea id="sinopsis" name="sinopsis" class="form-control" rows="8" cols="50"></textarea>
+                                            </div>
+                                            <br />
+
+                                            <div class="form-group">
+                                                <label>Subir tapa del libro</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <span class="btn btn-default btn-file">
+                                                            Abrir…
+                                                            <input type="file" id="imgInp" name="foto" required>
+                                                        </span>
+                                                    </span>
+                                                    <input type="text" class="form-control" readonly>
+                                                </div>
+                                                <img id='img-upload' />
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <br />
+                                            <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Agregar libro</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- END INPUT GROUPS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT -->
+        </div>
+        <!-- END MAIN -->
+        <div class="clearfix"></div>
+        <footer>
+            <div class="container-fluid">
+                <p class="copyright">&copy; 2017 <a href="https://www.themeineed.com" target="_blank">Theme I Need</a>. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <!-- END WRAPPER -->
+    <!-- Javascript -->
+
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="../assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="../assets/vendor/chartist/js/chartist.min.js"></script>
+    <script src="../assets/scripts/klorofil-common.js"></script>
+    <script>
+        $('#precio').keypress(function (tecla) {
+            if ((tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode != 46) && (tecla.charCode != 8)) {
+                return false;
+            } else {
+                var len = $('#precio').val().length;
+                var index = $('#precio').val().indexOf('.');
+
+                if (index > 0 && tecla.charCode == 46) {
+                    return false;
+                }
+
+                if (index > 0) {
+                    var CharAfterdot = (len + 1) - index;
+                    if (CharAfterdot > 3) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        });
+    </script>
+</body>

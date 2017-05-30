@@ -5,15 +5,10 @@
       <Column Name="idAutor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="apellidos" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="nombres" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Autores_AutorPorLibro" Member="AutorPorLibro" ThisKey="idAutor" OtherKey="idAutor" Type="AutorPorLibro" />
-    </Type>
-  </Table>
-  <Table Name="dbo.AutorPorLibro" Member="AutorPorLibro">
-    <Type Name="AutorPorLibro">
-      <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="idAutor" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="Autores_AutorPorLibro" Member="Autores" ThisKey="idAutor" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
-      <Association Name="Libros_AutorPorLibro" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
+      <Association Name="Autores_Libros" Member="Libros" ThisKey="idAutor" OtherKey="idAutor1" Type="Libros" />
+      <Association Name="Autores_Libros1" Member="Libros1" ThisKey="idAutor" OtherKey="idAutor2" Type="Libros" />
+      <Association Name="Autores_Libros2" Member="Libros2" ThisKey="idAutor" OtherKey="idAutor3" Type="Libros" />
+      <Association Name="Autores_Libros3" Member="Libros3" ThisKey="idAutor" OtherKey="idAutor4" Type="Libros" />
     </Type>
   </Table>
   <Table Name="dbo.CalificacionPorLibro" Member="CalificacionPorLibro">
@@ -104,10 +99,17 @@
       <Column Name="sinopsis" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="stock" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="fechaAlta" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Libros_AutorPorLibro" Member="AutorPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="AutorPorLibro" />
+      <Column Name="idAutor1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idAutor2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idAutor3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idAutor4" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Libros_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="CalificacionPorLibro" />
       <Association Name="Libros_ComentarioPorLibro" Member="ComentarioPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="ComentarioPorLibro" />
       <Association Name="Libros_DetallePorPedido" Member="DetallePorPedido" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="DetallePorPedido" />
+      <Association Name="Autores_Libros" Member="Autores" ThisKey="idAutor1" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
+      <Association Name="Autores_Libros1" Member="Autores1" ThisKey="idAutor2" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
+      <Association Name="Autores_Libros2" Member="Autores2" ThisKey="idAutor3" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
+      <Association Name="Autores_Libros3" Member="Autores3" ThisKey="idAutor4" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
       <Association Name="Editoriales_Libros" Member="Editoriales" ThisKey="idEditorial" OtherKey="idEditorial" Type="Editoriales" IsForeignKey="true" />
       <Association Name="Generos_Libros" Member="Generos" ThisKey="idGenero" OtherKey="idGenero" Type="Generos" IsForeignKey="true" />
     </Type>
@@ -138,6 +140,12 @@
       <Association Name="Localidades_Pedidos" Member="Localidades" ThisKey="idLocalidadEntrega" OtherKey="idLocalidad" Type="Localidades" IsForeignKey="true" />
       <Association Name="Provincias_Pedidos" Member="Provincias" ThisKey="idProvinciaEntrega" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
       <Association Name="Usuarios_Pedidos" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Perfiles" Member="Perfiles">
+    <Type Name="Perfiles">
+      <Column Name="idPerfil" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Provincias" Member="Provincias">
@@ -176,6 +184,7 @@
       <Column Name="direccion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="idProvincia" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="idLocalidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idPerfil" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Usuarios_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="CalificacionPorLibro" />
       <Association Name="Usuarios_CalificacionPorUsuario" Member="CalificacionPorUsuario" ThisKey="idUsuario" OtherKey="idUsuarioCalificado" Type="CalificacionPorUsuario" />
       <Association Name="Usuarios_CalificacionPorUsuario1" Member="CalificacionPorUsuario1" ThisKey="idUsuario" OtherKey="idUsuarioCalificador" Type="CalificacionPorUsuario" />

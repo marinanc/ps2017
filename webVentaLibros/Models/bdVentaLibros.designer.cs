@@ -33,9 +33,6 @@ namespace webVentaLibros.Models
     partial void InsertAutores(Autores instance);
     partial void UpdateAutores(Autores instance);
     partial void DeleteAutores(Autores instance);
-    partial void InsertAutorPorLibro(AutorPorLibro instance);
-    partial void UpdateAutorPorLibro(AutorPorLibro instance);
-    partial void DeleteAutorPorLibro(AutorPorLibro instance);
     partial void InsertCalificacionPorLibro(CalificacionPorLibro instance);
     partial void UpdateCalificacionPorLibro(CalificacionPorLibro instance);
     partial void DeleteCalificacionPorLibro(CalificacionPorLibro instance);
@@ -69,6 +66,9 @@ namespace webVentaLibros.Models
     partial void InsertPedidos(Pedidos instance);
     partial void UpdatePedidos(Pedidos instance);
     partial void DeletePedidos(Pedidos instance);
+    partial void InsertPerfiles(Perfiles instance);
+    partial void UpdatePerfiles(Perfiles instance);
+    partial void DeletePerfiles(Perfiles instance);
     partial void InsertProvincias(Provincias instance);
     partial void UpdateProvincias(Provincias instance);
     partial void DeleteProvincias(Provincias instance);
@@ -115,14 +115,6 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<Autores>();
-			}
-		}
-		
-		public System.Data.Linq.Table<AutorPorLibro> AutorPorLibro
-		{
-			get
-			{
-				return this.GetTable<AutorPorLibro>();
 			}
 		}
 		
@@ -214,6 +206,14 @@ namespace webVentaLibros.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<Perfiles> Perfiles
+		{
+			get
+			{
+				return this.GetTable<Perfiles>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Provincias> Provincias
 		{
 			get
@@ -251,7 +251,13 @@ namespace webVentaLibros.Models
 		
 		private string _nombres;
 		
-		private EntitySet<AutorPorLibro> _AutorPorLibro;
+		private EntitySet<Libros> _Libros;
+		
+		private EntitySet<Libros> _Libros1;
+		
+		private EntitySet<Libros> _Libros2;
+		
+		private EntitySet<Libros> _Libros3;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -267,7 +273,10 @@ namespace webVentaLibros.Models
 		
 		public Autores()
 		{
-			this._AutorPorLibro = new EntitySet<AutorPorLibro>(new Action<AutorPorLibro>(this.attach_AutorPorLibro), new Action<AutorPorLibro>(this.detach_AutorPorLibro));
+			this._Libros = new EntitySet<Libros>(new Action<Libros>(this.attach_Libros), new Action<Libros>(this.detach_Libros));
+			this._Libros1 = new EntitySet<Libros>(new Action<Libros>(this.attach_Libros1), new Action<Libros>(this.detach_Libros1));
+			this._Libros2 = new EntitySet<Libros>(new Action<Libros>(this.attach_Libros2), new Action<Libros>(this.detach_Libros2));
+			this._Libros3 = new EntitySet<Libros>(new Action<Libros>(this.attach_Libros3), new Action<Libros>(this.detach_Libros3));
 			OnCreated();
 		}
 		
@@ -331,16 +340,55 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_AutorPorLibro", Storage="_AutorPorLibro", ThisKey="idAutor", OtherKey="idAutor")]
-		public EntitySet<AutorPorLibro> AutorPorLibro
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros", Storage="_Libros", ThisKey="idAutor", OtherKey="idAutor1")]
+		public EntitySet<Libros> Libros
 		{
 			get
 			{
-				return this._AutorPorLibro;
+				return this._Libros;
 			}
 			set
 			{
-				this._AutorPorLibro.Assign(value);
+				this._Libros.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros1", Storage="_Libros1", ThisKey="idAutor", OtherKey="idAutor2")]
+		public EntitySet<Libros> Libros1
+		{
+			get
+			{
+				return this._Libros1;
+			}
+			set
+			{
+				this._Libros1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros2", Storage="_Libros2", ThisKey="idAutor", OtherKey="idAutor3")]
+		public EntitySet<Libros> Libros2
+		{
+			get
+			{
+				return this._Libros2;
+			}
+			set
+			{
+				this._Libros2.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros3", Storage="_Libros3", ThisKey="idAutor", OtherKey="idAutor4")]
+		public EntitySet<Libros> Libros3
+		{
+			get
+			{
+				return this._Libros3;
+			}
+			set
+			{
+				this._Libros3.Assign(value);
 			}
 		}
 		
@@ -364,184 +412,52 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		private void attach_AutorPorLibro(AutorPorLibro entity)
+		private void attach_Libros(Libros entity)
 		{
 			this.SendPropertyChanging();
 			entity.Autores = this;
 		}
 		
-		private void detach_AutorPorLibro(AutorPorLibro entity)
+		private void detach_Libros(Libros entity)
 		{
 			this.SendPropertyChanging();
 			entity.Autores = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AutorPorLibro")]
-	public partial class AutorPorLibro : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _codigoLibro;
-		
-		private int _idAutor;
-		
-		private EntityRef<Autores> _Autores;
-		
-		private EntityRef<Libros> _Libros;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncodigoLibroChanging(string value);
-    partial void OncodigoLibroChanged();
-    partial void OnidAutorChanging(int value);
-    partial void OnidAutorChanged();
-    #endregion
-		
-		public AutorPorLibro()
+		private void attach_Libros1(Libros entity)
 		{
-			this._Autores = default(EntityRef<Autores>);
-			this._Libros = default(EntityRef<Libros>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Autores1 = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string codigoLibro
+		private void detach_Libros1(Libros entity)
 		{
-			get
-			{
-				return this._codigoLibro;
-			}
-			set
-			{
-				if ((this._codigoLibro != value))
-				{
-					if (this._Libros.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncodigoLibroChanging(value);
-					this.SendPropertyChanging();
-					this._codigoLibro = value;
-					this.SendPropertyChanged("codigoLibro");
-					this.OncodigoLibroChanged();
-				}
-			}
+			this.SendPropertyChanging();
+			entity.Autores1 = null;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idAutor", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idAutor
+		private void attach_Libros2(Libros entity)
 		{
-			get
-			{
-				return this._idAutor;
-			}
-			set
-			{
-				if ((this._idAutor != value))
-				{
-					if (this._Autores.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidAutorChanging(value);
-					this.SendPropertyChanging();
-					this._idAutor = value;
-					this.SendPropertyChanged("idAutor");
-					this.OnidAutorChanged();
-				}
-			}
+			this.SendPropertyChanging();
+			entity.Autores2 = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_AutorPorLibro", Storage="_Autores", ThisKey="idAutor", OtherKey="idAutor", IsForeignKey=true)]
-		public Autores Autores
+		private void detach_Libros2(Libros entity)
 		{
-			get
-			{
-				return this._Autores.Entity;
-			}
-			set
-			{
-				Autores previousValue = this._Autores.Entity;
-				if (((previousValue != value) 
-							|| (this._Autores.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Autores.Entity = null;
-						previousValue.AutorPorLibro.Remove(this);
-					}
-					this._Autores.Entity = value;
-					if ((value != null))
-					{
-						value.AutorPorLibro.Add(this);
-						this._idAutor = value.idAutor;
-					}
-					else
-					{
-						this._idAutor = default(int);
-					}
-					this.SendPropertyChanged("Autores");
-				}
-			}
+			this.SendPropertyChanging();
+			entity.Autores2 = null;
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_AutorPorLibro", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
-		public Libros Libros
+		private void attach_Libros3(Libros entity)
 		{
-			get
-			{
-				return this._Libros.Entity;
-			}
-			set
-			{
-				Libros previousValue = this._Libros.Entity;
-				if (((previousValue != value) 
-							|| (this._Libros.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Libros.Entity = null;
-						previousValue.AutorPorLibro.Remove(this);
-					}
-					this._Libros.Entity = value;
-					if ((value != null))
-					{
-						value.AutorPorLibro.Add(this);
-						this._codigoLibro = value.codigoBarra;
-					}
-					else
-					{
-						this._codigoLibro = default(string);
-					}
-					this.SendPropertyChanged("Libros");
-				}
-			}
+			this.SendPropertyChanging();
+			entity.Autores3 = this;
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
+		private void detach_Libros3(Libros entity)
 		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Autores3 = null;
 		}
 	}
 	
@@ -2095,13 +2011,27 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<System.DateTime> _fechaAlta;
 		
-		private EntitySet<AutorPorLibro> _AutorPorLibro;
+		private System.Nullable<int> _idAutor1;
+		
+		private System.Nullable<int> _idAutor2;
+		
+		private System.Nullable<int> _idAutor3;
+		
+		private System.Nullable<int> _idAutor4;
 		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
 		private EntitySet<ComentarioPorLibro> _ComentarioPorLibro;
 		
 		private EntitySet<DetallePorPedido> _DetallePorPedido;
+		
+		private EntityRef<Autores> _Autores;
+		
+		private EntityRef<Autores> _Autores1;
+		
+		private EntityRef<Autores> _Autores2;
+		
+		private EntityRef<Autores> _Autores3;
 		
 		private EntityRef<Editoriales> _Editoriales;
 		
@@ -2133,14 +2063,25 @@ namespace webVentaLibros.Models
     partial void OnstockChanged();
     partial void OnfechaAltaChanging(System.Nullable<System.DateTime> value);
     partial void OnfechaAltaChanged();
+    partial void OnidAutor1Changing(System.Nullable<int> value);
+    partial void OnidAutor1Changed();
+    partial void OnidAutor2Changing(System.Nullable<int> value);
+    partial void OnidAutor2Changed();
+    partial void OnidAutor3Changing(System.Nullable<int> value);
+    partial void OnidAutor3Changed();
+    partial void OnidAutor4Changing(System.Nullable<int> value);
+    partial void OnidAutor4Changed();
     #endregion
 		
 		public Libros()
 		{
-			this._AutorPorLibro = new EntitySet<AutorPorLibro>(new Action<AutorPorLibro>(this.attach_AutorPorLibro), new Action<AutorPorLibro>(this.detach_AutorPorLibro));
 			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
 			this._ComentarioPorLibro = new EntitySet<ComentarioPorLibro>(new Action<ComentarioPorLibro>(this.attach_ComentarioPorLibro), new Action<ComentarioPorLibro>(this.detach_ComentarioPorLibro));
 			this._DetallePorPedido = new EntitySet<DetallePorPedido>(new Action<DetallePorPedido>(this.attach_DetallePorPedido), new Action<DetallePorPedido>(this.detach_DetallePorPedido));
+			this._Autores = default(EntityRef<Autores>);
+			this._Autores1 = default(EntityRef<Autores>);
+			this._Autores2 = default(EntityRef<Autores>);
+			this._Autores3 = default(EntityRef<Autores>);
 			this._Editoriales = default(EntityRef<Editoriales>);
 			this._Generos = default(EntityRef<Generos>);
 			OnCreated();
@@ -2374,16 +2315,99 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_AutorPorLibro", Storage="_AutorPorLibro", ThisKey="codigoBarra", OtherKey="codigoLibro")]
-		public EntitySet<AutorPorLibro> AutorPorLibro
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idAutor1", DbType="Int")]
+		public System.Nullable<int> idAutor1
 		{
 			get
 			{
-				return this._AutorPorLibro;
+				return this._idAutor1;
 			}
 			set
 			{
-				this._AutorPorLibro.Assign(value);
+				if ((this._idAutor1 != value))
+				{
+					if (this._Autores.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidAutor1Changing(value);
+					this.SendPropertyChanging();
+					this._idAutor1 = value;
+					this.SendPropertyChanged("idAutor1");
+					this.OnidAutor1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idAutor2", DbType="Int")]
+		public System.Nullable<int> idAutor2
+		{
+			get
+			{
+				return this._idAutor2;
+			}
+			set
+			{
+				if ((this._idAutor2 != value))
+				{
+					if (this._Autores1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidAutor2Changing(value);
+					this.SendPropertyChanging();
+					this._idAutor2 = value;
+					this.SendPropertyChanged("idAutor2");
+					this.OnidAutor2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idAutor3", DbType="Int")]
+		public System.Nullable<int> idAutor3
+		{
+			get
+			{
+				return this._idAutor3;
+			}
+			set
+			{
+				if ((this._idAutor3 != value))
+				{
+					if (this._Autores2.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidAutor3Changing(value);
+					this.SendPropertyChanging();
+					this._idAutor3 = value;
+					this.SendPropertyChanged("idAutor3");
+					this.OnidAutor3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idAutor4", DbType="Int")]
+		public System.Nullable<int> idAutor4
+		{
+			get
+			{
+				return this._idAutor4;
+			}
+			set
+			{
+				if ((this._idAutor4 != value))
+				{
+					if (this._Autores3.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidAutor4Changing(value);
+					this.SendPropertyChanging();
+					this._idAutor4 = value;
+					this.SendPropertyChanged("idAutor4");
+					this.OnidAutor4Changed();
+				}
 			}
 		}
 		
@@ -2423,6 +2447,142 @@ namespace webVentaLibros.Models
 			set
 			{
 				this._DetallePorPedido.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros", Storage="_Autores", ThisKey="idAutor1", OtherKey="idAutor", IsForeignKey=true)]
+		public Autores Autores
+		{
+			get
+			{
+				return this._Autores.Entity;
+			}
+			set
+			{
+				Autores previousValue = this._Autores.Entity;
+				if (((previousValue != value) 
+							|| (this._Autores.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Autores.Entity = null;
+						previousValue.Libros.Remove(this);
+					}
+					this._Autores.Entity = value;
+					if ((value != null))
+					{
+						value.Libros.Add(this);
+						this._idAutor1 = value.idAutor;
+					}
+					else
+					{
+						this._idAutor1 = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Autores");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros1", Storage="_Autores1", ThisKey="idAutor2", OtherKey="idAutor", IsForeignKey=true)]
+		public Autores Autores1
+		{
+			get
+			{
+				return this._Autores1.Entity;
+			}
+			set
+			{
+				Autores previousValue = this._Autores1.Entity;
+				if (((previousValue != value) 
+							|| (this._Autores1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Autores1.Entity = null;
+						previousValue.Libros1.Remove(this);
+					}
+					this._Autores1.Entity = value;
+					if ((value != null))
+					{
+						value.Libros1.Add(this);
+						this._idAutor2 = value.idAutor;
+					}
+					else
+					{
+						this._idAutor2 = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Autores1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros2", Storage="_Autores2", ThisKey="idAutor3", OtherKey="idAutor", IsForeignKey=true)]
+		public Autores Autores2
+		{
+			get
+			{
+				return this._Autores2.Entity;
+			}
+			set
+			{
+				Autores previousValue = this._Autores2.Entity;
+				if (((previousValue != value) 
+							|| (this._Autores2.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Autores2.Entity = null;
+						previousValue.Libros2.Remove(this);
+					}
+					this._Autores2.Entity = value;
+					if ((value != null))
+					{
+						value.Libros2.Add(this);
+						this._idAutor3 = value.idAutor;
+					}
+					else
+					{
+						this._idAutor3 = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Autores2");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros3", Storage="_Autores3", ThisKey="idAutor4", OtherKey="idAutor", IsForeignKey=true)]
+		public Autores Autores3
+		{
+			get
+			{
+				return this._Autores3.Entity;
+			}
+			set
+			{
+				Autores previousValue = this._Autores3.Entity;
+				if (((previousValue != value) 
+							|| (this._Autores3.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Autores3.Entity = null;
+						previousValue.Libros3.Remove(this);
+					}
+					this._Autores3.Entity = value;
+					if ((value != null))
+					{
+						value.Libros3.Add(this);
+						this._idAutor4 = value.idAutor;
+					}
+					else
+					{
+						this._idAutor4 = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Autores3");
+				}
 			}
 		}
 		
@@ -2512,18 +2672,6 @@ namespace webVentaLibros.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_AutorPorLibro(AutorPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Libros = this;
-		}
-		
-		private void detach_AutorPorLibro(AutorPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Libros = null;
 		}
 		
 		private void attach_CalificacionPorLibro(CalificacionPorLibro entity)
@@ -3216,6 +3364,92 @@ namespace webVentaLibros.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Perfiles")]
+	public partial class Perfiles : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPerfil;
+		
+		private string _nombre;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPerfilChanging(int value);
+    partial void OnidPerfilChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    #endregion
+		
+		public Perfiles()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPerfil", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idPerfil
+		{
+			get
+			{
+				return this._idPerfil;
+			}
+			set
+			{
+				if ((this._idPerfil != value))
+				{
+					this.OnidPerfilChanging(value);
+					this.SendPropertyChanging();
+					this._idPerfil = value;
+					this.SendPropertyChanged("idPerfil");
+					this.OnidPerfilChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Provincias")]
 	public partial class Provincias : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3778,6 +4012,8 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<int> _idLocalidad;
 		
+		private int _idPerfil;
+		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
 		private EntitySet<CalificacionPorUsuario> _CalificacionPorUsuario;
@@ -3816,6 +4052,8 @@ namespace webVentaLibros.Models
     partial void OnidProvinciaChanged();
     partial void OnidLocalidadChanging(System.Nullable<int> value);
     partial void OnidLocalidadChanged();
+    partial void OnidPerfilChanging(int value);
+    partial void OnidPerfilChanged();
     #endregion
 		
 		public Usuarios()
@@ -4015,6 +4253,26 @@ namespace webVentaLibros.Models
 					this._idLocalidad = value;
 					this.SendPropertyChanged("idLocalidad");
 					this.OnidLocalidadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPerfil", DbType="Int NOT NULL")]
+		public int idPerfil
+		{
+			get
+			{
+				return this._idPerfil;
+			}
+			set
+			{
+				if ((this._idPerfil != value))
+				{
+					this.OnidPerfilChanging(value);
+					this.SendPropertyChanging();
+					this._idPerfil = value;
+					this.SendPropertyChanged("idPerfil");
+					this.OnidPerfilChanged();
 				}
 			}
 		}
