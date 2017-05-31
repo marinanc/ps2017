@@ -89,7 +89,59 @@ namespace webVentaLibros.Controllers
         [HttpGet]
         public ActionResult AgregarAutor()
         {
-            return View();
+            var bd = new bdVentaLibrosDataContext();
+
+            var listaAutores = (from autor in bd.Autores
+                                select autor).ToList();
+
+            return View(listaAutores);
+        }
+
+        [HttpPost]
+        public ActionResult AgregarAutor(AutorModel autor)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            var autorIngresado = new AutorModel
+            {
+                apellidoAutor = autor.apellidoAutor,
+                nombreAutor = autor.nombreAutor
+            };
+
+            if (AutorExiste(autorIngresado.apellidoAutor, autorIngresado.nombreAutor))
+            {
+                TempData["Message"] = "Ya existe un autor con esos datos";
+            }
+            else
+            {
+                Autores nuevoAutor = new Autores
+                {
+                    apellidos = autor.apellidoAutor,
+                    nombres = autor.nombreAutor
+                };
+                bd.Autores.InsertOnSubmit(nuevoAutor);
+                bd.SubmitChanges();
+                TempData["Message"] = "Autor agregado!";
+            }
+            
+            return RedirectToAction("AgregarAutor");
+        }
+
+        //Verifiar si el autor ya existe
+        private bool AutorExiste(string apellidos, string nombres)
+        {
+            bool existe = false;
+            using (var bd = new bdVentaLibrosDataContext())
+            {
+                var autor = bd.Autores.FirstOrDefault(a => a.apellidos == apellidos);
+                if (autor != null)
+                {
+                    if (autor.nombres == nombres) //Verificar nombres del autor
+                    {
+                        existe = true;
+                    }
+                }
+            }
+            return existe;
         }
     }
 }

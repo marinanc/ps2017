@@ -42,6 +42,7 @@
                         <ul>
                             @if (Request.IsAuthenticated)
                             {
+                                <li><span>Hola @HttpContext.Current.User.Identity.Name.ToString() !</span></li>
                                 <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
                                 <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
                             }

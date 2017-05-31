@@ -27,11 +27,25 @@ namespace webVentaLibros.Controllers
         [HttpPost]
         public ActionResult Login(UserModel user)
         {
+            var bd = new bdVentaLibrosDataContext();
+
             if (ModelState.IsValid) //Verificar que el modelo de datos sea válido en cuanto a la definición de las propiedades
             {
-                if (Isvalid(user.mail,user.contraseña))//Verificar que el usuario y clave exista utilizando el método privado
+                if (Isvalid(user.mail,user.contraseña))//Verificar que el usuario y clave exista utilizando el método privado IsValid()
                 {
+                    var usuarioLogueado = from us in bd.Usuarios
+                                          where us.mail == user.mail
+                                          select new UserModel
+                                          {
+                                              idUsuario = us.idUsuario,
+                                              mail = us.mail,
+                                              nombreUsuario = us.nombreUsuario,
+                                              idPerfil = us.idPerfil
+                                          };
+                    ViewBag.usLogueado = usuarioLogueado;
+
                     FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
+                    ViewBag.usuarioLogueado = user;
                     return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }
                 else
@@ -141,11 +155,12 @@ namespace webVentaLibros.Controllers
                         mail = user.mail,
                         contraseña = user.contraseña,
                         nombreUsuario = user.nombreUsuario,
-                        //fechaHoraAlta = DateTime.Now,
+                        fechaHoraAlta = DateTime.Now,
                         //fechaHoraBaja = user.fechaHoraBaja,
                         direccion = user.direccion,
                         idProvincia = user.idProvincia,
-                        idLocalidad = user.idLocalidad
+                        idLocalidad = user.idLocalidad,
+                        idPerfil = 2
                     };
 
                     //Agregando un nuevo registro 

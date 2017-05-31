@@ -28,7 +28,7 @@
         <!-- NAVBAR -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="brand">
-                <a href="Index"><img src="../img/logo.png" alt="#" class="img-responsive logo"></a>
+                <a href="Index"><img src="../assets/img/logo3.png" alt="#" class="img-responsive logo"></a>
             </div>
             <div class="container-fluid">
                 
@@ -83,37 +83,27 @@
                     <ul class="nav">
                         <li><a href="Index" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
-                            <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar...</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesAgregar" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="AgregarLibro" class="">Libro</a></li>
-                                    <li><a href="page-login.html" class="">Autor</a></li>
+                                    <li>@Html.ActionLink("Libros","AgregarLibro","Admin")</li>
+                                    <li>@Html.ActionLink("Autores","AgregarAutor","Admin")</li>
                                     <li><a href="page-lockscreen.html" class="">Género</a></li>
-                                    <li><a href="page-lockscreen.html" class="">Editorial</a></li>
+                                    <li>@Html.ActionLink("Editoriales","Editoriales","Editorial")</li>
                                 </ul>
                             </div>
                         </li>
-                        <li>
-                            <a href="#subPagesModificar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-pencil"></i> <span>Modificar...</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="subPagesModificar" class="collapse ">
-                                <ul class="nav">
-                                    <li><a href="page-profile.html" class="">Libro</a></li>
-                                    <li><a href="page-login.html" class="">Autor</a></li>
-                                    <li><a href="page-lockscreen.html" class="">Género</a></li>
-                                    <li><a href="page-lockscreen.html" class="">Editorial</a></li>
-                                </ul>
-                            </div>
-                        </li>
+                        <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Actualizar stock</span></a></li>
                         <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a></li>
                         <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>
                         <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li>
                         <li>
-                            <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Paginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Páginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesPaginas" class="collapse ">
                                 <ul class="nav">
-                                    <li><a href="page-profile.html" class="">Profile</a></li>
-                                    <li><a href="page-login.html" class="">Login</a></li>
-                                    <li><a href="page-lockscreen.html" class="">Lockscreen</a></li>
+                                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                    <li>@Html.ActionLink("Catálogo", "Catalogo", "Catalogo") </li>
+                                    <li><a href="page-lockscreen.html" class="">Intercambios</a></li>
                                 </ul>
                             </div>
                         </li>
