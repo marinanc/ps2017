@@ -10,6 +10,7 @@ namespace webVentaLibros.Models
         public string codigoBarra { get; set; }
         public string titulo { get; set; }
         public int? idEditorial { get; set; }
+        public string editorial { get; set; }
         public int? paginas { get; set; }
         public int? edicion { get; set; }
         public int? idGenero { get; set; }
@@ -19,9 +20,13 @@ namespace webVentaLibros.Models
         public double precio { get; set; }
         public int? stock { get; set; }
         public int? idAutor1 { get; set; }
+        public string autor1 { get; set; }
         public int? idAutor2 { get; set; }
+        public string autor2 { get; set; }
         public int? idAutor3 { get; set; }
+        public string autor3 { get; set; }
         public int? idAutor4 { get; set; }
+        public string autor4 { get; set; }
         public DateTime fechaAlta { get; set; }
 
     }

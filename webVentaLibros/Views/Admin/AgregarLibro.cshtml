@@ -15,12 +15,14 @@
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
     <link rel="stylesheet" href="../assets/vendor/chartist/css/chartist-custom.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
 
     <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css">
+    <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
     <style type="text/css">
         .btn-file {
             position: relative;
@@ -46,8 +48,39 @@
         #img-upload {
             width: 100%;
         }
-
     </style>
+    <style type="text/css">
+        .input-group-addon.primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(50, 118, 177);
+            border-color: rgb(40, 94, 142);
+        }
+
+        .input-group-addon.success {
+            color: rgb(255, 255, 255);
+            background-color: rgb(92, 184, 92);
+            border-color: rgb(76, 174, 76);
+        }
+
+        .input-group-addon.info {
+            color: rgb(255, 255, 255);
+            background-color: rgb(57, 179, 215);
+            border-color: rgb(38, 154, 188);
+        }
+
+        .input-group-addon.warning {
+            color: rgb(255, 255, 255);
+            background-color: rgb(240, 173, 78);
+            border-color: rgb(238, 162, 54);
+        }
+
+        .input-group-addon.danger {
+            color: rgb(255, 255, 255);
+            background-color: rgb(217, 83, 79);
+            border-color: rgb(212, 63, 58);
+        }
+    </style>
+
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
@@ -55,6 +88,11 @@
     <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
     <script src="../js/jquery-3.2.1.js"></script>
     <script src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -92,6 +130,18 @@
                 readURL(this);
             });
         });
+    </script>
+    <script>
+    'use strict';
+    var $ = jQuery;
+    $.getScript("https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js", function () {
+
+        $('#example').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false
+        });
+    });
     </script>
 
 </head>
@@ -151,12 +201,12 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="Index" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="Index"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li>
-                            <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="subPagesAgregar" class="collapse ">
+                            <a href="#subPagesAgregar" data-toggle="collapse" class="active"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPagesAgregar" class="active">
                                 <ul class="nav">
-                                    <li>@Html.ActionLink("Libros", "AgregarLibro", "Admin")</li>
+                                    <li class="active">@Html.ActionLink("Libros", "AgregarLibro", "Admin")</li>
                                     <li>@Html.ActionLink("Autores", "AgregarAutor", "Admin")</li>
                                     <li>@Html.ActionLink("Generos", "Generos", "Genero")</li>
                                     <li>@Html.ActionLink("Editoriales", "Editoriales", "Editorial")</li>
@@ -197,145 +247,250 @@
                                 </div>
                                 <div class="panel-body">
                                     <form action=@Url.Action("AgregarLibro","Admin") enctype="multipart/form-data" method="POST" role="form">
-                                        <div class="col-md-12">
+                                        <div class="row form-group">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <label for="titulo">Título</label>
-                                                    <input id="titulo" name="titulo" class="form-control" type="text" required>
-                                                    <br />
+                                                    <span class="input-group-addon danger">Título:</span>
+                                                    <input type="text" class="form-control" id="titulo" name="titulo" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <label for="codigoBarra">Código de barra</label>
-                                                    <input id="codigoBarra" name="codigoBarra" class="form-control" min="0" type="number" required>
-                                                    <br />
+                                                    <span class="input-group-addon danger">Codigo de barra:</span>
+                                                    <input type="text" class="form-control" id="codigoBarra" name="codigoBarra">
                                                 </div>
                                             </div>
                                         </div>
                                         <br />
+                                        <br />
                                         <div class="col-md-6">
-                                            <div class="input-group">
-                                                <fieldset>
-                                                    <legend>Autores</legend>
-                                                    <label for="idAutor1">1er Autor</label>
-                                                    <select id="idAutor1" name="idAutor1" class="form-control input-lg">
-                                                        <option value=@null selected>Elige un autor...</option>
-                                                        @foreach (var autor in ViewBag.listadoAutores)
-                                                        {
-                                                        <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
-                                                        }
-                                                    </select>
-                                                    <br />
-                                                    <label for="idAutor2">2do Autor</label>
-                                                    <select id="idAutor2" name="idAutor2" class="form-control input-lg">
-                                                        <option value=@null selected>Elige un autor...</option>
-                                                        @foreach (var autor in ViewBag.listadoAutores)
-                                                        {
-                                                            <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
-                                                        }
-                                                    </select>
-                                                    <br />
-                                                    <label for="idAutor3">3er Autor</label>
-                                                    <select id="idAutor3" name="idAutor3" class="form-control input-lg">
-                                                        <option value=@null selected>Elige un autor...</option>
-                                                        @foreach (var autor in ViewBag.listadoAutores)
-                                                        {
-                                                            <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
-                                                        }
-                                                    </select>
-                                                    <br />
-                                                    <label for="idAutor4">4to Autor</label>
-                                                    <select id="idAutor4" name="idAutor4" class="form-control input-lg">
-                                                        <option value=@null selected>Elige un autor...</option>
-                                                        @foreach (var autor in ViewBag.listadoAutores)
-                                                        {
-                                                            <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
-                                                        }
-                                                    </select>
-                                                </fieldset>
-                                            </div>
                                             <br />
-                                            <div class="input-group">
-                                                <label for="idEditorial">Editorial</label>
-                                                <select id="idEditorial" name="idEditorial" class="form-control input-lg">
-                                                    <option value=@null selected>Elige una editorial...</option>
-                                                    @foreach (var editorial in ViewBag.listadoEditoriales)
-                                                    {
-                                                    <option value="@editorial.idEditorial">@editorial.nombre</option>
+                                            <br />
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">                                                       
+                                                        <span class="input-group-addon info">1er Autor:</span>
+                                                        <select id="idAutor1" name="idAutor1" class="form-control">
+                                                            <option value=@null selected>Elige un autor...</option>
+                                                            @foreach (var autor in ViewBag.listadoAutores)
+                                                            {
+                                                                <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                            }
+                                                        </select>
 
-                                                    }
-                                                </select>
-                                            </div>
-                                            <br />
-                                            <div class="input-group">
-                                                <div class="input-group">
-                                                    <label for="edicion">Año edición: </label>
-                                                    <input type="number" min="1000" max="@DateTime.Now.Year" id="edicion" name="edicion"/>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <br />
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">2do Autor:</span>
+                                                        <select id="idAutor2" name="idAutor2" class="form-control">
+                                                            <option value=@null selected>Elige un autor...</option>
+                                                            @foreach (var autor in ViewBag.listadoAutores)
+                                                            {
+                                                                <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                            }
+                                                        </select>
 
-                                            <div class="input-group">
-                                                <div class="input-group">
-                                                    <label for="stock">Cant. unidades: </label>
-                                                    <input type="number" min="0" id="stock" name="stock"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">3er Autor:</span>
+                                                        <select id="idAutor3" name="idAutor3" class="form-control">
+                                                            <option value=@null selected>Elige un autor...</option>
+                                                            @foreach (var autor in ViewBag.listadoAutores)
+                                                            {
+                                                                <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                            }
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">4to Autor:</span>
+                                                        <select id="idAutor4" name="idAutor4" class="form-control">
+                                                            <option value=@null selected>Elige un autor...</option>
+                                                            @foreach (var autor in ViewBag.listadoAutores)
+                                                            {
+                                                                <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
+                                                            }
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Editorial:</span>
+                                                        <select id="idEditorial" name="idEditorial" class="form-control">
+                                                            <option value=@null selected>Elige una editorial...</option>
+                                                            @foreach (var editorial in ViewBag.listadoEditoriales)
+                                                            {
+                                                                <option value="@editorial.idEditorial">@editorial.nombre</option>
+
+                                                            }
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Año de edición:</span>
+                                                        <input type="number" min="1000" max="@DateTime.Now.Year" id="edicion" name="edicion" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Stock</span>
+                                                        <input type="number" min="0" id="stock" name="stock" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Genero</span>
+                                                        <select id="idGenero" name="idGenero" class="form-control" required>
+                                                            <option value="" selected>Elige un género...</option>
+                                                            @foreach (var genero in ViewBag.listadoGeneros)
+                                                            {
+                                                                <option value="@genero.idGenero">@genero.nombreGenero</option>
+
+                                                            }
+
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
-                                            <div class="input-group">
-                                                <label for="idGenero">Género</label>
-                                                <select id="idGenero" name="idGenero" class="form-control input-lg" required>
-                                                    <option value="" selected>Elige un género...</option>
-                                                    @foreach (var genero in ViewBag.listadoGeneros)
-                                                    {
-                                                    <option value="@genero.idGenero">@genero.nombreGenero</option>
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Cant. páginas</span>
+                                                        <input type="number" min="1" id="paginas" name="paginas" />
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                    }
+                                            <div class="row form-group">
+                                                <div class="col-md-10">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Precio ARS$</span>
+                                                        <input type="number" id="precio" name="precio" min="0" step="1" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                                </select>
-                                            </div>
+                                        <div class="col-md-12">
                                             <br />
-                                            <div class="input-group">
-                                                <label for="paginas">Cant. páginas: </label>
-                                                <input type="number" min="1" id="paginas" name="paginas" />
-                                            </div>
                                             <br />
-                                            <div class="input-group">
-                                                <label for="precio">Precio: </label>
-                                                <span class="input-group-addon">ARS $</span>
-                                                <input type="number" id="precio" name="precio" min="0" step="1" />
-                                            </div>
-                                            <br />
-                                            <div class="input-group">
-                                                <label for="sinopsis">Sinopsis/Descripción</label>
-                                                <textarea id="sinopsis" name="sinopsis" class="form-control" rows="8" cols="50"></textarea>
-                                            </div>
-                                            <br />
-
-                                            <div class="form-group">
-                                                <label>Subir tapa del libro</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <span class="btn btn-default btn-file">
-                                                            Abrir…
-                                                            <input type="file" id="imgInp" name="foto" required>
+                                            <div class="row form-group">
+                                                <div class="col-md-6">
+                                                    <div class="input-group">
+                                                        <label for="sinopsis">Sinopsis/Descripción</label>
+                                                        <textarea id="sinopsis" name="sinopsis" class="form-control" rows="8" cols="50"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Subir tapa del libro</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <span class="btn btn-default btn-file">
+                                                                Abrir…
+                                                                <input type="file" id="imgInp" name="foto" required>
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                    <input type="text" class="form-control" readonly>
+                                                        <input type="text" class="form-control" readonly>
+                                                    </div>
+                                                    <img id='img-upload' />
                                                 </div>
-                                                <img id='img-upload' />
                                             </div>
-
                                         </div>
+
                                         <div class="form-group col-lg-12">
                                             <br />
                                             <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Agregar libro</button>
                                         </div>
                                     </form>
                                 </div>
+
+                                <!--TABLA CON LISTADO DE LIBROS-->
+                                <div class="panel-body">
+                                    <h3>Lista de Libros</h3>
+                                    <div class="container">
+                                        <div class="row">
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <table id="example" class="display" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Cód.Barra</th>
+                                                            <th>Título</th>
+                                                            <th>Género</th>
+                                                            <th>Autores</th>
+                                                            <th>Editorial</th>
+                                                            <th>Precio</th>
+                                                            <th>Modificar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Cód.Barra</th>
+                                                            <th>Título</th>
+                                                            <th>Género</th>
+                                                            <th>Autores</th>
+                                                            <th>Editorial</th>
+                                                            <th>Precio</th>
+                                                            <th>Modificar</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                        
+                                                            @foreach (var libro in ViewBag.listadoLibros)
+                                                            {
+                                                                <tr>
+                                                                    <td>@libro.codigoBarra</td>
+                                                                    <td>@libro.titulo</td>
+                                                                    <td>@libro.genero</td>                                                
+                                                                    <td>@(libro.autor1+"-"+libro.autor2+"-"+libro.autor3+"-"+libro.autor4)</td>
+                                                                    <td>@libro.editorial</td>
+                                                                    <td>@libro.precio</td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-default btn-lg">
+                                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
                             </div>
                             <!-- END INPUT GROUPS -->
                         </div>
@@ -362,7 +517,9 @@
     <script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="../assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="../assets/vendor/chartist/js/chartist.min.js"></script>
+    <script src="../assets/vendor/toastr/toastr.min.js"></script>
     <script src="../assets/scripts/klorofil-common.js"></script>
+
     <script>
         $('#precio').keypress(function (tecla) {
             if ((tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode != 46) && (tecla.charCode != 8)) {
@@ -386,4 +543,14 @@
             return true;
         });
     </script>
+    @if (TempData["Message"] != null)
+    {
+
+        <div id="toast-container" class="toast-top-right">
+            <div class="toast toast-info" aria-live="polite" style="display: block;">
+                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
+                <div class="toast-message">@TempData["Message"]</div>
+            </div>
+        </div>
+    }
 </body>
