@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Editoriales";
+    ViewBag.Title = "Generos";
 }
 
 <head>
@@ -135,7 +135,7 @@
                                 <ul class="nav">
                                     <li>@Html.ActionLink("Libros", "AgregarLibro", "Admin")</li>
                                     <li>@Html.ActionLink("Autores", "AgregarAutor", "Admin")</li>
-                                    <li>@Html.ActionLink("Generos", "Generos", "Genero")</li>
+                                    <li>@Html.ActionLink("Generos", "Generos","Genero")</li>
                                     <li>@Html.ActionLink("Editoriales", "Editoriales", "Editorial")</li>
                                 </ul>
                             </div>
@@ -170,22 +170,23 @@
                         <div class="col-md-12">
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Editoriales</h3>
+                                    <h3 class="panel-title">GÉNEROS LITERARIOS</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="panel">
                                         <div class="panel-heading">
                                             <fieldset>
                                                 <h3>Datos del autor</h3>
-                                                <form action=@Url.Action("AgregarEditorial","Editorial") enctype="multipart/form-data" method="POST" role="form">
+                                                <form action=@Url.Action("AgregarGenero","Genero") enctype="multipart/form-data" method="POST" role="form">
                                                     <div class="row form-group">
                                                         <div class="col-md-6">
                                                             <div class="input-group">
-                                                                <span class="input-group-addon info">Nombre de la editorial:</span>
-                                                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                                                <span class="input-group-addon info">Género literario:</span>
+                                                                <input type="text" class="form-control" id="nombreGenero" name="nombreGenero" required>
                                                             </div>
                                                         </div>
-                                                      </div>  
+                                                        
+                                                    </div>
                                                     <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Aceptar</button>
                                                 </form>
                                             </fieldset>
@@ -202,25 +203,25 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Código</th>
-                                                                    <th>Editorial</th>
+                                                                    <th>Género</th>
                                                                     <th>Modificar</th>
                                                                 </tr>
                                                             </thead>
                                                             <tfoot>
                                                                 <tr>
                                                                     <th>Código</th>
-                                                                    <th>Editorial</th>
+                                                                    <th>Género</th>
                                                                     <th>Modificar</th>
                                                                 </tr>
                                                             </tfoot>
                                                             <tbody>
                                                                 @if (Model != null)
                                                                 {
-                                                                    foreach (var editorial in Model)
+                                                                    foreach (var genero in Model)
                                                                     {
                                                                         <tr>
-                                                                            <td>@editorial.idEditorial</td>
-                                                                            <td>@editorial.nombre</td>
+                                                                            <td>@genero.idGenero</td>
+                                                                            <td>@genero.nombre</td>
                                                                             <td>
                                                                                 <button type="button" class="btn btn-default btn-lg">
                                                                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -277,3 +278,4 @@
         </div>
     }
 </body>
+
