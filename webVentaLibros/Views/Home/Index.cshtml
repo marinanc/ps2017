@@ -53,7 +53,7 @@
                                 <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
                                 }
                             }
-                            @if (Roles.IsUserInRole("Cliente")) 
+                            @if (!Roles.IsUserInRole("Administrador")) 
                             {
                             <li>
                                 @Html.ActionLink("Carrito","Carrito","Cart")

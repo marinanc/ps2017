@@ -117,12 +117,23 @@
                         <ul>
                             @if (Request.IsAuthenticated)
                             {
-                                <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
-                                <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                                <li><span>Hola @WebSecurity.CurrentUserName !</span></li>
+                                if (Roles.IsUserInRole("Administrador"))
+                                {
+                                    <li>@Html.ActionLink("Panel de Control", "Index", "Admin")</li>
+                                }
+                                else
+                                {
+                                    <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                    <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                                }
                             }
-                            <li>
-                                @Html.ActionLink("Carrito", "Carrito", "Cart")
-                            </li>
+                            @if (!Roles.IsUserInRole("Administrador"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Carrito", "Carrito", "Cart")
+                                </li>
+                            }
                             <li>
                                 @if (Request.IsAuthenticated)
                                 {
