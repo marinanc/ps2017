@@ -19,8 +19,8 @@ namespace webVentaLibros.Models
         public int idUsuario { get; set; }
         public int idProvincia { get; set; }
         public int idLocalidad { get; set; }
-        public DateTime fechaHoraAlta { get; set; }
-        public DateTime fechaHoraBaja { get; set; }
+        public string fechaHoraAlta { get; set; }
+        public string fechaHoraBaja { get; set; }
         public int idPerfil { get; set; }
     }
 }

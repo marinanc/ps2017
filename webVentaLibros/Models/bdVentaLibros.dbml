@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bdVentaLibros" Class="bdVentaLibrosDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=MARINA-PC\SQLEXPRESS;Initial Catalog=bdVentaLibros;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bdVentaLibrosConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MARINA-PC\SQLEXPRESS;Initial Catalog=bdVentaLibros;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bdVentaLibrosConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Autores" Member="Autores">
     <Type Name="Autores">
       <Column Name="idAutor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -173,18 +173,25 @@
       <Association Name="Usuarios_PublicacionPorUsuario" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.UserProfile" Member="UserProfile">
+    <Type Name="UserProfile">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(56) NOT NULL" CanBeNull="false" />
+      <Association Name="UserProfile_webpages_UsersInRoles" Member="webpages_UsersInRoles" ThisKey="UserId" OtherKey="UserId" Type="webpages_UsersInRoles" />
+    </Type>
+  </Table>
   <Table Name="dbo.Usuarios" Member="Usuarios">
     <Type Name="Usuarios">
       <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="mail" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
       <Column Name="contraseña" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="nombreUsuario" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
-      <Column Name="fechaHoraAlta" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="fechaHoraBaja" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="direccion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="idProvincia" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="idLocalidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="idPerfil" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fechaHoraAlta" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Usuarios_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="CalificacionPorLibro" />
       <Association Name="Usuarios_CalificacionPorUsuario" Member="CalificacionPorUsuario" ThisKey="idUsuario" OtherKey="idUsuarioCalificado" Type="CalificacionPorUsuario" />
       <Association Name="Usuarios_CalificacionPorUsuario1" Member="CalificacionPorUsuario1" ThisKey="idUsuario" OtherKey="idUsuarioCalificador" Type="CalificacionPorUsuario" />
@@ -193,6 +200,43 @@
       <Association Name="Usuarios_PublicacionPorUsuario" Member="PublicacionPorUsuario" ThisKey="idUsuario" OtherKey="idUsuario" Type="PublicacionPorUsuario" />
       <Association Name="Localidades_Usuarios" Member="Localidades" ThisKey="idLocalidad" OtherKey="idLocalidad" Type="Localidades" IsForeignKey="true" />
       <Association Name="Provincias_Usuarios" Member="Provincias" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.webpages_Membership" Member="webpages_Membership">
+    <Type Name="webpages_Membership">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConfirmationToken" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="IsConfirmed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LastPasswordFailureDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PasswordFailuresSinceLastSuccess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordChangedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PasswordSalt" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordVerificationToken" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="PasswordVerificationTokenExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.webpages_OAuthMembership" Member="webpages_OAuthMembership">
+    <Type Name="webpages_OAuthMembership">
+      <Column Name="Provider" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProviderUserId" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.webpages_Roles" Member="webpages_Roles">
+    <Type Name="webpages_Roles">
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="webpages_Roles_webpages_UsersInRoles" Member="webpages_UsersInRoles" ThisKey="RoleId" OtherKey="RoleId" Type="webpages_UsersInRoles" />
+    </Type>
+  </Table>
+  <Table Name="dbo.webpages_UsersInRoles" Member="webpages_UsersInRoles">
+    <Type Name="webpages_UsersInRoles">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="webpages_Roles_webpages_UsersInRoles" Member="webpages_Roles" ThisKey="RoleId" OtherKey="RoleId" Type="webpages_Roles" IsForeignKey="true" />
+      <Association Name="UserProfile_webpages_UsersInRoles" Member="UserProfile" ThisKey="UserId" OtherKey="UserId" Type="UserProfile" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

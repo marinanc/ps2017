@@ -11,7 +11,7 @@ namespace webVentaLibros.Controllers
     {
         //
         // GET: /Editorial/
-
+        [Authorize(Roles = "Administrador")]
         public ActionResult Editoriales()
         {
             var bd = new bdVentaLibrosDataContext();
@@ -22,6 +22,7 @@ namespace webVentaLibros.Controllers
             return View(listaEditoriales);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public ActionResult AgregarEditorial(EditorialModel editorial)
         {
@@ -43,6 +44,7 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("Editoriales");
         }
 
+        [Authorize(Roles = "Administrador")]
         private bool EditorialExiste(string nombre)
         {
             bool existe = false;

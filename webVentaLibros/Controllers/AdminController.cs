@@ -11,13 +11,14 @@ namespace webVentaLibros.Controllers
     {
         //
         // GET: /Admin/
-
+        [Authorize(Roles="Administrador")]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public ActionResult AgregarLibro()
         {
             var bd = new bdVentaLibrosDataContext();
@@ -103,6 +104,7 @@ namespace webVentaLibros.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public ActionResult AgregarLibro(LibroModel libro, HttpPostedFileBase foto)
         {
             var bd = new bdVentaLibrosDataContext();
@@ -145,6 +147,7 @@ namespace webVentaLibros.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public ActionResult AgregarAutor()
         {
             var bd = new bdVentaLibrosDataContext();
@@ -156,6 +159,7 @@ namespace webVentaLibros.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public ActionResult AgregarAutor(AutorModel autor)
         {
             var bd = new bdVentaLibrosDataContext();
@@ -184,6 +188,7 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("AgregarAutor");
         }
 
+        [Authorize(Roles = "Administrador")]
         //Verifiar si el autor ya existe
         private bool AutorExiste(string apellidos, string nombres)
         {
@@ -202,6 +207,7 @@ namespace webVentaLibros.Controllers
             return existe;
         }
 
+        [Authorize(Roles = "Administrador")]
         private bool LibroExiste(string codigoBarra)
         {
             bool existe = false;

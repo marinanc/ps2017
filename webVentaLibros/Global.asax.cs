@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebMatrix.WebData;
+using WebMatrix.Data;
+using System.Web.Security;
 
 namespace webVentaLibros
 {
@@ -22,6 +25,10 @@ namespace webVentaLibros
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
+            //WebSecurity.CreateUserAndAccount("Admin", "Admin");
+            //Roles.CreateRole("Administrador");
+            //Roles.AddUserToRole("Admin", "Administrador");
         }
     }
 }

@@ -12,6 +12,7 @@ namespace webVentaLibros.Controllers
         //
         // GET: /Genero/
 
+        [Authorize(Roles = "Administrador")]
         public ActionResult Generos()
         {
             var bd = new bdVentaLibrosDataContext();
@@ -23,6 +24,7 @@ namespace webVentaLibros.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public ActionResult AgregarGenero(GeneroModel genero)
         {
             var bd = new bdVentaLibrosDataContext();
@@ -43,6 +45,7 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("Generos");
         }
 
+        [Authorize(Roles = "Administrador")]
         private bool GeneroExiste(string nombre)
         {
             bool existe = false;

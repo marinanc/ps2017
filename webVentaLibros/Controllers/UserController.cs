@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using webVentaLibros.Models;
+using WebMatrix.WebData;
 
 namespace webVentaLibros.Controllers
 {
@@ -42,10 +43,12 @@ namespace webVentaLibros.Controllers
                                               nombreUsuario = us.nombreUsuario,
                                               idPerfil = us.idPerfil
                                           };
-                    ViewBag.usLogueado = usuarioLogueado;
-
-                    FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
-                    ViewBag.usuarioLogueado = user;
+                    if (usuarioLogueado.FirstOrDefault().idPerfil == 1) { 
+                        WebMatrix.WebData.WebSecurity.Login("Admin", user.contraseña);
+                    }
+                    ViewData["logueadoNombre"] = usuarioLogueado.FirstOrDefault().nombreUsuario;
+                    ViewData["logueadoPerfil"] = usuarioLogueado.FirstOrDefault().idPerfil;
+                    FormsAuthentication.SetAuthCookie(ViewData["logueadoNombre"].ToString(), false); //crea variable de user con el usuario
                     return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }
                 else
@@ -58,6 +61,10 @@ namespace webVentaLibros.Controllers
 
         public ActionResult Logout()
         {
+            if (WebSecurity.CurrentUserName == "Admin")
+            {
+                WebSecurity.Logout();
+            }
             FormsAuthentication.SignOut(); //cerrar sesion
             return RedirectToAction("Index","Home");
         }
@@ -155,17 +162,15 @@ namespace webVentaLibros.Controllers
                         mail = user.mail,
                         contraseña = user.contraseña,
                         nombreUsuario = user.nombreUsuario,
-                        fechaHoraAlta = DateTime.Now,
-                        //fechaHoraBaja = user.fechaHoraBaja,
                         direccion = user.direccion,
                         idProvincia = user.idProvincia,
                         idLocalidad = user.idLocalidad,
-                        idPerfil = 2
+                        idPerfil = 2,
+                        fechaHoraAlta = DateTime.Now
                     };
 
                     //Agregando un nuevo registro 
                     bd.Usuarios.InsertOnSubmit(nuevoUsuario);
-                    //Agregando un nuevo registro 
 
                     //Hacer el submit
                     bd.SubmitChanges();
