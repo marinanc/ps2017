@@ -2,6 +2,7 @@
     ViewBag.Title = "index";
 }
 @using webVentaLibros.Models;
+@using WebMatrix.WebData;
 
 <head>
     <meta charset="utf-8">
@@ -42,9 +43,15 @@
                         <ul>
                             @if (Request.IsAuthenticated)
                             {
-                                <li><span>Hola @HttpContext.Current.Session["userName"] !</span></li>
+                                <li><span>Hola @WebSecurity.CurrentUserName !</span></li>
+                                if (Roles.IsUserInRole("Administrador"))
+                                {
+                                    <li>@Html.ActionLink("Panel de Control","Index","Admin")</li>
+                                }
+                                else { 
                                 <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
                                 <li><a href="#"><i class="fa fa-heart"></i> Lista de Deseo</a></li>
+                                }
                             }
                             <li>
                                 @Html.ActionLink("Carrito","Carrito","Cart")

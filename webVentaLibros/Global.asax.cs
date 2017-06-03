@@ -28,6 +28,7 @@ namespace webVentaLibros
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
             //WebSecurity.CreateUserAndAccount("Admin", "Admin");
             //Roles.CreateRole("Administrador");
+            //Roles.CreateRole("Cliente");
             //Roles.AddUserToRole("Admin", "Administrador");
         }
     }

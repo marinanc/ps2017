@@ -46,9 +46,12 @@ namespace webVentaLibros.Controllers
                     if (usuarioLogueado.FirstOrDefault().idPerfil == 1) { 
                         WebMatrix.WebData.WebSecurity.Login("Admin", user.contraseña);
                     }
-                    ViewData["logueadoNombre"] = usuarioLogueado.FirstOrDefault().nombreUsuario;
-                    ViewData["logueadoPerfil"] = usuarioLogueado.FirstOrDefault().idPerfil;
-                    FormsAuthentication.SetAuthCookie(ViewData["logueadoNombre"].ToString(), false); //crea variable de user con el usuario
+                    else
+                    {
+                        WebMatrix.WebData.WebSecurity.Login(usuarioLogueado.FirstOrDefault().nombreUsuario, user.contraseña);
+                    }
+
+                    FormsAuthentication.SetAuthCookie(usuarioLogueado.FirstOrDefault().nombreUsuario, false); //crea variable de user con el usuario
                     return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }
                 else
@@ -61,10 +64,10 @@ namespace webVentaLibros.Controllers
 
         public ActionResult Logout()
         {
-            if (WebSecurity.CurrentUserName == "Admin")
-            {
+            //if (WebSecurity.CurrentUserName == "Admin")
+            //{
                 WebSecurity.Logout();
-            }
+            //}
             FormsAuthentication.SignOut(); //cerrar sesion
             return RedirectToAction("Index","Home");
         }
@@ -174,7 +177,8 @@ namespace webVentaLibros.Controllers
 
                     //Hacer el submit
                     bd.SubmitChanges();
-
+                    WebSecurity.CreateUserAndAccount(nuevoUsuario.nombreUsuario, nuevoUsuario.contraseña);
+                    Roles.AddUserToRole(nuevoUsuario.nombreUsuario, "Cliente");
                     FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
                     return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }
