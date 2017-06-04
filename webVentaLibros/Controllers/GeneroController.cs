@@ -11,7 +11,7 @@ namespace webVentaLibros.Controllers
     {
         //
         // GET: /Genero/
-
+        
         [Authorize(Roles = "Administrador")]
         public ActionResult Generos()
         {
@@ -42,6 +42,41 @@ namespace webVentaLibros.Controllers
                 bd.SubmitChanges();
                 TempData["Message"] = "Género literario agregado!";
             }
+            return RedirectToAction("Generos");
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public ActionResult ModificarGenero(int id)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var generoElegido = from genero in bd.Generos
+                                where genero.idGenero == id
+                                select genero;
+
+            return View(generoElegido);
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public ActionResult ModificarGenero(GeneroModel generoElegido)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var generoModificado = from genero in bd.Generos
+                                   where genero.idGenero == generoElegido.idGenero
+                                   select genero;
+            
+            foreach (var genero in generoModificado)
+            {
+                genero.nombre = generoElegido.nombreGenero;
+            }
+
+            bd.SubmitChanges();
+
+            TempData["Message"] = "Género modificado!";
+
             return RedirectToAction("Generos");
         }
 
