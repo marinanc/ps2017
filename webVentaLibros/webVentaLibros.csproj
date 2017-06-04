@@ -521,6 +521,7 @@
     <Content Include="Views\Admin\ModificarLibro.cshtml" />
     <Content Include="Views\Admin\ModificarAutor.cshtml" />
     <Content Include="Views\Genero\ModificarGenero.cshtml" />
+    <Content Include="Views\Editorial\ModificarEditorial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

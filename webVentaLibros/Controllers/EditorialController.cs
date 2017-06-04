@@ -44,6 +44,40 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("Editoriales");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ModificarEditorial(int id)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var editorialElegida = from editorial in bd.Editoriales
+                                   where editorial.idEditorial == id
+                                   select editorial;
+
+            return View(editorialElegida);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ModificarEditorial(EditorialModel editorialElegida)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var editorialModificada = from editorial in bd.Editoriales
+                                      where editorial.idEditorial == editorialElegida.idEditorial
+                                      select editorial;
+
+            foreach (var editorial in editorialModificada)
+            {
+                editorial.nombre = editorialElegida.nombre;
+            }
+
+            bd.SubmitChanges();
+            TempData["Message"] = "Editorial modificado!";
+
+            return RedirectToAction("Editoriales");
+        }
+
         [Authorize(Roles = "Administrador")]
         private bool EditorialExiste(string nombre)
         {
