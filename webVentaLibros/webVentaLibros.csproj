@@ -152,6 +152,7 @@
     <Compile Include="Controllers\EditorialController.cs" />
     <Compile Include="Controllers\GeneroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IntercambioController.cs" />
     <Compile Include="Controllers\LibroController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -517,6 +518,7 @@
     <Content Include="Views\Admin\AgregarAutor.cshtml" />
     <Content Include="Views\Editorial\Editoriales.cshtml" />
     <Content Include="Views\Genero\Generos.cshtml" />
+    <Content Include="Views\Admin\ModificarLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,6 +5,7 @@
 @using webVentaLibros.Models
 @using System.Collections
 @{
+    //Vendedor
     MP mp = new MP("5423337948594881", "6dJ2lH2MWshwoj1zWKH2eEMSN8gYthLl");
 
     Hashtable preference = mp.createPreference("{\"items\":[{\"title\":\"sdk-dotnet\",\"quantity\":1,\"currency_id\":\"ARS\",\"unit_price\":10.5}]}");
@@ -15,7 +16,7 @@
     //foreach (var v in Session["carrito"] as List<CarritoItem>) {
     //    if (cantidadItems != 1)
     //    {
-    //        cadena = cadena + "{\"title\":\"" + v.Libro.titulo + "\",\"quantity\":" + v.Cantidad+",\"currency_id\":\"ARS\",\"unit_price\":" + v.Libro.precio+"},";
+    //        cadena = cadena + "{\"title\":\"" + v.Libro.titulo + "\",\"quantity\":" + v.Cantidad + ",\"currency_id\":\"ARS\",\"unit_price\":" + v.Libro.precio + "},";
     //        cantidadItems--;
     //    } else {
     //        cadena = cadena + "{\"title\":\"" + v.Libro.titulo + "\",\"quantity\":" + v.Cantidad + ",\"currency_id\":\"ARS\",\"unit_price\":" + v.Libro.precio + "}";
