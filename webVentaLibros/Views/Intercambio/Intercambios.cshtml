@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "BuscarLibro";
+    ViewBag.Title = "Intercambios";
 }
 @using webVentaLibros.Models;
+@using WebMatrix.WebData;
 
 <head>
     <meta charset="utf-8">
@@ -89,7 +90,7 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="../Cart/Carrito">Carrito - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="Cart/Carrito">Carrito - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>
@@ -110,15 +111,15 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            @Html.ActionLink("Home","Index","Home")
+                            @Html.ActionLink("Home", "Index", "Home")
                         </li>
                         <li>
-                           @Html.ActionLink("Carrito", "Carrito", "Cart")
+                            @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
                         <li>
                             @Html.ActionLink("Libros", "Catalogo", "Catalogo")
                         </li>
-                        <li>
+                        <li class="active">
                             @Html.ActionLink("Intercambios", "Intercambios", "Intercambio")
                         </li>
                         <li><a href="#">Contacto</a></li>
@@ -127,66 +128,6 @@
             </div>
         </div>
     </div> <!-- End mainmenu area -->
-
-    <div class="slider-area">
-        <div class="row">
-            <div class="single-sidebar">
-                <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
-                    <input type="text" name="busqueda" placeholder="Ingresar titulo,autor,ISBN..." required>
-                    <input type="submit" value="Buscar">
-                </form>
-            </div>
-        </div>
-
-
-    </div> <!-- End slider area -->
-    @if (Model != null)
-    {
-        <div class="maincontent-area">
-            <div class="zigzag-bottom"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="latest-product">
-                            <h2 class="section-title">Busqueda</h2>
-                            <div class="product-carousel">
-
-                                @foreach (var libro in Model)
-                                {
-
-                                    <div class="single-product">
-                                        <div class="product-f-image">
-                                            <img src="../@libro.foto" alt="">
-                                            <div class="product-hover">
-
-                                                <input type="text" name="codLibro" value="@libro.codigoBarra" style="visibility:hidden" />
-                                                <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Comprar</a>
-                                                <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-
-
-                                            </div>
-                                        </div>
-
-                                        <h2><a href="single-product.html">@libro.titulo</a></h2>
-
-                                        <div class="product-carousel-price">
-                                            <ins>$@libro.precio</ins>
-                                        </div>
-
-                                    </div>
-
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End main content area -->
-    }
-
-
-
-
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">

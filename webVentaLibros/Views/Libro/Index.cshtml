@@ -72,7 +72,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
         </div>
     </div> <!-- End header area -->
@@ -115,9 +115,11 @@
                             @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
                         <li>
-                            @Html.ActionLink("Libros", "Catalogo", "Catalogo")                           
+                            @Html.ActionLink("Libros", "Catalogo", "Catalogo")
                         </li>
-                        <li><a href="#">Intercambio de Libros</a></li>
+                        <li>
+                            @Html.ActionLink("Intercambios", "Intercambios", "Intercambio")
+                        </li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
                 </div>
@@ -183,87 +185,87 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
 
                 <div class="col-md-8">
                     <div class="product-content-right">
-                        
 
-@if (Model != null)
-    {
-    foreach (var libro in Model)
-        {
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="product-images">
-                                    <div class="product-main-img">
-                                        <img src="@libro.foto" alt="">
-                                    </div>                                   
-                                </div>
-                            </div>
 
-                            <div class="col-sm-6">
-                                <div class="product-inner">
-                                    <h2 class="product-name">@libro.titulo</h2>
-                                    <div class="product-inner-price">
-                                        <ins>$@libro.precio</ins>
-                                    </div>
-
-                                    <form action=@Url.Action("Carrito","Cart") method="POST" role="form" class="cart">
-               
-                                        <div class="quantity">
-                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
-                                        </div>
-                                        <input type="text" name="codLibro" value="@libro.codigoBarra" hidden />
-                                        <button class="add_to_cart_button" type="submit">Comprar</button>
-                                    </form>
-
-                                    <div class="product-inner-category">
-                                        <p>Género: <a href="">@libro.genero</a></p>
-                                    </div>
-
-                                    <div role="tabpanel">
-                                        <ul class="product-tab" role="tablist">
-                                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-                                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                                <h2>Descripción</h2>
-                                                <p>
-                                                    @libro.sinopsis
-                                                </p>
-                           
+                        @if (Model != null)
+                        {
+                            foreach (var libro in Model)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="product-images">
+                                            <div class="product-main-img">
+                                                <img src="@libro.foto" alt="">
                                             </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="profile">
-                                                <h2>Opiniones</h2>
-                                                <div class="submit-review">
-                                                    <p><label for="name">Nombre</label> <input name="name" type="text"></p>
-                                                    <p><label for="email">Email</label> <input name="email" type="email"></p>
-                                                    <div class="rating-chooser">
-                                                        <p>Tú calificación</p>
+                                        </div>
+                                    </div>
 
-                                                        <div class="rating-wrap-post">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
+                                    <div class="col-sm-6">
+                                        <div class="product-inner">
+                                            <h2 class="product-name">@libro.titulo</h2>
+                                            <div class="product-inner-price">
+                                                <ins>$@libro.precio</ins>
+                                            </div>
+
+                                            <form action=@Url.Action("Carrito","Cart") method="POST" role="form" class="cart">
+
+                                                <div class="quantity">
+                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                                </div>
+                                                <input type="text" name="codLibro" value="@libro.codigoBarra" hidden />
+                                                <button class="add_to_cart_button" type="submit">Comprar</button>
+                                            </form>
+
+                                            <div class="product-inner-category">
+                                                <p>Género: <a href="">@libro.genero</a></p>
+                                            </div>
+
+                                            <div role="tabpanel">
+                                                <ul class="product-tab" role="tablist">
+                                                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
+                                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                                        <h2>Descripción</h2>
+                                                        <p>
+                                                            @libro.sinopsis
+                                                        </p>
+
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="profile">
+                                                        <h2>Opiniones</h2>
+                                                        <div class="submit-review">
+                                                            <p><label for="name">Nombre</label> <input name="name" type="text"></p>
+                                                            <p><label for="email">Email</label> <input name="email" type="email"></p>
+                                                            <div class="rating-chooser">
+                                                                <p>Tú calificación</p>
+
+                                                                <div class="rating-wrap-post">
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                    <i class="fa fa-star"></i>
+                                                                </div>
+                                                            </div>
+                                                            <p><label for="review">Tú opinión</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
+                                                            <p><input type="submit" value="Enviar"></p>
                                                         </div>
                                                     </div>
-                                                    <p><label for="review">Tú opinión</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                    <p><input type="submit" value="Enviar"></p>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div>
-    }
-}
+                            }
+                        }
                         <div class="related-products-wrapper">
                             <h2 class="related-products-title">Libros relacionados</h2>
                             <div class="related-products-carousel">
@@ -271,7 +273,7 @@
                                     <div class="product-f-image">
                                         <img src="img/195x243.png" alt="">
                                         <div class="product-hover">
-                                            
+
                                             <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
                                         </div>
                                     </div>
@@ -286,7 +288,7 @@
                                     <div class="product-f-image">
                                         <img src="img/195x243.png" alt="">
                                         <div class="product-hover">
-                                            
+
                                             <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
                                         </div>
                                     </div>
@@ -300,7 +302,7 @@
                                     <div class="product-f-image">
                                         <img src="img/195x243.png" alt="">
                                         <div class="product-hover">
-                                            
+
                                             <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
                                         </div>
                                     </div>
@@ -315,7 +317,7 @@
                                     <div class="product-f-image">
                                         <img src="img/195x243.png" alt="">
                                         <div class="product-hover">
-                                            
+
                                             <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
                                         </div>
                                     </div>
@@ -330,7 +332,7 @@
                                     <div class="product-f-image">
                                         <img src="img/195x243.png" alt="">
                                         <div class="product-hover">
-                                           
+
                                             <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
                                         </div>
                                     </div>
@@ -345,7 +347,7 @@
                                     <div class="product-f-image">
                                         <img src="img/195x243.png" alt="">
                                         <div class="product-hover">
-                                            
+
                                             <a href="" class="view-details-link"><i class="fa fa-link"></i>Ver detalles</a>
                                         </div>
                                     </div>
@@ -430,7 +432,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
     </div>

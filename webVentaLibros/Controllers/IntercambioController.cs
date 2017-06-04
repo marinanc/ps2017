@@ -11,7 +11,7 @@ namespace webVentaLibros.Controllers
         //
         // GET: /Intercambio/
 
-        public ActionResult Index()
+        public ActionResult Intercambios()
         {
             return View();
         }

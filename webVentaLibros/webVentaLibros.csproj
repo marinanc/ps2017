@@ -522,6 +522,7 @@
     <Content Include="Views\Admin\ModificarAutor.cshtml" />
     <Content Include="Views\Genero\ModificarGenero.cshtml" />
     <Content Include="Views\Editorial\ModificarEditorial.cshtml" />
+    <Content Include="Views\Intercambio\Intercambios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
