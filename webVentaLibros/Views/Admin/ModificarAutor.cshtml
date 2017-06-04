@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Editoriales";
+    ViewBag.Title = "ModificarAutor";
 }
+@using webVentaLibros.Models;
 
 <head>
     <title>Dashboard</title>
@@ -97,7 +98,7 @@
                                 <li><a href="#" class="more">See all notifications</a></li>
                             </ul>
                         </li>
-                        
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>@WebSecurity.CurrentUserName</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                             <ul class="dropdown-menu">
@@ -120,7 +121,7 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="../Admin/Index" class="active"><i class="lnr lnr-home"></i> <span>Panel de Control</span></a></li>
+                        <li><a href="Index" class="active"><i class="lnr lnr-home"></i> <span>Panel de Control</span></a></li>
                         <li>
                             <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesAgregar" class="collapse ">
@@ -162,76 +163,48 @@
                         <div class="col-md-12">
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Editoriales</h3>
+                                    <h3 class="panel-title">AUTORES</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="panel">
                                         
                                             <fieldset>
-                                                <h3>Datos de la nueva editorial</h3>
-                                                <form action=@Url.Action("AgregarEditorial","Editorial") enctype="multipart/form-data" method="POST" role="form">
-                                                    <div class="row form-group">
-                                                        <div class="col-md-6">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon info">Nombre de la editorial:</span>
-                                                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                                <h3>Datos del autor</h3>
+                                                @if (Model != null)
+                                                {
+                                                    foreach (var autor in Model)
+                                                    {
+                                                        <form action=@Url.Action("ModificarAutor","Admin") enctype="multipart/form-data" method="POST" role="form">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon info">Código de autor:</span>
+                                                                        <input type="text" class="form-control" id="idAutor" name="idAutor" value="@autor.idAutor" readonly>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                      </div>  
-                                                    <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Agregar editorial</button>
-                                                </form>
+                                                            <div class="row form-group">
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon info">Apellido/s:</span>
+                                                                        <input type="text" class="form-control" id="apellidoAutor" name="apellidoAutor" value="@autor.apellidos" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon info">Nombre/s:</span>
+                                                                        <input type="text" class="form-control" id="nombreAutor" name="nombreAutor" value="@autor.nombres">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Aceptar</button>
+                                                        </form>
+                                                    }
+                                                }
                                             </fieldset>
                                         
-                                        <div class="panel-body">
-                                            <h3>Lista de Editoriales</h3>
-                                            <div class="container">
-                                                <div class="row">
 
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <table id="example" class="display" cellspacing="0" width="100%">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Código</th>
-                                                                    <th>Editorial</th>
-                                                                    <th>Modificar</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th>Código</th>
-                                                                    <th>Editorial</th>
-                                                                    <th>Modificar</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                            <tbody>
-                                                                @if (Model != null)
-                                                                {
-                                                                    foreach (var editorial in Model)
-                                                                    {
-                                                                        <tr>
-                                                                            <td>@editorial.idEditorial</td>
-                                                                            <td>@editorial.nombre</td>
-                                                                            <td>
-                                                                                <button type="button" class="btn btn-default btn-lg">
-                                                                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                                                </button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    }
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -258,14 +231,5 @@
     <script src="../assets/vendor/chartist/js/chartist.min.js"></script>
     <script src="../assets/vendor/toastr/toastr.min.js"></script>
     <script src="../assets/scripts/klorofil-common.js"></script>
-    @if (TempData["Message"] != null)
-    {
 
-        <div id="toast-container" class="toast-top-right">
-            <div class="toast toast-info" aria-live="polite" style="display: block;">
-                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
-                <div class="toast-message">@TempData["Message"]</div>
-            </div>
-        </div>
-    }
 </body>

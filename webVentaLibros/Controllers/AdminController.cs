@@ -285,6 +285,41 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("AgregarAutor");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ModificarAutor(int id)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var autorElegido = from autor in bd.Autores
+                               where autor.idAutor == id
+                               select autor;
+
+            return View(autorElegido);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ModificarAutor(AutorModel autorElegido)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var autorModificado = from autor in bd.Autores
+                                  where autor.idAutor == autorElegido.idAutor
+                                  select autor;
+
+            foreach (var autor in autorModificado)
+            {
+                autor.apellidos = autorElegido.apellidoAutor;
+                autor.nombres = autorElegido.nombreAutor;
+            }
+
+            bd.SubmitChanges();
+            TempData["Message"] = "Autor modificado!";
+
+            return RedirectToAction("AgregarAutor");
+        }
+
         [Authorize(Roles = "Administrador")]
         //Verifiar si el autor ya existe
         private bool AutorExiste(string apellidos, string nombres)
