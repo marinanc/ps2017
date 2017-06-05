@@ -1,12 +1,14 @@
 ﻿@{
-    ViewBag.Title = "Catalogo";
+    ViewBag.Title = "MisIntercambios";
 }
+@using webVentaLibros.Models;
+@using WebMatrix.WebData;
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Catalogo - Venta de Libros</title>
+    <title>Intercambios - Venta de Libros</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -113,7 +115,7 @@
                         <li>
                             @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
-                        <li class="active">
+                        <li>
                             @Html.ActionLink("Libros", "Catalogo", "Catalogo")
                         </li>
                         <li>
@@ -125,66 +127,102 @@
             </div>
         </div>
     </div> <!-- End mainmenu area -->
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- INPUT GROUPS -->
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Datos del libro a intercambiar</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form action=@Url.Action("AgregarLibro","Admin") enctype="multipart/form-data" method="POST" role="form">
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon danger">Título</span>
+                                                <input type="text" class="form-control" id="titulo" name="titulo" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <label for="sinopsis">Descripción</label>
+                                                <textarea id="descrpcion" name="descripcion" class="form-control" rows="8" cols="50" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />                                   
 
-    <div class="product-big-title-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="product-bit-title text-center">
-                        <h2>Libro</h2>
+                                    <div class="col-md-12">
+                                        <br />
+                                        <br />
+                                        <div class="row form-group">
+                                            <div class="col-md-3">
+                                                <label>Imagen 1</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <span class="btn btn-default btn-file">
+                                                            Abrir…
+                                                            <input type="file" id="imgInp" name="foto1" required>
+                                                        </span>
+                                                    </span>
+                                                    <input type="text" class="form-control" readonly>
+                                                </div>
+                                                <img id='img-upload' />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Imagen 2</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <span class="btn btn-default btn-file">
+                                                            Abrir…
+                                                            <input type="file" id="imgInp" name="foto2">
+                                                        </span>
+                                                    </span>
+                                                    <input type="text" class="form-control" readonly>
+                                                </div>
+                                                <img id='img-upload' />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Imagen 3</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <span class="btn btn-default btn-file">
+                                                            Abrir…
+                                                            <input type="file" id="imgInp" name="foto3">
+                                                        </span>
+                                                    </span>
+                                                    <input type="text" class="form-control" readonly>
+                                                </div>
+                                                <img id='img-upload' />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-lg-12">
+                                        <br />
+                                        <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Agregar libro</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!--TABLA CON LISTADO DE LIBROS-->
+                           
+
+                        </div>
+                        <!-- END INPUT GROUPS -->
                     </div>
                 </div>
             </div>
         </div>
+        <!-- END MAIN CONTENT -->
     </div>
-
-
-    <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Buscar libro</h2>
-                        <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
-                            <input type="text" name="busqueda" placeholder="Ingresar titulo,autor,ISBN..." required>
-                            <input type="submit" value="Buscar">
-                        </form>
-                    </div>
-
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Generos</h2>
-                        <div class="list-group">
-
-                            @foreach (var genero in ViewBag.listadoGeneros)
-                            {
-                                <div class="list-group-item">
-                                    @Html.ActionLink((string)genero.nombreGenero, "MostrarLibros", new { idGenero = genero.idGenero })
-                                </div>
-                                
-                            }
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="product-content-right">
-
-                        <div class="row">
-
-                            <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
-
-
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
+    <!-- END MAIN -->
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -204,7 +242,7 @@
 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">User Navigation </h2>
+                        <h2 class="footer-wid-title">Usuario </h2>
                         <ul>
                             <li><a href="#">Mi cuenta</a></li>
                             <li><a href="#">Historial de Pedidos</a></li>
@@ -233,14 +271,17 @@
                         <h2 class="footer-wid-title">Newsletter</h2>
                         <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
                         <div class="newsletter-form">
-                            <input type="email" placeholder="Type your email">
-                            <input type="submit" value="Subscribe">
+                            <form action="#">
+                                <input type="email" placeholder="Type your email">
+                                <input type="submit" value="Subscribe">
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- End footer top area -->
+
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
@@ -253,8 +294,7 @@
 
             </div>
         </div>
-    </div>
-
+    </div> <!-- End footer bottom area -->
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -270,4 +310,8 @@
 
     <!-- Main Script -->
     <script src="../js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="../js/bxslider.min.js"></script>
+    <script type="text/javascript" src="../js/script.slider.js"></script>
 </body>

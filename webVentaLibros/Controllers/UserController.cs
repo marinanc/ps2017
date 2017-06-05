@@ -50,7 +50,7 @@ namespace webVentaLibros.Controllers
                     {
                         WebMatrix.WebData.WebSecurity.Login(usuarioLogueado.FirstOrDefault().nombreUsuario, user.contraseña);
                     }
-
+                    Session["idUsuario"] = usuarioLogueado.FirstOrDefault().idUsuario;
                     FormsAuthentication.SetAuthCookie(usuarioLogueado.FirstOrDefault().nombreUsuario, false); //crea variable de user con el usuario
                     return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }

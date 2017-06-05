@@ -149,6 +149,7 @@
     <Compile Include="Controllers\BusquedaController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CatalogoController.cs" />
+    <Compile Include="Controllers\CuentaUsuarioController.cs" />
     <Compile Include="Controllers\EditorialController.cs" />
     <Compile Include="Controllers\GeneroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Models\LibroModel.cs" />
     <Compile Include="Models\LocalidadModel.cs" />
     <Compile Include="Models\ProvinciaModel.cs" />
+    <Compile Include="Models\PublicacionIntercambio.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -523,6 +525,8 @@
     <Content Include="Views\Genero\ModificarGenero.cshtml" />
     <Content Include="Views\Editorial\ModificarEditorial.cshtml" />
     <Content Include="Views\Intercambio\Intercambios.cshtml" />
+    <Content Include="Views\CuentaUsuario\MiCuenta.cshtml" />
+    <Content Include="Views\CuentaUsuario\MisIntercambios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

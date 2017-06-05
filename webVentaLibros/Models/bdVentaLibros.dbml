@@ -157,22 +157,6 @@
       <Association Name="Provincias_Usuarios" Member="Usuarios" ThisKey="idProvincia" OtherKey="idProvincia" Type="Usuarios" />
     </Type>
   </Table>
-  <Table Name="dbo.PublicacionPorUsuario" Member="PublicacionPorUsuario">
-    <Type Name="PublicacionPorUsuario">
-      <Column Name="idPublicacion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="tituloPublicacion" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="descripcion" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="foto1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="foto2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="foto3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="idEstado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="PublicacionPorUsuario_Intercambios" Member="Intercambios" ThisKey="idPublicacion" OtherKey="idPublicacionUsuario1" Type="Intercambios" />
-      <Association Name="PublicacionPorUsuario_Intercambios1" Member="Intercambios1" ThisKey="idPublicacion" OtherKey="idPublicacionUsuario2" Type="Intercambios" />
-      <Association Name="Estados_PublicacionPorUsuario" Member="Estados" ThisKey="idEstado" OtherKey="idEstado" Type="Estados" IsForeignKey="true" />
-      <Association Name="Usuarios_PublicacionPorUsuario" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.UserProfile" Member="UserProfile">
     <Type Name="UserProfile">
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -237,6 +221,22 @@
       <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="webpages_Roles_webpages_UsersInRoles" Member="webpages_Roles" ThisKey="RoleId" OtherKey="RoleId" Type="webpages_Roles" IsForeignKey="true" />
       <Association Name="UserProfile_webpages_UsersInRoles" Member="UserProfile" ThisKey="UserId" OtherKey="UserId" Type="UserProfile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PublicacionPorUsuario" Member="PublicacionPorUsuario">
+    <Type Name="PublicacionPorUsuario">
+      <Column Name="idPublicacion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="titulo" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="foto1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="foto2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="foto3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idEstado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PublicacionPorUsuario_Intercambios" Member="Intercambios" ThisKey="idPublicacion" OtherKey="idPublicacionUsuario1" Type="Intercambios" />
+      <Association Name="PublicacionPorUsuario_Intercambios1" Member="Intercambios1" ThisKey="idPublicacion" OtherKey="idPublicacionUsuario2" Type="Intercambios" />
+      <Association Name="Estados_PublicacionPorUsuario" Member="Estados" ThisKey="idEstado" OtherKey="idEstado" Type="Estados" IsForeignKey="true" />
+      <Association Name="Usuarios_PublicacionPorUsuario" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
