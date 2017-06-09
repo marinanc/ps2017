@@ -90,9 +90,9 @@ namespace webVentaLibros.Models
     partial void Insertwebpages_UsersInRoles(webpages_UsersInRoles instance);
     partial void Updatewebpages_UsersInRoles(webpages_UsersInRoles instance);
     partial void Deletewebpages_UsersInRoles(webpages_UsersInRoles instance);
-    partial void InsertPublicacionPorUsuario(PublicacionPorUsuario instance);
-    partial void UpdatePublicacionPorUsuario(PublicacionPorUsuario instance);
-    partial void DeletePublicacionPorUsuario(PublicacionPorUsuario instance);
+    partial void InsertPublicacionIntercambio(PublicacionIntercambio instance);
+    partial void UpdatePublicacionIntercambio(PublicacionIntercambio instance);
+    partial void DeletePublicacionIntercambio(PublicacionIntercambio instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -285,11 +285,11 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<PublicacionPorUsuario> PublicacionPorUsuario
+		public System.Data.Linq.Table<PublicacionIntercambio> PublicacionIntercambio
 		{
 			get
 			{
-				return this.GetTable<PublicacionPorUsuario>();
+				return this.GetTable<PublicacionIntercambio>();
 			}
 		}
 	}
@@ -1530,7 +1530,7 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<Pedidos> _Pedidos;
 		
-		private EntitySet<PublicacionPorUsuario> _PublicacionPorUsuario;
+		private EntitySet<PublicacionIntercambio> _PublicacionIntercambio;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -1545,7 +1545,7 @@ namespace webVentaLibros.Models
 		public Estados()
 		{
 			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
-			this._PublicacionPorUsuario = new EntitySet<PublicacionPorUsuario>(new Action<PublicacionPorUsuario>(this.attach_PublicacionPorUsuario), new Action<PublicacionPorUsuario>(this.detach_PublicacionPorUsuario));
+			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
 			OnCreated();
 		}
 		
@@ -1602,16 +1602,16 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_PublicacionPorUsuario", Storage="_PublicacionPorUsuario", ThisKey="idEstado", OtherKey="idEstado")]
-		public EntitySet<PublicacionPorUsuario> PublicacionPorUsuario
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_PublicacionIntercambio", Storage="_PublicacionIntercambio", ThisKey="idEstado", OtherKey="idEstado")]
+		public EntitySet<PublicacionIntercambio> PublicacionIntercambio
 		{
 			get
 			{
-				return this._PublicacionPorUsuario;
+				return this._PublicacionIntercambio;
 			}
 			set
 			{
-				this._PublicacionPorUsuario.Assign(value);
+				this._PublicacionIntercambio.Assign(value);
 			}
 		}
 		
@@ -1647,13 +1647,13 @@ namespace webVentaLibros.Models
 			entity.Estados = null;
 		}
 		
-		private void attach_PublicacionPorUsuario(PublicacionPorUsuario entity)
+		private void attach_PublicacionIntercambio(PublicacionIntercambio entity)
 		{
 			this.SendPropertyChanging();
 			entity.Estados = this;
 		}
 		
-		private void detach_PublicacionPorUsuario(PublicacionPorUsuario entity)
+		private void detach_PublicacionIntercambio(PublicacionIntercambio entity)
 		{
 			this.SendPropertyChanging();
 			entity.Estados = null;
@@ -1672,6 +1672,8 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<Libros> _Libros;
 		
+		private EntitySet<PublicacionIntercambio> _PublicacionIntercambio;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1685,6 +1687,7 @@ namespace webVentaLibros.Models
 		public Generos()
 		{
 			this._Libros = new EntitySet<Libros>(new Action<Libros>(this.attach_Libros), new Action<Libros>(this.detach_Libros));
+			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
 			OnCreated();
 		}
 		
@@ -1741,6 +1744,19 @@ namespace webVentaLibros.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Generos_PublicacionIntercambio", Storage="_PublicacionIntercambio", ThisKey="idGenero", OtherKey="idGenero")]
+		public EntitySet<PublicacionIntercambio> PublicacionIntercambio
+		{
+			get
+			{
+				return this._PublicacionIntercambio;
+			}
+			set
+			{
+				this._PublicacionIntercambio.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1772,6 +1788,18 @@ namespace webVentaLibros.Models
 			this.SendPropertyChanging();
 			entity.Generos = null;
 		}
+		
+		private void attach_PublicacionIntercambio(PublicacionIntercambio entity)
+		{
+			this.SendPropertyChanging();
+			entity.Generos = this;
+		}
+		
+		private void detach_PublicacionIntercambio(PublicacionIntercambio entity)
+		{
+			this.SendPropertyChanging();
+			entity.Generos = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Intercambios")]
@@ -1792,9 +1820,9 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<int> _calificacionUsuario2;
 		
-		private EntityRef<PublicacionPorUsuario> _PublicacionPorUsuario;
+		private EntityRef<PublicacionIntercambio> _PublicacionIntercambio;
 		
-		private EntityRef<PublicacionPorUsuario> _PublicacionPorUsuario1;
+		private EntityRef<PublicacionIntercambio> _PublicacionIntercambio1;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -1816,8 +1844,8 @@ namespace webVentaLibros.Models
 		
 		public Intercambios()
 		{
-			this._PublicacionPorUsuario = default(EntityRef<PublicacionPorUsuario>);
-			this._PublicacionPorUsuario1 = default(EntityRef<PublicacionPorUsuario>);
+			this._PublicacionIntercambio = default(EntityRef<PublicacionIntercambio>);
+			this._PublicacionIntercambio1 = default(EntityRef<PublicacionIntercambio>);
 			OnCreated();
 		}
 		
@@ -1832,7 +1860,7 @@ namespace webVentaLibros.Models
 			{
 				if ((this._idPublicacionUsuario1 != value))
 				{
-					if (this._PublicacionPorUsuario.HasLoadedOrAssignedValue)
+					if (this._PublicacionIntercambio.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1856,7 +1884,7 @@ namespace webVentaLibros.Models
 			{
 				if ((this._idPublicacionUsuario2 != value))
 				{
-					if (this._PublicacionPorUsuario1.HasLoadedOrAssignedValue)
+					if (this._PublicacionIntercambio1.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1949,26 +1977,26 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionPorUsuario_Intercambios", Storage="_PublicacionPorUsuario", ThisKey="idPublicacionUsuario1", OtherKey="idPublicacion", IsForeignKey=true)]
-		public PublicacionPorUsuario PublicacionPorUsuario
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios", Storage="_PublicacionIntercambio", ThisKey="idPublicacionUsuario1", OtherKey="idPublicacion", IsForeignKey=true)]
+		public PublicacionIntercambio PublicacionIntercambio
 		{
 			get
 			{
-				return this._PublicacionPorUsuario.Entity;
+				return this._PublicacionIntercambio.Entity;
 			}
 			set
 			{
-				PublicacionPorUsuario previousValue = this._PublicacionPorUsuario.Entity;
+				PublicacionIntercambio previousValue = this._PublicacionIntercambio.Entity;
 				if (((previousValue != value) 
-							|| (this._PublicacionPorUsuario.HasLoadedOrAssignedValue == false)))
+							|| (this._PublicacionIntercambio.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PublicacionPorUsuario.Entity = null;
+						this._PublicacionIntercambio.Entity = null;
 						previousValue.Intercambios.Remove(this);
 					}
-					this._PublicacionPorUsuario.Entity = value;
+					this._PublicacionIntercambio.Entity = value;
 					if ((value != null))
 					{
 						value.Intercambios.Add(this);
@@ -1978,31 +2006,31 @@ namespace webVentaLibros.Models
 					{
 						this._idPublicacionUsuario1 = default(int);
 					}
-					this.SendPropertyChanged("PublicacionPorUsuario");
+					this.SendPropertyChanged("PublicacionIntercambio");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionPorUsuario_Intercambios1", Storage="_PublicacionPorUsuario1", ThisKey="idPublicacionUsuario2", OtherKey="idPublicacion", IsForeignKey=true)]
-		public PublicacionPorUsuario PublicacionPorUsuario1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios1", Storage="_PublicacionIntercambio1", ThisKey="idPublicacionUsuario2", OtherKey="idPublicacion", IsForeignKey=true)]
+		public PublicacionIntercambio PublicacionIntercambio1
 		{
 			get
 			{
-				return this._PublicacionPorUsuario1.Entity;
+				return this._PublicacionIntercambio1.Entity;
 			}
 			set
 			{
-				PublicacionPorUsuario previousValue = this._PublicacionPorUsuario1.Entity;
+				PublicacionIntercambio previousValue = this._PublicacionIntercambio1.Entity;
 				if (((previousValue != value) 
-							|| (this._PublicacionPorUsuario1.HasLoadedOrAssignedValue == false)))
+							|| (this._PublicacionIntercambio1.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._PublicacionPorUsuario1.Entity = null;
+						this._PublicacionIntercambio1.Entity = null;
 						previousValue.Intercambios1.Remove(this);
 					}
-					this._PublicacionPorUsuario1.Entity = value;
+					this._PublicacionIntercambio1.Entity = value;
 					if ((value != null))
 					{
 						value.Intercambios1.Add(this);
@@ -2012,7 +2040,7 @@ namespace webVentaLibros.Models
 					{
 						this._idPublicacionUsuario2 = default(int);
 					}
-					this.SendPropertyChanged("PublicacionPorUsuario1");
+					this.SendPropertyChanged("PublicacionIntercambio1");
 				}
 			}
 		}
@@ -3825,7 +3853,7 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<Pedidos> _Pedidos;
 		
-		private EntitySet<PublicacionPorUsuario> _PublicacionPorUsuario;
+		private EntitySet<PublicacionIntercambio> _PublicacionIntercambio;
 		
 		private EntityRef<Localidades> _Localidades;
 		
@@ -3864,7 +3892,7 @@ namespace webVentaLibros.Models
 			this._CalificacionPorUsuario1 = new EntitySet<CalificacionPorUsuario>(new Action<CalificacionPorUsuario>(this.attach_CalificacionPorUsuario1), new Action<CalificacionPorUsuario>(this.detach_CalificacionPorUsuario1));
 			this._ComentarioPorLibro = new EntitySet<ComentarioPorLibro>(new Action<ComentarioPorLibro>(this.attach_ComentarioPorLibro), new Action<ComentarioPorLibro>(this.detach_ComentarioPorLibro));
 			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
-			this._PublicacionPorUsuario = new EntitySet<PublicacionPorUsuario>(new Action<PublicacionPorUsuario>(this.attach_PublicacionPorUsuario), new Action<PublicacionPorUsuario>(this.detach_PublicacionPorUsuario));
+			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
 			this._Localidades = default(EntityRef<Localidades>);
 			this._Provincias = default(EntityRef<Provincias>);
 			OnCreated();
@@ -4143,16 +4171,16 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_PublicacionPorUsuario", Storage="_PublicacionPorUsuario", ThisKey="idUsuario", OtherKey="idUsuario")]
-		public EntitySet<PublicacionPorUsuario> PublicacionPorUsuario
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_PublicacionIntercambio", Storage="_PublicacionIntercambio", ThisKey="idUsuario", OtherKey="idUsuario")]
+		public EntitySet<PublicacionIntercambio> PublicacionIntercambio
 		{
 			get
 			{
-				return this._PublicacionPorUsuario;
+				return this._PublicacionIntercambio;
 			}
 			set
 			{
-				this._PublicacionPorUsuario.Assign(value);
+				this._PublicacionIntercambio.Assign(value);
 			}
 		}
 		
@@ -4304,13 +4332,13 @@ namespace webVentaLibros.Models
 			entity.Usuarios = null;
 		}
 		
-		private void attach_PublicacionPorUsuario(PublicacionPorUsuario entity)
+		private void attach_PublicacionIntercambio(PublicacionIntercambio entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = this;
 		}
 		
-		private void detach_PublicacionPorUsuario(PublicacionPorUsuario entity)
+		private void detach_PublicacionIntercambio(PublicacionIntercambio entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = null;
@@ -5011,8 +5039,8 @@ namespace webVentaLibros.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PublicacionPorUsuario")]
-	public partial class PublicacionPorUsuario : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PublicacionIntercambio")]
+	public partial class PublicacionIntercambio : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -5025,19 +5053,23 @@ namespace webVentaLibros.Models
 		
 		private string _descripcion;
 		
-		private string _foto1;
-		
-		private string _foto2;
-		
-		private string _foto3;
+		private string _foto;
 		
 		private int _idEstado;
+		
+		private System.Nullable<int> _idGenero;
+		
+		private string _autor;
+		
+		private System.Nullable<System.DateTime> _fechaHoraAlta;
 		
 		private EntitySet<Intercambios> _Intercambios;
 		
 		private EntitySet<Intercambios> _Intercambios1;
 		
 		private EntityRef<Estados> _Estados;
+		
+		private EntityRef<Generos> _Generos;
 		
 		private EntityRef<Usuarios> _Usuarios;
 		
@@ -5053,26 +5085,29 @@ namespace webVentaLibros.Models
     partial void OntituloChanged();
     partial void OndescripcionChanging(string value);
     partial void OndescripcionChanged();
-    partial void Onfoto1Changing(string value);
-    partial void Onfoto1Changed();
-    partial void Onfoto2Changing(string value);
-    partial void Onfoto2Changed();
-    partial void Onfoto3Changing(string value);
-    partial void Onfoto3Changed();
+    partial void OnfotoChanging(string value);
+    partial void OnfotoChanged();
     partial void OnidEstadoChanging(int value);
     partial void OnidEstadoChanged();
+    partial void OnidGeneroChanging(System.Nullable<int> value);
+    partial void OnidGeneroChanged();
+    partial void OnautorChanging(string value);
+    partial void OnautorChanged();
+    partial void OnfechaHoraAltaChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaHoraAltaChanged();
     #endregion
 		
-		public PublicacionPorUsuario()
+		public PublicacionIntercambio()
 		{
 			this._Intercambios = new EntitySet<Intercambios>(new Action<Intercambios>(this.attach_Intercambios), new Action<Intercambios>(this.detach_Intercambios));
 			this._Intercambios1 = new EntitySet<Intercambios>(new Action<Intercambios>(this.attach_Intercambios1), new Action<Intercambios>(this.detach_Intercambios1));
 			this._Estados = default(EntityRef<Estados>);
+			this._Generos = default(EntityRef<Generos>);
 			this._Usuarios = default(EntityRef<Usuarios>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPublicacion", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPublicacion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int idPublicacion
 		{
 			get
@@ -5156,62 +5191,22 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_foto1", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string foto1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_foto", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string foto
 		{
 			get
 			{
-				return this._foto1;
+				return this._foto;
 			}
 			set
 			{
-				if ((this._foto1 != value))
+				if ((this._foto != value))
 				{
-					this.Onfoto1Changing(value);
+					this.OnfotoChanging(value);
 					this.SendPropertyChanging();
-					this._foto1 = value;
-					this.SendPropertyChanged("foto1");
-					this.Onfoto1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_foto2", DbType="NVarChar(50)")]
-		public string foto2
-		{
-			get
-			{
-				return this._foto2;
-			}
-			set
-			{
-				if ((this._foto2 != value))
-				{
-					this.Onfoto2Changing(value);
-					this.SendPropertyChanging();
-					this._foto2 = value;
-					this.SendPropertyChanged("foto2");
-					this.Onfoto2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_foto3", DbType="NVarChar(50)")]
-		public string foto3
-		{
-			get
-			{
-				return this._foto3;
-			}
-			set
-			{
-				if ((this._foto3 != value))
-				{
-					this.Onfoto3Changing(value);
-					this.SendPropertyChanging();
-					this._foto3 = value;
-					this.SendPropertyChanged("foto3");
-					this.Onfoto3Changed();
+					this._foto = value;
+					this.SendPropertyChanged("foto");
+					this.OnfotoChanged();
 				}
 			}
 		}
@@ -5240,7 +5235,71 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionPorUsuario_Intercambios", Storage="_Intercambios", ThisKey="idPublicacion", OtherKey="idPublicacionUsuario1")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idGenero", DbType="Int")]
+		public System.Nullable<int> idGenero
+		{
+			get
+			{
+				return this._idGenero;
+			}
+			set
+			{
+				if ((this._idGenero != value))
+				{
+					if (this._Generos.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidGeneroChanging(value);
+					this.SendPropertyChanging();
+					this._idGenero = value;
+					this.SendPropertyChanged("idGenero");
+					this.OnidGeneroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_autor", DbType="NVarChar(50)")]
+		public string autor
+		{
+			get
+			{
+				return this._autor;
+			}
+			set
+			{
+				if ((this._autor != value))
+				{
+					this.OnautorChanging(value);
+					this.SendPropertyChanging();
+					this._autor = value;
+					this.SendPropertyChanged("autor");
+					this.OnautorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHoraAlta", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaHoraAlta
+		{
+			get
+			{
+				return this._fechaHoraAlta;
+			}
+			set
+			{
+				if ((this._fechaHoraAlta != value))
+				{
+					this.OnfechaHoraAltaChanging(value);
+					this.SendPropertyChanging();
+					this._fechaHoraAlta = value;
+					this.SendPropertyChanged("fechaHoraAlta");
+					this.OnfechaHoraAltaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios", Storage="_Intercambios", ThisKey="idPublicacion", OtherKey="idPublicacionUsuario1")]
 		public EntitySet<Intercambios> Intercambios
 		{
 			get
@@ -5253,7 +5312,7 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionPorUsuario_Intercambios1", Storage="_Intercambios1", ThisKey="idPublicacion", OtherKey="idPublicacionUsuario2")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios1", Storage="_Intercambios1", ThisKey="idPublicacion", OtherKey="idPublicacionUsuario2")]
 		public EntitySet<Intercambios> Intercambios1
 		{
 			get
@@ -5266,7 +5325,7 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_PublicacionPorUsuario", Storage="_Estados", ThisKey="idEstado", OtherKey="idEstado", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_PublicacionIntercambio", Storage="_Estados", ThisKey="idEstado", OtherKey="idEstado", IsForeignKey=true)]
 		public Estados Estados
 		{
 			get
@@ -5283,12 +5342,12 @@ namespace webVentaLibros.Models
 					if ((previousValue != null))
 					{
 						this._Estados.Entity = null;
-						previousValue.PublicacionPorUsuario.Remove(this);
+						previousValue.PublicacionIntercambio.Remove(this);
 					}
 					this._Estados.Entity = value;
 					if ((value != null))
 					{
-						value.PublicacionPorUsuario.Add(this);
+						value.PublicacionIntercambio.Add(this);
 						this._idEstado = value.idEstado;
 					}
 					else
@@ -5300,7 +5359,41 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_PublicacionPorUsuario", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Generos_PublicacionIntercambio", Storage="_Generos", ThisKey="idGenero", OtherKey="idGenero", IsForeignKey=true)]
+		public Generos Generos
+		{
+			get
+			{
+				return this._Generos.Entity;
+			}
+			set
+			{
+				Generos previousValue = this._Generos.Entity;
+				if (((previousValue != value) 
+							|| (this._Generos.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Generos.Entity = null;
+						previousValue.PublicacionIntercambio.Remove(this);
+					}
+					this._Generos.Entity = value;
+					if ((value != null))
+					{
+						value.PublicacionIntercambio.Add(this);
+						this._idGenero = value.idGenero;
+					}
+					else
+					{
+						this._idGenero = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Generos");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_PublicacionIntercambio", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
 		public Usuarios Usuarios
 		{
 			get
@@ -5317,12 +5410,12 @@ namespace webVentaLibros.Models
 					if ((previousValue != null))
 					{
 						this._Usuarios.Entity = null;
-						previousValue.PublicacionPorUsuario.Remove(this);
+						previousValue.PublicacionIntercambio.Remove(this);
 					}
 					this._Usuarios.Entity = value;
 					if ((value != null))
 					{
-						value.PublicacionPorUsuario.Add(this);
+						value.PublicacionIntercambio.Add(this);
 						this._idUsuario = value.idUsuario;
 					}
 					else
@@ -5357,25 +5450,25 @@ namespace webVentaLibros.Models
 		private void attach_Intercambios(Intercambios entity)
 		{
 			this.SendPropertyChanging();
-			entity.PublicacionPorUsuario = this;
+			entity.PublicacionIntercambio = this;
 		}
 		
 		private void detach_Intercambios(Intercambios entity)
 		{
 			this.SendPropertyChanging();
-			entity.PublicacionPorUsuario = null;
+			entity.PublicacionIntercambio = null;
 		}
 		
 		private void attach_Intercambios1(Intercambios entity)
 		{
 			this.SendPropertyChanging();
-			entity.PublicacionPorUsuario1 = this;
+			entity.PublicacionIntercambio1 = this;
 		}
 		
 		private void detach_Intercambios1(Intercambios entity)
 		{
 			this.SendPropertyChanging();
-			entity.PublicacionPorUsuario1 = null;
+			entity.PublicacionIntercambio1 = null;
 		}
 	}
 }
