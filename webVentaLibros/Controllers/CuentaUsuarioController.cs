@@ -62,7 +62,7 @@ namespace webVentaLibros.Controllers
                 idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]),
                 titulo = ppum.titulo,
                 descripcion = ppum.descripcion,
-                foto = @"img/catalogo/" + foto.FileName,
+                foto = @"img/catalogoIntercambios/" + foto.FileName,
                 idEstado = 1,
                 idGenero = ppum.idGenero,
                 autor = ppum.autor, 

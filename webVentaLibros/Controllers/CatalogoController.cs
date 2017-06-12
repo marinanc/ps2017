@@ -49,7 +49,7 @@ namespace webVentaLibros.Controllers
                                 }).ToList();
 
             ViewBag.listadoGeneros = listaGeneros;
-            ViewBag.listadoLibros = listaLibros;
+            ViewBag.listadoPublicaciones = listaLibros;
 
             return View();
         }

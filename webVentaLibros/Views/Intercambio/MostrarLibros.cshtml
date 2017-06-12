@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Intercambios";
+    ViewBag.Title = "MostrarLibros";
 }
 @using webVentaLibros.Models;
 @using WebMatrix.WebData;
@@ -268,7 +268,7 @@
                             @foreach (var genero in ViewBag.listadoGeneros)
                             {
                                 <div class="list-group-item">
-                                    @Html.ActionLink((string)genero.nombreGenero, "MostrarLibros", new { idGenero = genero.idGenero })
+                                    @Html.ActionLink((string)genero.nombre, "MostrarLibros", new { idGenero = genero.idGenero })
                                 </div>
 
                             }
@@ -294,7 +294,7 @@
                                                 </div>
                                             </div>
                                             <br />
-                                            <h3 style="text-align:center"><a href="@Url.Action("DetalleLibro", "Intercambio", new { idPublicacion = libro.idPublicacion })">@libro.titulo</a></h3>
+                                            <h3 style="text-align:center"><a href="#">@libro.titulo</a></h3>
                                         </div>
                                     </div>
                                 }

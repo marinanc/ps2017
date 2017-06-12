@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Intercambios";
+    ViewBag.Title = "BusquedaLibro";
 }
 @using webVentaLibros.Models;
 @using WebMatrix.WebData;
@@ -264,11 +264,11 @@
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Generos</h2>
                         <div class="list-group">
-
+                            
                             @foreach (var genero in ViewBag.listadoGeneros)
                             {
                                 <div class="list-group-item">
-                                    @Html.ActionLink((string)genero.nombreGenero, "MostrarLibros", new { idGenero = genero.idGenero })
+                                    @Html.ActionLink((string)genero.nombre, "MostrarLibros", new { idGenero = genero.idGenero })
                                 </div>
 
                             }
@@ -281,9 +281,9 @@
 
                         <div class="row">
                             <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
-                            @if (ViewBag.listadoPublicaciones != null)
+                            @if (ViewBag.librosEncontrados != null)
                             {
-                                foreach (var libro in ViewBag.listadoPublicaciones)
+                                foreach (var libro in ViewBag.librosEncontrados)
                                 {
                                     <div class="col-md-4">
                                         <div class="product-item">

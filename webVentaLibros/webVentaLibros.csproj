@@ -527,6 +527,9 @@
     <Content Include="Views\Intercambio\Intercambios.cshtml" />
     <Content Include="Views\CuentaUsuario\MiCuenta.cshtml" />
     <Content Include="Views\CuentaUsuario\MisIntercambios.cshtml" />
+    <Content Include="Views\Intercambio\BusquedaLibro.cshtml" />
+    <Content Include="Views\Intercambio\MostrarLibros.cshtml" />
+    <Content Include="Views\Intercambio\DetalleLibro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

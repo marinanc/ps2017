@@ -25,8 +25,9 @@ namespace webVentaLibros.Controllers
                              foto = libro.foto,
                              titulo = libro.titulo, 
                              sinopsis = libro.sinopsis,
-                             precio = Convert.ToDouble(libro.precio)
-                         }).ToList();
+                             precio = Convert.ToDouble(libro.precio),
+                             fechaAlta = Convert.ToDateTime(libro.fechaAlta)
+                         }).OrderByDescending(l => l.fechaAlta).Take(10).ToList();
 
             var listaCompleta = new List<LibroModel>();
 
