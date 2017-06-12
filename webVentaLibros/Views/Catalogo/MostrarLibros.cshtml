@@ -24,81 +24,118 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <style type="text/css">
-        .row {
-            padding-top: 10px;
+        .product-item {
+            padding: 15px;
+            background: #fff;
+            margin-top: 20px;
+            position: relative;
         }
 
-        /* cards */
-
-        .card *:hover {
-            text-decoration: none;
-        }
-
-        .card .thumbnail {
-            padding: 0;
-            border: none;
-            text-align: center;
-            border-radius: 0;
-            -webkit-box-shadow: 0px 0.5px 1px 0px rgba(0,0,0,0.75);
-            -moz-box-shadow: 0px 0.5px 1px 0px rgba(0,0,0,0.75);
-            box-shadow: 0px 0.5px 1px 0px rgba(0,0,0,0.75);
-        }
-
-            .card .thumbnail .caption {
-                margin: -20px 20px 20px 20px;
-                padding: 19px 29px 19px 29px;
-                position: relative;
-                background-color: white;
+            .product-item:hover {
+                box-shadow: 5px 5px rgba(234, 234, 234, 0.9);
             }
 
-                .card .thumbnail .caption h3 small {
-                    font-style: italic;
-                    text-transform: none;
-                    letter-spacing: 0;
-                    font-weight: 400;
-                    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-                    display: block;
-                    padding: 5px;
+            .product-item:after {
+                content: ".";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+                font-size: 0;
+                line-height: 0;
+            }
+
+        .sticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 63px;
+            height: 63px;
+        }
+
+        .sticker-new {
+            background: url(http://keenthemes.com/assets/bootsnipp/new.png) no-repeat;
+            left: auto;
+            right: 0;
+        }
+
+        .pi-img-wrapper {
+            position: relative;
+        }
+
+            .pi-img-wrapper div {
+                background: rgba(0,0,0,0.3);
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: none;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+
+        .product-item:hover > .pi-img-wrapper > div {
+            display: block;
+        }
+
+        .pi-img-wrapper div .btn {
+            padding: 3px 10px;
+            color: #fff;
+            border: 1px #fff solid;
+            margin: -13px 5px 0;
+            background: transparent;
+            text-transform: uppercase;
+            position: relative;
+            top: 50%;
+            line-height: 1.4;
+            font-size: 12px;
+        }
+
+        .product-item .btn:hover {
+            background: #e84d1c;
+            border-color: #c8c8c8;
+        }
+
+        .product-item h3 {
+            font-size: 14px;
+            font-weight: 300;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+            .product-item h3 a {
+                color: #3e4d5c;
+            }
+
+                .product-item h3 a:hover {
+                    color: #E02222;
                 }
 
-                .card .thumbnail .caption h3 {
-                    font-family: 'Raleway',sans-serif;
-                    font-weight: 600;
-                    letter-spacing: -1px;
-                    margin-top: 0;
-                    text-transform: uppercase;
-                    font-size: 18px;
-                }
+        .pi-price {
+            color: #e84d1c;
+            font-size: 18px;
+            float: left;
+            padding-top: 1px;
+        }
 
-                .card .thumbnail .caption hr {
-                    border-top: 1px solid #333;
-                    margin: 20px 40px;
-                }
+        .product-item .add2cart {
+            float: right;
+            color: #a8aeb3;
+            border: 1px #ededed solid;
+            padding: 3px 6px;
+            text-transform: uppercase;
+        }
 
-                .card .thumbnail .caption p {
-                    font-size: 12px;
-                    line-height: 1.6;
-                }
-
-                .card .thumbnail .caption button {
-                    border-radius: 0;
-                    color: #aaa;
-                    -moz-transition: 0.3s;
-                    -webkit-transition: 0.3s;
-                    -o-transition: 0.3s;
-                    transition: 0.3s;
-                }
-
-                    .card .thumbnail .caption button:hover {
-                        background-color: black;
-                        border-color: black;
-                        color: white;
-                        -moz-transition: 0.3s;
-                        -webkit-transition: 0.3s;
-                        -o-transition: 0.3s;
-                        transition: 0.3s;
-                    }
+            .product-item .add2cart:hover {
+                color: #fff;
+                background: #e84d1c;
+                border-color: #e84d1c;
+            }
     </style>
+
+
+
+   
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -248,35 +285,28 @@
                             <div class="row">
 
                                 <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
+
                                 @if (ViewBag.listadoLibros != null)
                                 {
                                     foreach (var libro in ViewBag.listadoLibros)
                                     {
-
-                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 card">
-
-                                            <div class="thumbnail">
-                                                <img src="../@libro.foto" alt="#">
-                                                <div class="caption">
-                                                    <h3>
-                                                        @libro.titulo
-                                                        <small>
-                                                            $@libro.precio
-                                                        </small>
-                                                    </h3>
-                                                    <hr>
-                                                    <form action=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) method="get" role="form">
-                                                        <input type="text" name="cod" value="@libro.codigoBarra" style="visibility:hidden" />
-                                                        <button class="btn btn-default" role="button">Ver más</button>
-                                                    </form>
+                                        <div class="col-md-4">
+                                            <div class="product-item">
+                                                <div class="pi-img-wrapper">
+                                                    <img src="../@libro.foto" class="img-responsive" alt="#">
+                                                    <div>
+                                                        <a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })" class="btn">Detalles</a>
+                                                    </div>
                                                 </div>
+                                                <br />
+                                                <h3 style="text-align:center"><a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })">@libro.titulo</a></h3>
+                                                <div class="pi-price">ARS $@libro.precio</div>
                                             </div>
-
                                         </div>
-
                                     }
                                 }
 
+                                
                             </div>
                         </div>
                     </div>

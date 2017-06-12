@@ -143,7 +143,7 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Buscar libro</h2>
                         <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
@@ -153,41 +153,23 @@
                     </div>
 
                     <div class="single-sidebar">
-                        <h2 class="sidebar-title">Products</h2>
-                        <div class="thubmnail-recent">
-                            <img src="img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="">Libro 1</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="">Libro 2</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="">Libro 3</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="">Libro 4</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
+                        <h2 class="sidebar-title">Generos</h2>
+                        <div class="list-group">
+
+                            @foreach (var genero in ViewBag.listadoGeneros)
+                            {
+                                <div class="list-group-item">
+                                    @Html.ActionLink((string)genero.nombre, "MostrarLibros", "Catalogo",new { idGenero = genero.idGenero }, null)
+                                </div>
+                            }
+
                         </div>
                     </div>
 
 
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="product-content-right">
 
 

@@ -46,17 +46,18 @@
                                 <li><span>Hola @WebSecurity.CurrentUserName !</span></li>
                                 if (Roles.IsUserInRole("Administrador"))
                                 {
-                                    <li>@Html.ActionLink("Panel de Control","Index","Admin")</li>
+                                    <li>@Html.ActionLink("Panel de Control", "Index", "Admin")</li>
                                 }
-                                else { 
-                                <li><a href="CuentaUsuario/MiCuenta"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                else
+                                {
+                                    <li><a href="CuentaUsuario/MiCuenta"><i class="fa fa-user"></i> Mi Cuenta</a></li>
                                 }
                             }
-                            @if (!Roles.IsUserInRole("Administrador")) 
+                            @if (!Roles.IsUserInRole("Administrador"))
                             {
-                            <li>
-                                @Html.ActionLink("Carrito","Carrito","Cart")
-                            </li>
+                                <li>
+                                    @Html.ActionLink("Carrito", "Carrito", "Cart")
+                                </li>
                             }
                             <li>
                                 @if (Request.IsAuthenticated)
@@ -72,7 +73,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
     </div> <!-- End header area -->
@@ -108,7 +109,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li>                       
+                        <li class="active"><a href="index.html">Home</a></li>
                         <li>
                             @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
@@ -139,15 +140,15 @@
             <ul class="" id="bxslider-home4">
                 <li>
                     <img src="img/principalLibro.png" alt="Slide">
-                    
+
                 </li>
                 <li>
                     <img src="img/mercadopago.png" alt="Slide">
-                    
+
                 </li>
                 <li>
                     <img src="img/intercambioLibros.png" alt="Slide">
-                    
+
                 </li>
             </ul>
         </div>
@@ -185,51 +186,45 @@
             </div>
         </div>
     </div> <!-- End promo area -->
-    
-@if (Model != null)
-{
-    <div class="maincontent-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="latest-product">
-                        <h2 class="section-title">Novedades</h2>
-                        <div class="product-carousel">
-                
-                            @foreach (var libro in Model)
-                            {
-                            
-                            <div class="single-product">
-                                <div style="width:200px; height:300px" class="product-f-image">
-                                    <img style="width:100%; height:100%"src="@libro.foto" alt="">
-                                    <div class="product-hover">
-                                        
-                                            <input type="text" name="codLibro" value="@libro.codigoBarra" style="visibility:hidden" />
-                                            
-                                            <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-                                           
-                                        
-                                    </div>
-                                </div>
-                                
-                                    <h2><a href="single-product.html">@libro.titulo</a></h2>
+    @if (Model != null)
+    {
+        <div class="maincontent-area">
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="latest-product">
+                            <h2 class="section-title">Novedades</h2>
+                            <div class="product-carousel">
 
-                                    <div class="product-carousel-price">
-                                        <ins>$@libro.precio</ins>
-                                    </div>
+                                @foreach (var libro in Model)
+                                {
 
-                            </div>  
-                            
-                            }                        
+                                    <div class="single-product">
+                                        <div style="width:200px; height:300px" class="product-f-image">
+                                            <img style="width:100%; height:100%" src="@libro.foto" alt="">
+                                            <div class="product-hover">
+                                                <input type="text" name="codLibro" value="@libro.codigoBarra" style="visibility:hidden" />
+
+                                                <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i>Detalles</a>
+                                            </div>
+                                        </div>
+
+                                        <h2><a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })>@libro.titulo</a></h2>
+
+                                        <div class="product-carousel-price">
+                                            <ins>$@libro.precio</ins>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div> <!-- End main content area -->
-}
-    
+        </div> <!-- End main content area -->
+    }
+
 
     <div class="product-widget-area">
         <div class="zigzag-bottom"></div>
@@ -374,7 +369,7 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>$400.00</ins> 
+                                <ins>$400.00</ins>
                             </div>
                         </div>
                     </div>
@@ -451,7 +446,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
         </div>
     </div> <!-- End footer bottom area -->

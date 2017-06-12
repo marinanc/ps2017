@@ -16,6 +16,9 @@ namespace webVentaLibros.Controllers
         {
             var bdVentaLibros = new bdVentaLibrosDataContext();
 
+            ViewBag.listadoGeneros = from genero in bdVentaLibros.Generos
+                                     select genero;
+
             var libroSeleccionado = from libro in bdVentaLibros.Libros
                                     join gen in bdVentaLibros.Generos on libro.idGenero equals gen.idGenero
                                     where libro.codigoBarra == cod

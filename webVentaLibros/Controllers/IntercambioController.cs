@@ -62,7 +62,7 @@ namespace webVentaLibros.Controllers
                                 select genero;
 
             ViewBag.listadoGeneros = listaGeneros;
-            ViewBag.listadoLibros = listaLibros;
+            ViewBag.listadoPublicaciones = listaLibros;
 
             return View();
         }
