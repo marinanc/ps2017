@@ -173,15 +173,31 @@ namespace webVentaLibros.Controllers
                         fechaHoraAlta = DateTime.Now
                     };
 
+                    WebSecurity.CreateUserAndAccount(nuevoUsuario.nombreUsuario, nuevoUsuario.contraseña);
+                    Roles.AddUserToRole(nuevoUsuario.nombreUsuario, "Cliente");
+
                     //Agregando un nuevo registro 
                     bd.Usuarios.InsertOnSubmit(nuevoUsuario);
 
                     //Hacer el submit
                     bd.SubmitChanges();
-                    WebSecurity.CreateUserAndAccount(nuevoUsuario.nombreUsuario, nuevoUsuario.contraseña);
-                    Roles.AddUserToRole(nuevoUsuario.nombreUsuario, "Cliente");
-                    FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
-                    return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
+
+                    if (nuevoUsuario.idPerfil == 1)
+                    {
+                        WebMatrix.WebData.WebSecurity.Login("Admin", user.contraseña);
+                    }
+                    else
+                    {
+                        WebMatrix.WebData.WebSecurity.Login(nuevoUsuario.nombreUsuario, nuevoUsuario.contraseña);
+                    }
+                    System.Web.HttpContext.Current.Session["IDUSUARIO"] = nuevoUsuario.idUsuario;
+                    FormsAuthentication.SetAuthCookie(nuevoUsuario.nombreUsuario, false); //crea variable de user con el usuario
+                    return RedirectToAction("Index", "Home");
+
+                    //WebSecurity.CreateUserAndAccount(nuevoUsuario.nombreUsuario, nuevoUsuario.contraseña);
+                    //Roles.AddUserToRole(nuevoUsuario.nombreUsuario, "Cliente");
+                    //FormsAuthentication.SetAuthCookie(user.mail, false); //crea variable de user con el usuario
+                    //return RedirectToAction("Index", "Home"); //dirigir al controlador home vista Index una vez se a autenticado en el sistema
                 }
                 else
                 {
