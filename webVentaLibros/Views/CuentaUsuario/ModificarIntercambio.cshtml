@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "MisIntercambios";
+    ViewBag.Title = "ModificarIntercambio";
 }
 @using webVentaLibros.Models;
 @using WebMatrix.WebData;
@@ -27,8 +27,6 @@
     <link rel="stylesheet" href="../css/responsive.css">
 
     <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
-
-    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
 
     <style type="text/css">
         .btn-file {
@@ -96,58 +94,61 @@
 
 
     <script>
-    $(document).ready(function () {
-        $(document).on('change', '.btn-file :file', function () {
-            var input = $(this),
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [label]);
-        });
+        $(document).ready(function () {
+            $(document).on('change', '.btn-file :file', function () {
+                var input = $(this),
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [label]);
+            });
 
-        $('.btn-file :file').on('fileselect', function (event, label) {
+            $('.btn-file :file').on('fileselect', function (event, label) {
 
-            var input = $(this).parents('.input-group').find(':text'),
-                log = label;
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = label;
 
-            if (input.length) {
-                input.val(log);
-            } else {
-                if (log) alert(log);
-            }
-
-        });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#img-upload').attr('src', e.target.result);
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log) alert(log);
                 }
 
-                reader.readAsDataURL(input.files[0]);
+            });
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#img-upload').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
             }
-        }
 
-        $("#imgInp").change(function () {
-            readURL(this);
+            $("#imgInp").change(function () {
+                readURL(this);
+            });
         });
-    });
     </script>
+
     <script>
-    'use strict';
-    var $ = jQuery;
-    $.getScript("https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js", function () {
+        'use strict';
+        var $ = jQuery;
+        $.getScript("https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js", function () {
 
-        $('#example').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false
+            $('#example').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": false
+            });
         });
-    });
     </script>
 
-
-
-
+    <script type="text/javascript">
+    function mostrar() {
+        document.getElementById('oculto').style.display = 'block';
+    }
+    </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -259,79 +260,100 @@
                     <div class="col-md-12">
                         <!-- INPUT GROUPS -->
                         <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Datos del libro a intercambiar</h3>
+                            <div class="panel-heading" style="text-align:center">
+                                <br />
+                                <br />
+                                <h3 class="panel-title">MODIFICAR DATOS</h3>
                             </div>
                             <div class="panel-body">
-                                <form action=@Url.Action("NuevoIntercambio","CuentaUsuario") enctype="multipart/form-data" method="POST" role="form">
-                                    <div class="row form-group">
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon danger">Título</span>
-                                                <input type="text" class="form-control" id="titulo" name="titulo" required>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-md-6">
-                                            <br />
-                                            <br />
-                                                <div class="input-group">
-                                                    
-                                                    <span class="input-group-addon info">Genero</span>
-                                                    <select id="idGenero" name="idGenero" class="form-control">
-                                                        <option value="" selected>Elige un género...</option>
-                                                        @foreach (var genero in ViewBag.listadoGeneros)
-                                                        {
-                                                            <option value="@genero.idGenero">@genero.nombre</option>
-
-                                                        }
-
-                                                    </select>
+                                @if (Model != null)
+                                {
+                                    foreach (var intercambio in Model)
+                                    {
+                                        <form action=@Url.Action("ModificarIntercambio","CuentaUsuario") enctype="multipart/form-data" method="POST" role="form">
+                                            <div class="row form-group">
+                                                <div class="col-md-2">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon danger">Cod. publicación</span>
+                                                        <input type="text" class="form-control" id="idPublicacion" name="idPublicacion" value="@intercambio.idPublicacion" readonly>
+                                                    </div>
                                                 </div>
-                                            <br />
-                                            <br />
-                                            <div class="input-group">
-                                                <span class="input-group-addon info">Autor/es</span>
-                                                <input type="text" class="form-control" id="autor" name="autor">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <label for="sinopsis">Descripción</label>
-                                                <textarea id="descrpcion" name="descripcion" class="form-control" rows="8" cols="50" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <br />                                   
-
-                                   
-                                        <br />
-                                        <br />
-                                        <div class="row form-group">
-                                            <div class="col-md-6">
-                                                <label>Imagen del libro</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <span class="btn btn-default btn-file">
-                                                            Abrir…
-                                                            <input type="file" id="imgInp" name="foto" required>
-                                                        </span>
-                                                    </span>
-                                                    <input type="text" class="form-control" readonly>
+                                            <br />
+                                            <div class="row form-group">
+                                                <div class="col-md-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon danger">Título</span>
+                                                        <input type="text" class="form-control" id="titulo" name="titulo" value="@intercambio.titulo" required>
+                                                    </div>
                                                 </div>
-                                                <img id='img-upload' />
-                                            </div>                                
-                                        </div>
-                                    
 
-                                    <div class="form-group col-lg-12">
-                                        <br />
-                                        <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Agregar libro</button>
-                                    </div>
-                                </form>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-6">
+                                                    <br />
+                                                    <div class="input-group">
+
+                                                        <span class="input-group-addon info">Genero</span>
+                                                        <select id="idGenero" name="idGenero" class="form-control">
+                                                            <option value="@intercambio.idGenero" selected>@intercambio.Generos.nombre</option>
+                                                            @foreach (var genero in ViewBag.listadoGeneros)
+                                                            {
+                                                                <option value="@genero.idGenero">@genero.nombre</option>
+
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <br />
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon info">Autor/es</span>
+                                                        <input type="text" class="form-control" id="autor" name="autor" value=@intercambio.autor>
+                                                    </div>
+                                                    <br />
+                                                    <div class="input-group">
+                                                        <label for="sinopsis">Descripción</label>
+                                                        <textarea id="descrpcion" name="descripcion" class="form-control" rows="8" cols="50" required>@intercambio.descripcion</textarea>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-6" style="text-align:center">
+                                                    <div style="width: 230px; height: 300px; display:block; margin: 0 auto" class="thumbnail">
+                                                        <img style="width:100%; height:100%" src="../@intercambio.foto" />
+                                                        <br />
+                                                        <a href="#" class="cambiarFoto" onclick="mostrar()">Cambiar foto</a>
+                                                    </div>
+                                                    <div class="input-group" id="oculto" style="display:none">
+                                                        <br />
+                                                        <br />
+                                                        <label>Subir foto del libro</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <span class="btn btn-default btn-file">
+                                                                    Abrir…
+                                                                    <input type="file" id="imgInp" name="foto">
+                                                                </span>
+                                                            </span>
+                                                            <input type="text" class="form-control" readonly>
+                                                        </div>
+                                                        <img id='img-upload' />
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+
+
+                                            <div class="form-group col-lg-12">
+                                                <br />
+                                                <button class="btn btn-primary" type="submit" style="display:block; margin-left:auto; margin-right:auto">Modificar</button>
+                                            </div>
+                                        </form>
+                                    }
+                                }
                             </div>
 
                             <!--TABLA CON LISTADO DE PUBLICACIONES-->
@@ -352,7 +374,7 @@
                                                         <th>Autores</th>
                                                         <th>Fecha</th>
                                                         <th>Modificar</th>
-                                                        
+
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
@@ -363,29 +385,29 @@
                                                         <th>Autores</th>
                                                         <th>Fecha</th>
                                                         <th>Modificar</th>
-                                                        
+
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
 
                                                     @foreach (var publicacion in ViewBag.listadoLibrosPublicados)
                                                     {
-                                                        <tr>
-                                                            <td>@publicacion.idPublicacion</td>
-                                                            <td>@publicacion.titulo</td>
-                                                            <td>@publicacion.genero</td>
-                                                            <td>@publicacion.autor</td>
-                                                            <td>@publicacion.fechaHoraAlta</td>
-                                                            <td>
-                                                                <form action=@Url.Action("ModificarIntercambio", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
-                                                                    <input type="text" value="@publicacion.idPublicacion" id="idPublicacion" name="idPublicacion" hidden />
-                                                                    <button type="submit" class="btn btn-default btn-lg">
-                                                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">
-                                                                        </span>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>@publicacion.idPublicacion</td>
+                                                        <td>@publicacion.titulo</td>
+                                                        <td>@publicacion.genero</td>
+                                                        <td>@publicacion.autor</td>
+                                                        <td>@publicacion.fechaHoraAlta</td>
+                                                        <td>
+                                                            <form action=@Url.Action("ModificarIntercambio", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                                <input type="text" value="@publicacion.idPublicacion" id="idPublicacion" name="idPublicacion" hidden />
+                                                                <button type="submit" class="btn btn-default btn-lg">
+                                                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+                                                                    </span>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
                                                     }
 
                                                 </tbody>
@@ -502,7 +524,6 @@
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../assets/vendor/toastr/toastr.min.js"></script>
 
     @if (TempData["Message"] != null)
     {

@@ -320,6 +320,41 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("AgregarAutor");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ActualizarStock()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var listaLibros = (from libro in bd.Libros
+                               from editorial in bd.Editoriales
+                               .Where(e => e.idEditorial == libro.idEditorial).DefaultIfEmpty()
+                               from genero in bd.Generos
+                               .Where(g => g.idGenero == libro.idGenero).DefaultIfEmpty()
+                               from autor in bd.Autores
+                               .Where(a => a.idAutor == libro.idAutor1).DefaultIfEmpty()
+                               .Where(a => a.idAutor == libro.idAutor2).DefaultIfEmpty()
+                               .Where(a => a.idAutor == libro.idAutor3).DefaultIfEmpty()
+                               .Where(a => a.idAutor == libro.idAutor4).DefaultIfEmpty()
+                               select new LibroModel
+                               {
+                                   codigoBarra = libro.codigoBarra,
+                                   titulo = libro.titulo,
+                                   genero = libro.Generos.nombre,
+                                   autor1 = libro.Autores.apellidos + ", " + libro.Autores.nombres,
+                                   autor2 = libro.Autores1.apellidos + ", " + libro.Autores.nombres,
+                                   autor3 = libro.Autores2.apellidos + ", " + libro.Autores.nombres,
+                                   autor4 = libro.Autores3.apellidos + ", " + libro.Autores.nombres,
+                                   editorial = libro.Editoriales.nombre,
+                                   precio = Convert.ToDouble(libro.precio),
+                                   stock = libro.stock
+                               }).ToList();
+
+            ViewBag.listadoLibros = listaLibros;
+
+            return View();
+        }
+
         [Authorize(Roles = "Administrador")]
         //Verifiar si el autor ya existe
         private bool AutorExiste(string apellidos, string nombres)

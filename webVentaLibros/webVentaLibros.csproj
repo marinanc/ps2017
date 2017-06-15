@@ -530,6 +530,8 @@
     <Content Include="Views\Intercambio\BusquedaLibro.cshtml" />
     <Content Include="Views\Intercambio\MostrarLibros.cshtml" />
     <Content Include="Views\Intercambio\DetalleLibro.cshtml" />
+    <Content Include="Views\Admin\ActualizarStock.cshtml" />
+    <Content Include="Views\CuentaUsuario\ModificarIntercambio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

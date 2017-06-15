@@ -77,9 +77,79 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("MisIntercambios");
         }
 
-        public ActionResult ModificarPublicacion(int idPublicacion)
+        [HttpGet]
+        public ActionResult ModificarIntercambio(int idPublicacion)
         {
-            return View();
+
+            var bd = new bdVentaLibrosDataContext();
+
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+            ViewBag.listadoLibrosPublicados = from publicacion in bd.PublicacionIntercambio
+                                              where publicacion.idUsuario == idUsuario
+                                              from genero in bd.Generos
+                                              where publicacion.idGenero == genero.idGenero
+                                              select new PublicacionIntercambioModel
+                                              {
+                                                  idPublicacion = publicacion.idPublicacion,
+                                                  titulo = publicacion.titulo,
+                                                  foto = publicacion.foto,
+                                                  autor = publicacion.autor,
+                                                  genero = genero.nombre,
+                                                  fechaHoraAlta = Convert.ToDateTime(publicacion.fechaHoraAlta)
+                                              };
+
+            ViewBag.listadoGeneros = from genero in bd.Generos
+                                     select genero;
+
+            var publicacionModificar = from publicacion in bd.PublicacionIntercambio
+                                       where idPublicacion == publicacion.idPublicacion
+                                       select publicacion;
+                               
+            return View(publicacionModificar);
         }
+
+        [HttpPost]
+        public ActionResult ModificarIntercambio(PublicacionIntercambioModel publicacionModificar, HttpPostedFileBase foto)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            if (foto != null)
+            {
+                foto.SaveAs(System.IO.Path.Combine(@"D:\webVentaLibros\webVentaLibros\img\catalogoIntercambios", System.IO.Path.GetFileName(foto.FileName)));
+            }
+
+            var publicacionModificada = from publicacion in bd.PublicacionIntercambio
+                                  where publicacionModificar.idPublicacion == publicacion.idPublicacion
+                                  select publicacion;
+
+            //Cambio los datos del inmueble
+            if (foto != null)
+            {
+                foreach (var publicacion in publicacionModificada)
+                {
+                    publicacion.titulo = publicacionModificar.titulo;
+                    publicacion.idGenero = publicacionModificar.idGenero;
+                    publicacion.autor = publicacionModificar.autor;
+                    publicacion.descripcion = publicacionModificar.descripcion;
+                    publicacion.foto = @"img/catalogoIntercambios/" + foto.FileName;
+
+                }
+            }
+            else
+            {
+                foreach (var publicacion in publicacionModificada)
+                {
+                    publicacion.titulo = publicacionModificar.titulo;
+                    publicacion.idGenero = publicacionModificar.idGenero;
+                    publicacion.autor = publicacionModificar.autor;
+                    publicacion.descripcion = publicacionModificar.descripcion;
+                }
+            }
+            //Hago el submit
+            bd.SubmitChanges();
+            TempData["Message"] = "¡Publicacion de intercambio modificada!";
+            return RedirectToAction("MisIntercambios");
+        }
+
     }
 }
