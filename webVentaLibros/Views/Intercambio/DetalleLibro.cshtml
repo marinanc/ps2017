@@ -26,6 +26,94 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
+    <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.css" />
+
+    <script type="text/javascript" href="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
+
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <script>
+        'use strict';
+        var $ = jQuery;
+        $.getScript("https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.js", function () {
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    select: {
+                        style: 'single'
+                    }
+                });
+
+
+                /*
+                $(document).ready(function () {
+                    $('#example').DataTable({
+                        columnDefs: [{
+                            orderable: false,
+                            className: 'select-checkbox',
+                            targets: 0
+                        }],
+                        select: {
+                            style: 'os',
+                            selector: 'td:first-child'
+                        },
+                        order: [[1, 'asc']]
+                    });
+                });
+                */
+            });
+
+            $(document).ready(function () {
+                var tbl = $('#example').DataTable();
+                $('#example tbody').on('click', 'tr', function () {
+
+                    var sdata = tbl.row(this).data()[0];
+
+                    if (document.getElementById("botonForm")) {
+                        var child1 = document.getElementById("botonForm");
+                        var child2 = document.getElementById("codPublicacionUsu2");
+                        var parent = document.getElementById("formOculto");
+                        parent.removeChild(child1);
+                        parent.removeChild(child2);
+                    }
+
+                    var input = document.createElement("input");
+                    var btn = document.createElement("button");
+
+                    input.setAttribute("type", "hidden");
+                    input.setAttribute("name", "codPublicacionUsu2");
+                    input.setAttribute("id", "codPublicacionUsu2");
+                    input.setAttribute("value", String(sdata));
+
+                    btn.setAttribute("type", "submit");
+                    btn.setAttribute("class", "btn-info");
+                    btn.setAttribute("id", "botonForm");
+                    var t = document.createTextNode("Pedir intercambio");       // Create a text node
+                    btn.appendChild(t);
+
+                    //append to form element that you want .
+                    document.getElementById("formOculto").appendChild(input);
+                    document.getElementById("formOculto").appendChild(btn);
+
+                    document.getElementById('formOculto').style.display = 'block';
+                });
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        function mostrar() {
+            document.getElementById('oculto').style.display = 'block';
+            location.href = "#oculto";
+        }
+    </script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -33,8 +121,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
 
+<body>
     <div class="header-area">
         <div class="container">
             <div class="row">
@@ -72,8 +160,6 @@
                         </ul>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div> <!-- End header area -->
@@ -189,12 +275,9 @@
                                             <h2 class="product-name">@libro.titulo</h2>
 
 
-                                            <form action="#" method="POST" role="form" class="cart">
+                                            <input type="text" name="codLibro" value="@libro.idPublicacion" hidden />
+                                            <input type="button" onclick="mostrar()" value="¡Lo quiero!" />
 
-
-                                                <input type="text" name="codLibro" value="@libro.idPublicacion" hidden />
-                                                <button class="add_to_cart_button" type="submit">¡Lo quiero!</button>
-                                            </form>
 
                                             <div class="product-inner-category">
                                                 <p>Género: @libro.genero</p>
@@ -211,19 +294,87 @@
 
                                                         <p>
                                                             @libro.descripcion
-                                                </p>
+                                                        </p>
 
+                                                    </div>
+
+                                                </div>
                                             </div>
 
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div>
+
+                            <!-- LISTA DE INTERCAMBIOS DEL USUARIO CONECTADO -->
+                                <div class="row" id="oculto" style="display:none">
+                                    <!--TABLA CON LISTADO DE PUBLICACIONES-->
+                                    <div class="panel-body">
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <h3>Seleccioná por cuál de tus libros querés realizar el intercambio</h3>
+                                        <br />
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-9">
+                                                    <table id="example" class="display" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th>Codigo</th>
+                                                                <th>Título</th>
+                                                                <th>Género</th>
+                                                                <th>Autores</th>
+                                                                <th>Fecha</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+
+                                                                <th>Codigo</th>
+                                                                <th>Título</th>
+                                                                <th>Género</th>
+                                                                <th>Autores</th>
+                                                                <th>Fecha</th>
+
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+
+                                                            @foreach (var publicacion in ViewBag.listadoLibrosPublicados)
+                                                            {
+                                                                <tr>
+
+                                                                    <td>@publicacion.idPublicacion</td>
+                                                                    <td>@publicacion.titulo</td>
+                                                                    <td>@publicacion.genero</td>
+                                                                    <td>@publicacion.autor</td>
+                                                                    <td>@publicacion.fechaHoraAlta</td>
+
+                                                                </tr>
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--FIN LISTADO PUBLICACIONES-->
+                                </div>
+                                 <!--FIN LISTA DE INTERCAMBIOS DEL USUARIO CONECTADO -->
+                                <div class="row">
+                                   
+                                        <form id="formOculto" style="display:none; text-align:center" action=@Url.Action("PedirIntercambio","Intercambio") method="POST" role="form">
+
+                                            <input type="text" name="codPublicacionUsu1" id="codPublicacionUsu1" value="@libro.idPublicacion" hidden />
+
+                                        </form>
+                                    </div>
+                                
                             }
                         }
-
                     </div>
                 </div>
             </div>

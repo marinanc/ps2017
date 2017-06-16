@@ -168,6 +168,7 @@
     <Compile Include="Models\CarritoItem.cs" />
     <Compile Include="Models\EditorialModel.cs" />
     <Compile Include="Models\GeneroModel.cs" />
+    <Compile Include="Models\IntercambioModel.cs" />
     <Compile Include="Models\LibroModel.cs" />
     <Compile Include="Models\LocalidadModel.cs" />
     <Compile Include="Models\ProvinciaModel.cs" />

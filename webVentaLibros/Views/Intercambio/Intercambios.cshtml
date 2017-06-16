@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="../css/owl.carousel.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
+
+    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
+
     <style type="text/css">
         .product-item {
             padding: 15px;
@@ -398,4 +401,17 @@
     <!-- Slider -->
     <script type="text/javascript" src="../js/bxslider.min.js"></script>
     <script type="text/javascript" src="../js/script.slider.js"></script>
+
+    <script src="../assets/vendor/toastr/toastr.min.js"></script>
+
+    @if (TempData["Message"] != null)
+    {
+
+        <div id="toast-container" class="toast-top-right">
+            <div class="toast toast-info" aria-live="polite" style="display: block;">
+                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
+                <div class="toast-message">@TempData["Message"]</div>
+            </div>
+        </div>
+    }
 </body>
