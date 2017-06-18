@@ -527,12 +527,16 @@
     <Content Include="Views\Editorial\ModificarEditorial.cshtml" />
     <Content Include="Views\Intercambio\Intercambios.cshtml" />
     <Content Include="Views\CuentaUsuario\MiCuenta.cshtml" />
-    <Content Include="Views\CuentaUsuario\MisIntercambios.cshtml" />
+    <Content Include="Views\CuentaUsuario\MisPublicacionesActivas.cshtml" />
     <Content Include="Views\Intercambio\BusquedaLibro.cshtml" />
     <Content Include="Views\Intercambio\MostrarLibros.cshtml" />
     <Content Include="Views\Intercambio\DetalleLibro.cshtml" />
     <Content Include="Views\Admin\ActualizarStock.cshtml" />
     <Content Include="Views\CuentaUsuario\ModificarIntercambio.cshtml" />
+    <Content Include="Views\CuentaUsuario\SolicitudesIntercambio.cshtml" />
+    <Content Include="Views\CuentaUsuario\SolicitudRecibida.cshtml" />
+    <Content Include="Views\CuentaUsuario\SolicitudEnviada.cshtml" />
+    <Content Include="Views\CuentaUsuario\IntercambioAceptado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,35 +14,51 @@ namespace webVentaLibros.Controllers
 
         public ActionResult MiCuenta()
         {
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.datosUsuario = from usuario in bd.Usuarios
+                                   where usuario.idUsuario == idUsuario
+                                   select usuario;
+
+            ViewBag.cantidadPedidosIntercambioRecibidos = (from publicacion in bd.PublicacionIntercambio
+                                                           where publicacion.idUsuario == idUsuario
+                                                           from intercambio in bd.Intercambios
+                                                           where publicacion.idPublicacion == intercambio.idPublicacionUsuario1
+                                                           select intercambio).Count();
+
             return View();
         }
 
         [HttpGet]
-        public ActionResult MisIntercambios()
+        public ActionResult MisPublicacionesActivas()
         {
             var bd = new bdVentaLibrosDataContext();
 
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
 
             var usuarioLogueado = (from usuario in bd.Usuarios
-                                  where usuario.idUsuario == idUsuario
-                                  select usuario).FirstOrDefault();
+                                   where usuario.idUsuario == idUsuario
+                                   select usuario).FirstOrDefault();
 
             ViewBag.listadoLibrosPublicados = from publicacion in bd.PublicacionIntercambio
-                                              where publicacion.idUsuario == idUsuario
+                                              where publicacion.idUsuario == idUsuario &&
+                                              publicacion.idEstado == 1
                                               from genero in bd.Generos
                                               where publicacion.idGenero == genero.idGenero
-                                              select new PublicacionIntercambioModel { 
+                                              select new PublicacionIntercambioModel
+                                              {
                                                   idPublicacion = publicacion.idPublicacion,
                                                   titulo = publicacion.titulo,
-                                                  foto = publicacion.foto,   
+                                                  foto = publicacion.foto,
                                                   autor = publicacion.autor,
                                                   genero = genero.nombre,
                                                   fechaHoraAlta = Convert.ToDateTime(publicacion.fechaHoraAlta)
                                               };
 
             ViewBag.listadoGeneros = from genero in bd.Generos
-                                select genero;
+                                     select genero;
 
             return View();
         }
@@ -52,8 +68,8 @@ namespace webVentaLibros.Controllers
         {
             var bd = new bdVentaLibrosDataContext();
 
-            if (foto != null) 
-            { 
+            if (foto != null)
+            {
                 foto.SaveAs(System.IO.Path.Combine(@"D:\webVentaLibros\webVentaLibros\img\catalogoIntercambios", System.IO.Path.GetFileName(foto.FileName)));
             }
 
@@ -65,7 +81,7 @@ namespace webVentaLibros.Controllers
                 foto = @"img/catalogoIntercambios/" + foto.FileName,
                 idEstado = 1,
                 idGenero = ppum.idGenero,
-                autor = ppum.autor, 
+                autor = ppum.autor,
                 fechaHoraAlta = DateTime.Now
 
             };
@@ -74,7 +90,7 @@ namespace webVentaLibros.Controllers
             bd.SubmitChanges();
             TempData["Message"] = "Se ha publicado su libro!";
 
-            return RedirectToAction("MisIntercambios");
+            return RedirectToAction("MisPublicacionesActivas");
         }
 
         [HttpGet]
@@ -104,7 +120,7 @@ namespace webVentaLibros.Controllers
             var publicacionModificar = from publicacion in bd.PublicacionIntercambio
                                        where idPublicacion == publicacion.idPublicacion
                                        select publicacion;
-                               
+
             return View(publicacionModificar);
         }
 
@@ -119,8 +135,8 @@ namespace webVentaLibros.Controllers
             }
 
             var publicacionModificada = from publicacion in bd.PublicacionIntercambio
-                                  where publicacionModificar.idPublicacion == publicacion.idPublicacion
-                                  select publicacion;
+                                        where publicacionModificar.idPublicacion == publicacion.idPublicacion
+                                        select publicacion;
 
             //Cambio los datos del inmueble
             if (foto != null)
@@ -148,7 +164,228 @@ namespace webVentaLibros.Controllers
             //Hago el submit
             bd.SubmitChanges();
             TempData["Message"] = "¡Publicacion de intercambio modificada!";
-            return RedirectToAction("MisIntercambios");
+            return RedirectToAction("MisPublicacionesActivas");
+        }
+
+        public ActionResult SolicitudesIntercambio()
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            ViewBag.solicitudesIntercambioRecibidos = from publicacion in bd.PublicacionIntercambio
+                                                      where publicacion.idUsuario == idUsuario
+                                                      from intercambio in bd.Intercambios
+                                                      where publicacion.idPublicacion == intercambio.idPublicacionUsuario1
+                                                      && intercambio.idEstado == 1
+                                                      select intercambio;
+
+            ViewBag.solicitudesIntercambioEnviados = from publicacion in bd.PublicacionIntercambio
+                                                     where publicacion.idUsuario == idUsuario
+                                                     from intercambio in bd.Intercambios
+                                                     where publicacion.idPublicacion == intercambio.idPublicacionUsuario2
+                                                     && intercambio.idEstado == 1
+                                                     select intercambio;
+
+            ViewBag.solicitudesAceptadas = from publicacion in bd.PublicacionIntercambio
+                                                     where publicacion.idUsuario == idUsuario
+                                                     from intercambio in bd.Intercambios
+                                                     where publicacion.idPublicacion == intercambio.idPublicacionUsuario2
+                                                     && intercambio.idEstado == 2
+                                                     select intercambio;
+
+            ViewBag.intercambiosRealizados = from publicacion in bd.PublicacionIntercambio
+                                                      where publicacion.idUsuario == idUsuario
+                                                      from intercambio in bd.Intercambios
+                                                      where (publicacion.idPublicacion == intercambio.idPublicacionUsuario1
+                                                      || publicacion.idPublicacion == intercambio.idPublicacionUsuario2)
+                                                      && intercambio.idEstado == 3
+                                                      select intercambio;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult SolicitudRecibida(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.miLibro = from libro in bd.PublicacionIntercambio
+                              where libro.idPublicacion == idPublicacion1
+                              select libro;
+
+            ViewBag.libroOfrecido = from libro in bd.PublicacionIntercambio
+                                    where libro.idPublicacion == idPublicacion2
+                                    select libro;
+
+            ViewBag.idMiPublicacion = idPublicacion1;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult SolicitudEnviada(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.miLibro = from libro in bd.PublicacionIntercambio
+                              where libro.idPublicacion == idPublicacion2
+                              select libro;
+
+            ViewBag.libroDeseado = from libro in bd.PublicacionIntercambio
+                                   where libro.idPublicacion == idPublicacion1
+                                   select libro;
+
+            ViewBag.idMiPublicacion = idPublicacion2;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CancelarIntercambio(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var eliminarIntercambio = from intercambio in bd.Intercambios
+                                      where intercambio.idPublicacionUsuario1 == idPublicacion1
+                                      where intercambio.idPublicacionUsuario2 == idPublicacion2
+                                      select intercambio;
+
+            foreach (var intercambio in eliminarIntercambio)
+            {
+                bd.Intercambios.DeleteOnSubmit(intercambio);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Intercambio cancelado";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo cancelar el intercambio";
+            }
+            return RedirectToAction("SolicitudesIntercambio");
+        }
+
+        public ActionResult AceptarIntercambio(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var actualizarIntercambio = from intercambio in bd.Intercambios
+                                    where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                    intercambio.idPublicacionUsuario2 == idPublicacion2
+                                    select intercambio;
+
+            var rechazarOtros = from intercambio in bd.Intercambios
+                                where (intercambio.idPublicacionUsuario1 == idPublicacion1 ||
+                                intercambio.idPublicacionUsuario2 == idPublicacion1 ||
+                                intercambio.idPublicacionUsuario1 == idPublicacion2 ||
+                                intercambio.idPublicacionUsuario2 == idPublicacion2) &&
+                                !(intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                    intercambio.idPublicacionUsuario2 == idPublicacion2)
+                                select intercambio;
+
+            ViewBag.librosIntercambiados = actualizarIntercambio;
+
+            foreach (var intercambio in actualizarIntercambio)
+            {
+                intercambio.idEstado = 2;
+            }
+
+            //Elimina los intercambios donde se ofrecian uno de los dos libros
+            foreach (var intercambio in rechazarOtros)
+            {
+                bd.Intercambios.DeleteOnSubmit(intercambio);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Intercambio aceptado! Ingresa al detalle del intercambio para ver los datos del usuario";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo aceptar el intercambio";
+            }
+
+            
+            foreach (var intercambio in rechazarOtros)
+            {
+                bd.Intercambios.DeleteOnSubmit(intercambio);
+            }
+
+            return RedirectToAction("SolicitudesIntercambio");
+        }
+
+        public ActionResult IntercambioAceptado(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.libro1 = from libro in bd.PublicacionIntercambio
+                             where libro.idPublicacion == idPublicacion1
+                             select libro;
+
+            ViewBag.libro2 = from libro in bd.PublicacionIntercambio
+                             where libro.idPublicacion == idPublicacion2
+                             select libro;
+
+            return View();
+        }
+
+        public ActionResult IntercambioRealizado(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var intercambioRealizado = from intercambio in bd.Intercambios
+                                       where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                       intercambio.idPublicacionUsuario2 == idPublicacion2
+                                       select intercambio;
+
+            var publicacionUsu1 = from publicacion in bd.PublicacionIntercambio
+                                  where publicacion.idPublicacion == idPublicacion1
+                                  select publicacion;
+
+            var publicacionUsu2 = from publicacion in bd.PublicacionIntercambio
+                                  where publicacion.idPublicacion == idPublicacion2
+                                  select publicacion;
+
+            foreach (var intercambio in intercambioRealizado)
+            {
+                intercambio.idEstado = 3;
+            }
+
+            foreach (var publicacion in publicacionUsu1)
+            {
+                publicacion.idEstado = 2;
+            }
+
+            foreach (var publicacion in publicacionUsu2)
+            {
+                publicacion.idEstado = 2;
+            }
+
+            bd.SubmitChanges();
+
+            TempData["Message"] = "Felicitaciones! El intercambio ha sido exitoso";
+            return RedirectToAction("SolicitudesIntercambio");
+        }
+
+        public ActionResult IntercambioNoRealizado(int idPublicacion1, int idPublicacion2)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var intercambioNoRealizado = from intercambio in bd.Intercambios
+                                       where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                       intercambio.idPublicacionUsuario2 == idPublicacion2
+                                       select intercambio;
+
+            foreach (var intercambio in intercambioNoRealizado)
+            {
+                intercambio.idEstado = 1;
+            }
+
+            TempData["Message"] = "Ups! Lamentamos el fracaso en el intercambio. Tu libro ha vuelto a publicarse";
+            return RedirectToAction("SolicitudesIntercambio");
         }
 
     }

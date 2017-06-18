@@ -1,0 +1,539 @@
+﻿@{
+    ViewBag.Title = "SolicitudesRecibidas";
+}
+@using webVentaLibros.Models;
+@using WebMatrix.WebData;
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi cuenta - Venta de Libros</title>
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/owl.carousel.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.css" />
+
+    <script type="text/javascript" href="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
+
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+    function mostrar() {
+        document.getElementById('oculto').style.display = 'block';
+        location.href = "#oculto";
+    }
+    </script>
+
+    <script>
+        'use strict';
+        var $ = jQuery;
+        $.getScript("https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.js", function () {
+
+            $('#example').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": false
+            });
+
+            $('#example2').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": false
+            });
+
+            $('#example3').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": false
+            });
+
+            $('#example4').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": false
+            });
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li><span>Hola @WebSecurity.CurrentUserName !</span></li>
+                                if (Roles.IsUserInRole("Administrador"))
+                                {
+                                    <li>@Html.ActionLink("Panel de Control", "Index", "Admin")</li>
+                                }
+                                else
+                                {
+                                    <li><a href="../CuentaUsuario/MiCuenta"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                }
+                            }
+                            @if (!Roles.IsUserInRole("Administrador"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Carrito", "Carrito", "Cart")
+                                </li>
+                            }
+                            <li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Cerrar sesión", "Logout", "User")
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Iniciar sesión", "Login", "User")
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div> <!-- End header area -->
+
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="./"><img src="../img/logo.png"></a></h1>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="shopping-item">
+                        <a href="Cart/Carrito">Carrito - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+
+    <div class="mainmenu-area" style="background-color: #363636">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Solicitudes", "SolicitudesIntercambio", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
+                        </li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- INPUT GROUPS -->
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Solicitudes de intercambios</h3>
+                            </div>
+                           
+                            <div class="panel-body">
+                                <!--SOLICITUDES RECIBIDAS-->
+                                <h3>RECIBIDAS</h3>
+                                <div class="container">
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Libro ofrecido</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Libro ofrecido</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+
+                                                    @foreach (var intercambio in ViewBag.solicitudesIntercambioRecibidos)
+                                                    {
+                                                        <tr>
+                                                            <td>@intercambio.PublicacionIntercambio.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio.Generos.nombre</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.Generos.nombre</td>
+                                                            <td>@intercambio.EstadosIntercambio.nombre</td>
+                                                            <td>@intercambio.fechaHora</td>
+                                                            <td>
+                                                                <form action=@Url.Action("SolicitudRecibida", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                                    <input type="text" value="@intercambio.idPublicacionUsuario1" id="idPublicacion1" name="idPublicacion1" hidden />
+                                                                    <input type="text" value="@intercambio.idPublicacionUsuario2" id="idPublicacion2" name="idPublicacion2" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-lg">
+                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--FIN SOLICITUDES RECIBIDAS-->
+                                <br />
+                                <br />
+                                <br />
+                                <!--SOLICITUDES ENVIADAS-->
+                                <h3>ENVIADAS</h3>
+                                <div class="container">
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example2" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Libro deseado</th>
+                                                        <th>Genero</th>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Libro deseado</th>
+                                                        <th>Genero</th>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+
+                                                    @foreach (var intercambio in ViewBag.solicitudesIntercambioEnviados)
+                                                    {
+                                                        <tr>
+                                                            <td>@intercambio.PublicacionIntercambio.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio.Generos.nombre</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.Generos.nombre</td>
+                                                            <td>@intercambio.EstadosIntercambio.nombre</td>
+                                                            <td>@intercambio.fechaHora</td>
+                                                            <td>
+                                                                <form action=@Url.Action("SolicitudEnviada", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                                    <input type="text" value="@intercambio.idPublicacionUsuario1" id="idPublicacion1" name="idPublicacion1" hidden />
+                                                                    <input type="text" value="@intercambio.idPublicacionUsuario2" id="idPublicacion2" name="idPublicacion2" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-lg">
+                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--FIN SOLICITUDES DE INTERCAMBIOS ENVIADAS-->
+                                <br />
+                                <br />
+                                <br />
+                                <!--INTERCAMBIOS ACEPTADOS-->
+                                <h3>ACEPTADOS</h3>
+                                <div class="container">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example3" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Libro deseado</th>
+                                                        <th>Genero</th>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Libro deseado</th>
+                                                        <th>Genero</th>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+
+                                                    @foreach (var intercambio in ViewBag.solicitudesAceptadas)
+                                                    {
+                                                        <tr>
+                                                            <td>@intercambio.PublicacionIntercambio.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio.Generos.nombre</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.Generos.nombre</td>
+                                                            <td>@intercambio.EstadosIntercambio.nombre</td>
+                                                            <td>@intercambio.fechaHora</td>
+                                                            <td>
+                                                                <form action=@Url.Action("IntercambioAceptado", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                                    <input type="text" value="@intercambio.idPublicacionUsuario1" id="idPublicacion1" name="idPublicacion1" hidden />
+                                                                    <input type="text" value="@intercambio.idPublicacionUsuario2" id="idPublicacion2" name="idPublicacion2" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-lg">
+                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--FIN INTERCAMBIOS ACEPTADOS-->
+                                <br />
+                                <br />
+                                <br />
+                                <!--INTERCAMBIOS REALIZADOS-->
+                                <h3>INTERCAMBIOS EXITOSOS</h3>
+                                <div class="container">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="example4" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Libro deseado</th>
+                                                        <th>Genero</th>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Libro deseado</th>
+                                                        <th>Genero</th>
+                                                        <th>Mi libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Estado</th>
+                                                        <th>Fecha</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+
+                                                    @foreach (var intercambio in ViewBag.intercambiosRealizados)
+                                                    {
+                                                        <tr>
+                                                            <td>@intercambio.PublicacionIntercambio.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio.Generos.nombre</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.titulo</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.Generos.nombre</td>
+                                                            <td>@intercambio.EstadosIntercambio.nombre</td>
+                                                            <td>@intercambio.fechaHora</td>                                                            
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer-top-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>u<span>Stora</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Usuario </h2>
+                        <ul>
+                            <li><a href="#">Mi cuenta</a></li>
+                            <li><a href="#">Historial de Pedidos</a></li>
+                            <li><a href="#">Lista de deseos</a></li>
+                            <li><a href="#">Contacto</a></li>
+                            <li><a href="#">Principal</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Libros</h2>
+                        <ul>
+                            <li><a href="#">Más vendidos</a></li>
+                            <li><a href="#">Más visitados</a></li>
+                            <li><a href="#">Novedades</a></li>
+                            <li><a href="#">Intercambios</a></li>
+                            <li><a href="#">Consultas y sugerencias</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-newsletter">
+                        <h2 class="footer-wid-title">Newsletter</h2>
+                        <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
+                        <div class="newsletter-form">
+                            <form action="#">
+                                <input type="email" placeholder="Type your email">
+                                <input type="submit" value="Subscribe">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div> <!-- End footer bottom area -->
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="../js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="../js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="../js/bxslider.min.js"></script>
+    <script type="text/javascript" src="../js/script.slider.js"></script>
+    <script src="../assets/vendor/toastr/toastr.min.js"></script>
+    @if (TempData["Message"] != null)
+    {
+
+        <div id="toast-container" class="toast-top-right">
+            <div class="toast toast-info" aria-live="polite" style="display: block;">
+                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
+                <div class="toast-message">@TempData["Message"]</div>
+            </div>
+        </div>
+    }
+</body>

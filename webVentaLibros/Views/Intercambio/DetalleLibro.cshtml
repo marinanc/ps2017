@@ -48,24 +48,6 @@
                         style: 'single'
                     }
                 });
-
-
-                /*
-                $(document).ready(function () {
-                    $('#example').DataTable({
-                        columnDefs: [{
-                            orderable: false,
-                            className: 'select-checkbox',
-                            targets: 0
-                        }],
-                        select: {
-                            style: 'os',
-                            selector: 'td:first-child'
-                        },
-                        order: [[1, 'asc']]
-                    });
-                });
-                */
             });
 
             $(document).ready(function () {
@@ -273,21 +255,31 @@
                                     <div class="col-sm-6">
                                         <div class="product-inner">
                                             <h2 class="product-name">@libro.titulo</h2>
-
-
-                                            <input type="text" name="codLibro" value="@libro.idPublicacion" hidden />
-                                            <input type="button" onclick="mostrar()" value="¡Lo quiero!" />
-
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                <div class="form-group" style="text-align:center">
+                                                    <input type="text" name="codLibro" value="@libro.idPublicacion" hidden />
+                                                    <button type="submit" class="btn-info" onclick="mostrar()">¡Lo quiero!</button>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group" style="text-align:center">
+                                                    <p>
+                                                        <span style="color: black;">@Html.ActionLink("Debe iniciar sesión para realizar intercambos", "Login", "User", new { @class = "actionLink" },null)</span>
+                                                    </p>
+                                                </div>
+                                            }
 
                                             <div class="product-inner-category">
-                                                <p>Género: @libro.genero</p>
+                                                <p>Género: @libro.Generos.nombre</p>
                                                 <p>Autor: @libro.autor</p>
                                             </div>
 
                                             <div role="tabpanel">
                                                 <ul class="product-tab" role="tablist">
                                                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-
+                                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div role="tabpanel" class="tab-pane fade in active" id="home">
@@ -297,7 +289,12 @@
                                                         </p>
 
                                                     </div>
+                                                    <div role="tabpanel" class="tab-pane fade" id="profile">
 
+                                                        <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
+                                                        <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
+                                                        <p><label>Calificacion:</label> </p>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -365,14 +362,14 @@
                                 </div>
                                  <!--FIN LISTA DE INTERCAMBIOS DEL USUARIO CONECTADO -->
                                 <div class="row">
-                                   
-                                        <form id="formOculto" style="display:none; text-align:center" action=@Url.Action("PedirIntercambio","Intercambio") method="POST" role="form">
 
-                                            <input type="text" name="codPublicacionUsu1" id="codPublicacionUsu1" value="@libro.idPublicacion" hidden />
+                                    <form id="formOculto" style="display:none; text-align:center" action=@Url.Action("PedirIntercambio","Intercambio") method="POST" role="form">
 
-                                        </form>
-                                    </div>
-                                
+                                        <input type="text" name="codPublicacionUsu1" id="codPublicacionUsu1" value="@libro.idPublicacion" hidden />
+
+                                    </form>
+                                </div>
+
                             }
                         }
                     </div>

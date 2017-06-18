@@ -94,7 +94,6 @@
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
-
     <script>
     $(document).ready(function () {
         $(document).on('change', '.btn-file :file', function () {
@@ -144,10 +143,6 @@
         });
     });
     </script>
-
-
-
-
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -219,7 +214,7 @@
         </div>
     </div> <!-- End site branding area -->
 
-    <div class="mainmenu-area">
+    <div class="mainmenu-area" style="background-color: #363636">
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
@@ -236,13 +231,13 @@
                             @Html.ActionLink("Home", "Index", "Home")
                         </li>
                         <li>
-                            @Html.ActionLink("Carrito", "Carrito", "Cart")
+                            @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
                         </li>
                         <li>
-                            @Html.ActionLink("Mis publicaciones", "MisIntercambios", "CuentaUsuario")
+                            @Html.ActionLink("Solicitudes", "SolicitudesIntercambio", "CuentaUsuario")
                         </li>
-                        <li>
-                            @Html.ActionLink("Intercambios", "Intercambios", "Intercambio")
+                        <li class="active">
+                            @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
                         </li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
@@ -280,8 +275,8 @@
                                                 <div class="input-group">
                                                     
                                                     <span class="input-group-addon info">Genero</span>
-                                                    <select id="idGenero" name="idGenero" class="form-control">
-                                                        <option value="" selected>Elige un género...</option>
+                                                    <select id="idGenero" name="idGenero" class="form-control" required>
+                                                        <option value="" disabled selected>Elige un género...</option>
                                                         @foreach (var genero in ViewBag.listadoGeneros)
                                                         {
                                                             <option value="@genero.idGenero">@genero.nombre</option>

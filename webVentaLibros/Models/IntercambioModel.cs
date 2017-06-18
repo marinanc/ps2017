@@ -15,5 +15,8 @@ namespace webVentaLibros.Models
         public int calificacionUsuario2 { get; set; }
         public int idEstado { get; set; }
 
+        public PublicacionIntercambio publicacionUsuario1 { get; set; }
+        public PublicacionIntercambio publicacionUsuario2 { get; set; }
+
     }
 }

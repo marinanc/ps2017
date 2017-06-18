@@ -220,7 +220,7 @@
         </div>
     </div> <!-- End site branding area -->
 
-    <div class="mainmenu-area">
+    <div class="mainmenu-area" style="background-color: #363636">
         <div class="container">
             <div class="row">
                 <div class="navbar-header">
@@ -237,13 +237,13 @@
                             @Html.ActionLink("Home", "Index", "Home")
                         </li>
                         <li>
-                            @Html.ActionLink("Carrito", "Carrito", "Cart")
+                            @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
                         </li>
                         <li>
-                            @Html.ActionLink("Mis publicaciones", "MisIntercambios", "CuentaUsuario")
+                            @Html.ActionLink("Solicitudes", "SolicitudesIntercambio", "CuentaUsuario")
                         </li>
-                        <li>
-                            @Html.ActionLink("Intercambios", "Intercambios", "Intercambio")
+                        <li class="active">
+                            @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
                         </li>
                         <li><a href="#">Contacto</a></li>
                     </ul>

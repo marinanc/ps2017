@@ -271,7 +271,7 @@
                             @foreach (var genero in ViewBag.listadoGeneros)
                             {
                                 <div class="list-group-item">
-                                    @Html.ActionLink((string)genero.nombreGenero, "MostrarLibros", new { idGenero = genero.idGenero })
+                                    @Html.ActionLink((string)genero.nombre, "MostrarLibros", new { idGenero = genero.idGenero })
                                 </div>
 
                             }

@@ -18,20 +18,14 @@ namespace webVentaLibros.Controllers
 
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
 
-            var listaGeneros = (from genero in bd.Generos
-                                select new GeneroModel
-                                {
-                                    idGenero = genero.idGenero,
-                                    nombreGenero = genero.nombre
-                                }).ToList();
-            ViewBag.listadoGeneros = listaGeneros;
+            ViewBag.listadoGeneros = from genero in bd.Generos
+                                     select genero;
+                               
 
-            var listaPublicaciones = from libro in bd.PublicacionIntercambio
+            ViewBag.listadoPublicaciones = from libro in bd.PublicacionIntercambio
                                      where libro.idEstado == 1
                                      where libro.idUsuario != idUsuario
                                      select libro;
-
-            ViewBag.listadoPublicaciones = listaPublicaciones;
 
             return View();
         }
@@ -82,16 +76,9 @@ namespace webVentaLibros.Controllers
                                     where libro.idEstado == 1
                                     from genero in bd.Generos
                                     where libro.idGenero == genero.idGenero
-                                    select new PublicacionIntercambioModel { 
-                                        idPublicacion = libro.idPublicacion,
-                                        titulo = libro.titulo,
-                                        foto = libro.foto,
-                                        genero = genero.nombre,
-                                        descripcion = libro.descripcion,
-                                        autor = libro.autor,
-                                        fechaHoraAlta = Convert.ToDateTime(libro.fechaHoraAlta)
-                                    };
+                                    select libro;
 
+            //Para listar los libros del usuario conectado
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
             ViewBag.listadoLibrosPublicados = from publicacion in bd.PublicacionIntercambio
                                               where publicacion.idUsuario == idUsuario

@@ -70,6 +70,7 @@ namespace webVentaLibros.Controllers
                 WebSecurity.Logout();
             //}
             FormsAuthentication.SignOut(); //cerrar sesion
+            System.Web.HttpContext.Current.Session["IDUSUARIO"] = null;
             return RedirectToAction("Index","Home");
         }
 
