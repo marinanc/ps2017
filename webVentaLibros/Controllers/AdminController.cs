@@ -339,6 +339,7 @@ namespace webVentaLibros.Controllers
                                select new LibroModel
                                {
                                    codigoBarra = libro.codigoBarra,
+                                   foto = libro.foto,
                                    titulo = libro.titulo,
                                    genero = libro.Generos.nombre,
                                    autor1 = libro.Autores.apellidos + ", " + libro.Autores.nombres,
@@ -351,6 +352,83 @@ namespace webVentaLibros.Controllers
                                }).ToList();
 
             ViewBag.listadoLibros = listaLibros;
+
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ActualizarStock(string codBarra, int stockIngreso)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var libroActualizarStock = from libro in bd.Libros
+                                       where libro.codigoBarra == codBarra
+                                       select libro;
+
+            foreach (var libro in libroActualizarStock)
+            {
+                libro.stock = libro.stock + stockIngreso;
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Stock de ISBN "+codBarra+" fue actualizado";
+
+                ViewBag.listadoLibros = (from libro in bd.Libros
+                                         from editorial in bd.Editoriales
+                                         .Where(e => e.idEditorial == libro.idEditorial).DefaultIfEmpty()
+                                         from genero in bd.Generos
+                                         .Where(g => g.idGenero == libro.idGenero).DefaultIfEmpty()
+                                         from autor in bd.Autores
+                                         .Where(a => a.idAutor == libro.idAutor1).DefaultIfEmpty()
+                                         .Where(a => a.idAutor == libro.idAutor2).DefaultIfEmpty()
+                                         .Where(a => a.idAutor == libro.idAutor3).DefaultIfEmpty()
+                                         .Where(a => a.idAutor == libro.idAutor4).DefaultIfEmpty()
+                                         select new LibroModel
+                                         {
+                                             codigoBarra = libro.codigoBarra,
+                                             foto = libro.foto,
+                                             titulo = libro.titulo,
+                                             genero = libro.Generos.nombre,
+                                             autor1 = libro.Autores.apellidos + ", " + libro.Autores.nombres,
+                                             autor2 = libro.Autores1.apellidos + ", " + libro.Autores.nombres,
+                                             autor3 = libro.Autores2.apellidos + ", " + libro.Autores.nombres,
+                                             autor4 = libro.Autores3.apellidos + ", " + libro.Autores.nombres,
+                                             editorial = libro.Editoriales.nombre,
+                                             precio = Convert.ToDouble(libro.precio),
+                                             stock = libro.stock
+                                         }).ToList();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.listadoLibros = (from libro in bd.Libros
+                                         from editorial in bd.Editoriales
+                                         .Where(e => e.idEditorial == libro.idEditorial).DefaultIfEmpty()
+                                         from genero in bd.Generos
+                                         .Where(g => g.idGenero == libro.idGenero).DefaultIfEmpty()
+                                         from autor in bd.Autores
+                                         .Where(a => a.idAutor == libro.idAutor1).DefaultIfEmpty()
+                                         .Where(a => a.idAutor == libro.idAutor2).DefaultIfEmpty()
+                                         .Where(a => a.idAutor == libro.idAutor3).DefaultIfEmpty()
+                                         .Where(a => a.idAutor == libro.idAutor4).DefaultIfEmpty()
+                                         select new LibroModel
+                                         {
+                                             codigoBarra = libro.codigoBarra,
+                                             foto = libro.foto,
+                                             titulo = libro.titulo,
+                                             genero = libro.Generos.nombre,
+                                             autor1 = libro.Autores.apellidos + ", " + libro.Autores.nombres,
+                                             autor2 = libro.Autores1.apellidos + ", " + libro.Autores.nombres,
+                                             autor3 = libro.Autores2.apellidos + ", " + libro.Autores.nombres,
+                                             autor4 = libro.Autores3.apellidos + ", " + libro.Autores.nombres,
+                                             editorial = libro.Editoriales.nombre,
+                                             precio = Convert.ToDouble(libro.precio),
+                                             stock = libro.stock
+                                         }).ToList();
+                TempData["Message"] = "No se pudo actualizar el stock. Intente nuevamente";
+            }
 
             return View();
         }

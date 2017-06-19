@@ -195,17 +195,17 @@
                     <ul class="nav">
                         <li><a href="Index"><i class="lnr lnr-home"></i> <span>Panel de Control</span></a></li>
                         <li>
-                            <a href="#subPagesAgregar" data-toggle="collapse" class="active"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                            <div id="subPagesAgregar" class="active">
+                            <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPagesAgregar">
                                 <ul class="nav">
-                                    <li class="active">@Html.ActionLink("Libros", "AgregarLibro", "Admin")</li>
+                                    <li>@Html.ActionLink("Libros", "AgregarLibro", "Admin")</li>
                                     <li>@Html.ActionLink("Autores", "AgregarAutor", "Admin")</li>
                                     <li>@Html.ActionLink("Generos", "Generos", "Genero")</li>
                                     <li>@Html.ActionLink("Editoriales", "Editoriales", "Editorial")</li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Actualizar stock</span></a></li>
+                        <li><a href="ActualizarStock" class="active"><i class="lnr lnr-sync"></i> <span>Actualizar stock</span></a></li>
                         <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a></li>
                         <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notificaciones</span></a></li>
                         <li>
@@ -234,7 +234,7 @@
                             <!-- INPUT GROUPS -->
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">DATOS DEL NUEVO LIBRO</h3>
+                                    <h3 class="panel-title">ACTUALIZAR STOCK DE LIBROS</h3>
                                 </div>
 
                                 <!--TABLA CON LISTADO DE LIBROS-->
@@ -243,12 +243,14 @@
                                     <div class="container">
                                         <div class="row">
 
+
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-10">
                                                 <table id="example" class="display" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>Tapa</th>
                                                             <th>Cód.Barra</th>
                                                             <th>Título</th>
                                                             <th>Género</th>
@@ -256,11 +258,12 @@
                                                             <th>Editorial</th>
                                                             <th>Precio</th>
                                                             <th>Stock actual</th>
-                                                            <th>Modificar</th>
+                                                            <th>Ingreso de stock</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
+                                                            <th>Tapa</th>
                                                             <th>Cód.Barra</th>
                                                             <th>Título</th>
                                                             <th>Género</th>
@@ -268,7 +271,7 @@
                                                             <th>Editorial</th>
                                                             <th>Precio</th>
                                                             <th>Stock actual</th>
-                                                            <th>Modificar</th>
+                                                            <th>Ingreso de stock</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -276,6 +279,7 @@
                                                         @foreach (var libro in ViewBag.listadoLibros)
                                                         {
                                                             <tr>
+                                                                <td style="width: 30px; height: 70px"><img style="width:100%; height:100%" src="../@libro.foto" /></td>
                                                                 <td>@libro.codigoBarra</td>
                                                                 <td>@libro.titulo</td>
                                                                 <td>@libro.genero</td>
@@ -284,10 +288,12 @@
                                                                 <td>@libro.precio</td>
                                                                 <td>@libro.stock</td>
                                                                 <td>
-                                                                    <form action=@Url.Action("ModificarLibro", "Admin") enctype="multipart/form-data" method="GET" role="form">
+                                                                    <form action=@Url.Action("ActualizarStock", "Admin") enctype="multipart/form-data" method="POST" role="form" style="text-align:center">
                                                                         <input type="text" value="@libro.codigoBarra" id="codBarra" name="codBarra" hidden />
-                                                                        <button type="submit" class="btn btn-default btn-lg">
-                                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+                                                                        <input type="number" id="stockIngreso" name="stockIngreso" style="width:75px" maxlength="4" min="@(0 - libro.stock)" required/>
+                                                                        
+                                                                        <button type="submit" class="btn btn-default">
+                                                                            <span class="glyphicon glyphicon-refresh" aria-hidden="true">
                                                                             </span>
                                                                         </button>
                                                                     </form>
