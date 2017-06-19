@@ -187,19 +187,20 @@ namespace webVentaLibros.Controllers
                                                      select intercambio;
 
             ViewBag.solicitudesAceptadas = from publicacion in bd.PublicacionIntercambio
-                                                     where publicacion.idUsuario == idUsuario
-                                                     from intercambio in bd.Intercambios
-                                                     where publicacion.idPublicacion == intercambio.idPublicacionUsuario2
-                                                     && intercambio.idEstado == 2
-                                                     select intercambio;
+                                           where publicacion.idUsuario == idUsuario
+                                           from intercambio in bd.Intercambios
+                                           where (publicacion.idPublicacion == intercambio.idPublicacionUsuario2 
+                                           || publicacion.idPublicacion == intercambio.idPublicacionUsuario1)
+                                           && intercambio.idEstado == 2
+                                           select intercambio;
 
             ViewBag.intercambiosRealizados = from publicacion in bd.PublicacionIntercambio
-                                                      where publicacion.idUsuario == idUsuario
-                                                      from intercambio in bd.Intercambios
-                                                      where (publicacion.idPublicacion == intercambio.idPublicacionUsuario1
-                                                      || publicacion.idPublicacion == intercambio.idPublicacionUsuario2)
-                                                      && intercambio.idEstado == 3
-                                                      select intercambio;
+                                             where publicacion.idUsuario == idUsuario
+                                             from intercambio in bd.Intercambios
+                                             where (publicacion.idPublicacion == intercambio.idPublicacionUsuario1
+                                             || publicacion.idPublicacion == intercambio.idPublicacionUsuario2)
+                                             && intercambio.idEstado == 3
+                                             select intercambio;
 
             return View();
         }
@@ -272,30 +273,39 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             var actualizarIntercambio = from intercambio in bd.Intercambios
-                                    where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
-                                    intercambio.idPublicacionUsuario2 == idPublicacion2
-                                    select intercambio;
+                                        where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                        intercambio.idPublicacionUsuario2 == idPublicacion2
+                                        select intercambio;
 
-            var rechazarOtros = from intercambio in bd.Intercambios
+            var rechazarOtros = (from intercambio in bd.Intercambios
                                 where (intercambio.idPublicacionUsuario1 == idPublicacion1 ||
                                 intercambio.idPublicacionUsuario2 == idPublicacion1 ||
                                 intercambio.idPublicacionUsuario1 == idPublicacion2 ||
-                                intercambio.idPublicacionUsuario2 == idPublicacion2) &&
-                                !(intercambio.idPublicacionUsuario1 == idPublicacion1 &&
-                                    intercambio.idPublicacionUsuario2 == idPublicacion2)
-                                select intercambio;
+                                intercambio.idPublicacionUsuario2 == idPublicacion2)                                
+                                select intercambio).Except(actualizarIntercambio);
+
+            var deshabilitarPublicaciones = from publicacion in bd.PublicacionIntercambio
+                                            where publicacion.idPublicacion == idPublicacion1 ||
+                                            publicacion.idPublicacion == idPublicacion2
+                                            select publicacion;
 
             ViewBag.librosIntercambiados = actualizarIntercambio;
 
             foreach (var intercambio in actualizarIntercambio)
             {
-                intercambio.idEstado = 2;
+                intercambio.idEstado = 2; // 2 => 'SOLICITUD ACEPTADA'
             }
 
             //Elimina los intercambios donde se ofrecian uno de los dos libros
             foreach (var intercambio in rechazarOtros)
             {
                 bd.Intercambios.DeleteOnSubmit(intercambio);
+            }
+
+            //Deshabilito las publicaciones
+            foreach (var publicacion in deshabilitarPublicaciones)
+            {
+                publicacion.idEstado = 3; //3 => 'EN INTERCAMBIO'
             }
 
             try
@@ -308,7 +318,7 @@ namespace webVentaLibros.Controllers
                 TempData["Message"] = "No se pudo aceptar el intercambio";
             }
 
-            
+
             foreach (var intercambio in rechazarOtros)
             {
                 bd.Intercambios.DeleteOnSubmit(intercambio);
@@ -320,6 +330,11 @@ namespace webVentaLibros.Controllers
         public ActionResult IntercambioAceptado(int idPublicacion1, int idPublicacion2)
         {
             var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.libroIntercambiados = from intercambio in bd.Intercambios
+                                          where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                          intercambio.idPublicacionUsuario2 == idPublicacion2
+                                          select intercambio;
 
             ViewBag.libro1 = from libro in bd.PublicacionIntercambio
                              where libro.idPublicacion == idPublicacion1
@@ -375,18 +390,40 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             var intercambioNoRealizado = from intercambio in bd.Intercambios
-                                       where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
-                                       intercambio.idPublicacionUsuario2 == idPublicacion2
-                                       select intercambio;
+                                         where intercambio.idPublicacionUsuario1 == idPublicacion1 &&
+                                         intercambio.idPublicacionUsuario2 == idPublicacion2
+                                         select intercambio;
 
-            foreach (var intercambio in intercambioNoRealizado)
+            var habilitarPublicaciones = from publicacion in bd.PublicacionIntercambio
+                                         where publicacion.idPublicacion == idPublicacion1 ||
+                                         publicacion.idPublicacion == idPublicacion2
+                                         select publicacion;
+
+            //Vuelvo a habilitar las publicaciones de los dos libros involucrados
+            foreach(var publicacion in habilitarPublicaciones)
             {
-                intercambio.idEstado = 1;
+                publicacion.idEstado = 1; // 1 => 'ACTIVO'
             }
 
-            TempData["Message"] = "Ups! Lamentamos el fracaso en el intercambio. Tu libro ha vuelto a publicarse";
+            //Elimino el intercambio
+            foreach (var intercambio in intercambioNoRealizado)
+            {
+                bd.Intercambios.DeleteOnSubmit(intercambio);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Ups! Lamentamos el fracaso en el intercambio. Tu libro ha vuelto a publicarse";
+            } 
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo cancelar el intercambio. Intentelo de nuevo";
+            }
+            
             return RedirectToAction("SolicitudesIntercambio");
         }
+
 
     }
 }

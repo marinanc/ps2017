@@ -36,9 +36,6 @@ namespace webVentaLibros.Models
     partial void InsertCalificacionPorLibro(CalificacionPorLibro instance);
     partial void UpdateCalificacionPorLibro(CalificacionPorLibro instance);
     partial void DeleteCalificacionPorLibro(CalificacionPorLibro instance);
-    partial void InsertCalificacionPorUsuario(CalificacionPorUsuario instance);
-    partial void UpdateCalificacionPorUsuario(CalificacionPorUsuario instance);
-    partial void DeleteCalificacionPorUsuario(CalificacionPorUsuario instance);
     partial void InsertComentarioPorLibro(ComentarioPorLibro instance);
     partial void UpdateComentarioPorLibro(ComentarioPorLibro instance);
     partial void DeleteComentarioPorLibro(ComentarioPorLibro instance);
@@ -141,14 +138,6 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<CalificacionPorLibro>();
-			}
-		}
-		
-		public System.Data.Linq.Table<CalificacionPorUsuario> CalificacionPorUsuario
-		{
-			get
-			{
-				return this.GetTable<CalificacionPorUsuario>();
 			}
 		}
 		
@@ -718,246 +707,6 @@ namespace webVentaLibros.Models
 						this._idUsuario = default(int);
 					}
 					this.SendPropertyChanged("Usuarios");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalificacionPorUsuario")]
-	public partial class CalificacionPorUsuario : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idUsuarioCalificado;
-		
-		private int _idUsuarioCalificador;
-		
-		private System.DateTime _fechaHora;
-		
-		private int _calificacion;
-		
-		private string _comentario;
-		
-		private EntityRef<Usuarios> _Usuarios;
-		
-		private EntityRef<Usuarios> _Usuarios1;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidUsuarioCalificadoChanging(int value);
-    partial void OnidUsuarioCalificadoChanged();
-    partial void OnidUsuarioCalificadorChanging(int value);
-    partial void OnidUsuarioCalificadorChanged();
-    partial void OnfechaHoraChanging(System.DateTime value);
-    partial void OnfechaHoraChanged();
-    partial void OncalificacionChanging(int value);
-    partial void OncalificacionChanged();
-    partial void OncomentarioChanging(string value);
-    partial void OncomentarioChanged();
-    #endregion
-		
-		public CalificacionPorUsuario()
-		{
-			this._Usuarios = default(EntityRef<Usuarios>);
-			this._Usuarios1 = default(EntityRef<Usuarios>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuarioCalificado", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idUsuarioCalificado
-		{
-			get
-			{
-				return this._idUsuarioCalificado;
-			}
-			set
-			{
-				if ((this._idUsuarioCalificado != value))
-				{
-					if (this._Usuarios.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidUsuarioCalificadoChanging(value);
-					this.SendPropertyChanging();
-					this._idUsuarioCalificado = value;
-					this.SendPropertyChanged("idUsuarioCalificado");
-					this.OnidUsuarioCalificadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuarioCalificador", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idUsuarioCalificador
-		{
-			get
-			{
-				return this._idUsuarioCalificador;
-			}
-			set
-			{
-				if ((this._idUsuarioCalificador != value))
-				{
-					if (this._Usuarios1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidUsuarioCalificadorChanging(value);
-					this.SendPropertyChanging();
-					this._idUsuarioCalificador = value;
-					this.SendPropertyChanged("idUsuarioCalificador");
-					this.OnidUsuarioCalificadorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", DbType="DateTime NOT NULL")]
-		public System.DateTime fechaHora
-		{
-			get
-			{
-				return this._fechaHora;
-			}
-			set
-			{
-				if ((this._fechaHora != value))
-				{
-					this.OnfechaHoraChanging(value);
-					this.SendPropertyChanging();
-					this._fechaHora = value;
-					this.SendPropertyChanged("fechaHora");
-					this.OnfechaHoraChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calificacion", DbType="Int NOT NULL")]
-		public int calificacion
-		{
-			get
-			{
-				return this._calificacion;
-			}
-			set
-			{
-				if ((this._calificacion != value))
-				{
-					this.OncalificacionChanging(value);
-					this.SendPropertyChanging();
-					this._calificacion = value;
-					this.SendPropertyChanged("calificacion");
-					this.OncalificacionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comentario", DbType="NVarChar(100)")]
-		public string comentario
-		{
-			get
-			{
-				return this._comentario;
-			}
-			set
-			{
-				if ((this._comentario != value))
-				{
-					this.OncomentarioChanging(value);
-					this.SendPropertyChanging();
-					this._comentario = value;
-					this.SendPropertyChanged("comentario");
-					this.OncomentarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorUsuario", Storage="_Usuarios", ThisKey="idUsuarioCalificado", OtherKey="idUsuario", IsForeignKey=true)]
-		public Usuarios Usuarios
-		{
-			get
-			{
-				return this._Usuarios.Entity;
-			}
-			set
-			{
-				Usuarios previousValue = this._Usuarios.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuarios.Entity = null;
-						previousValue.CalificacionPorUsuario.Remove(this);
-					}
-					this._Usuarios.Entity = value;
-					if ((value != null))
-					{
-						value.CalificacionPorUsuario.Add(this);
-						this._idUsuarioCalificado = value.idUsuario;
-					}
-					else
-					{
-						this._idUsuarioCalificado = default(int);
-					}
-					this.SendPropertyChanged("Usuarios");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorUsuario1", Storage="_Usuarios1", ThisKey="idUsuarioCalificador", OtherKey="idUsuario", IsForeignKey=true)]
-		public Usuarios Usuarios1
-		{
-			get
-			{
-				return this._Usuarios1.Entity;
-			}
-			set
-			{
-				Usuarios previousValue = this._Usuarios1.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuarios1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuarios1.Entity = null;
-						previousValue.CalificacionPorUsuario1.Remove(this);
-					}
-					this._Usuarios1.Entity = value;
-					if ((value != null))
-					{
-						value.CalificacionPorUsuario1.Add(this);
-						this._idUsuarioCalificador = value.idUsuario;
-					}
-					else
-					{
-						this._idUsuarioCalificador = default(int);
-					}
-					this.SendPropertyChanged("Usuarios1");
 				}
 			}
 		}
@@ -3592,10 +3341,6 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
-		private EntitySet<CalificacionPorUsuario> _CalificacionPorUsuario;
-		
-		private EntitySet<CalificacionPorUsuario> _CalificacionPorUsuario1;
-		
 		private EntitySet<ComentarioPorLibro> _ComentarioPorLibro;
 		
 		private EntitySet<Pedidos> _Pedidos;
@@ -3635,8 +3380,6 @@ namespace webVentaLibros.Models
 		public Usuarios()
 		{
 			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
-			this._CalificacionPorUsuario = new EntitySet<CalificacionPorUsuario>(new Action<CalificacionPorUsuario>(this.attach_CalificacionPorUsuario), new Action<CalificacionPorUsuario>(this.detach_CalificacionPorUsuario));
-			this._CalificacionPorUsuario1 = new EntitySet<CalificacionPorUsuario>(new Action<CalificacionPorUsuario>(this.attach_CalificacionPorUsuario1), new Action<CalificacionPorUsuario>(this.detach_CalificacionPorUsuario1));
 			this._ComentarioPorLibro = new EntitySet<ComentarioPorLibro>(new Action<ComentarioPorLibro>(this.attach_ComentarioPorLibro), new Action<ComentarioPorLibro>(this.detach_ComentarioPorLibro));
 			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
@@ -3866,32 +3609,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorUsuario", Storage="_CalificacionPorUsuario", ThisKey="idUsuario", OtherKey="idUsuarioCalificado")]
-		public EntitySet<CalificacionPorUsuario> CalificacionPorUsuario
-		{
-			get
-			{
-				return this._CalificacionPorUsuario;
-			}
-			set
-			{
-				this._CalificacionPorUsuario.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorUsuario1", Storage="_CalificacionPorUsuario1", ThisKey="idUsuario", OtherKey="idUsuarioCalificador")]
-		public EntitySet<CalificacionPorUsuario> CalificacionPorUsuario1
-		{
-			get
-			{
-				return this._CalificacionPorUsuario1;
-			}
-			set
-			{
-				this._CalificacionPorUsuario1.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_ComentarioPorLibro", Storage="_ComentarioPorLibro", ThisKey="idUsuario", OtherKey="idUsuario")]
 		public EntitySet<ComentarioPorLibro> ComentarioPorLibro
 		{
@@ -4029,30 +3746,6 @@ namespace webVentaLibros.Models
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = null;
-		}
-		
-		private void attach_CalificacionPorUsuario(CalificacionPorUsuario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuarios = this;
-		}
-		
-		private void detach_CalificacionPorUsuario(CalificacionPorUsuario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuarios = null;
-		}
-		
-		private void attach_CalificacionPorUsuario1(CalificacionPorUsuario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuarios1 = this;
-		}
-		
-		private void detach_CalificacionPorUsuario1(CalificacionPorUsuario entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuarios1 = null;
 		}
 		
 		private void attach_ComentarioPorLibro(ComentarioPorLibro entity)
@@ -5345,8 +5038,6 @@ namespace webVentaLibros.Models
 		
 		private System.DateTime _fechaHora;
 		
-		private string _comentario;
-		
 		private System.Nullable<int> _calificacionUsuario1;
 		
 		private System.Nullable<int> _calificacionUsuario2;
@@ -5369,8 +5060,6 @@ namespace webVentaLibros.Models
     partial void OnidPublicacionUsuario2Changed();
     partial void OnfechaHoraChanging(System.DateTime value);
     partial void OnfechaHoraChanged();
-    partial void OncomentarioChanging(string value);
-    partial void OncomentarioChanged();
     partial void OncalificacionUsuario1Changing(System.Nullable<int> value);
     partial void OncalificacionUsuario1Changed();
     partial void OncalificacionUsuario2Changing(System.Nullable<int> value);
@@ -5451,26 +5140,6 @@ namespace webVentaLibros.Models
 					this._fechaHora = value;
 					this.SendPropertyChanged("fechaHora");
 					this.OnfechaHoraChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comentario", DbType="NVarChar(200)")]
-		public string comentario
-		{
-			get
-			{
-				return this._comentario;
-			}
-			set
-			{
-				if ((this._comentario != value))
-				{
-					this.OncomentarioChanging(value);
-					this.SendPropertyChanging();
-					this._comentario = value;
-					this.SendPropertyChanged("comentario");
-					this.OncomentarioChanged();
 				}
 			}
 		}

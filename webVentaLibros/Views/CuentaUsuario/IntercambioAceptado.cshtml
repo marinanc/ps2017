@@ -197,24 +197,24 @@
 
                                                         <div role="tabpanel">
                                                             <ul class="product-tab" role="tablist">
-                                                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-                                                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
+                                                                <li role="presentation" class="active"><a href="#home1" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
+                                                                <li role="presentation"><a href="#profile1" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
                                                             </ul>
                                                             <div class="tab-content">
-                                                                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                                                <div role="tabpanel" class="tab-pane fade in active" id="home1">
 
                                                                     <p>
                                                                         @libro.descripcion
                                                                     </p>
 
                                                                 </div>
-                                                                <div role="tabpanel" class="tab-pane fade" id="profile">
+                                                                <div role="tabpanel" class="tab-pane fade" id="profile1">
                                                                     <h2>Usuario</h2>
                                                                     <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
                                                                     <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
                                                                     <p><label>Calificacion:</label> </p>
                                                                     <br />
-                                                                    <p><label>Email de contacto:</label>@libro.Usuarios.email</p>
+                                                                    <p><label>Email de contacto:</label>@libro.Usuarios.mail</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -265,24 +265,24 @@
 
                                                         <div role="tabpanel">
                                                             <ul class="product-tab" role="tablist">
-                                                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-                                                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
+                                                                <li role="presentation" class="active"><a href="#home2" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
+                                                                <li role="presentation"><a href="#profile2" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
                                                             </ul>
                                                             <div class="tab-content">
-                                                                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                                                <div role="tabpanel" class="tab-pane fade in active" id="home2">
 
                                                                     <p>
                                                                         @libro.descripcion
                                                                     </p>
 
                                                                 </div>
-                                                                <div role="tabpanel" class="tab-pane fade" id="profile">
+                                                                <div role="tabpanel" class="tab-pane fade" id="profile2">
                                                                     <h2>Usuario</h2>
                                                                     <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
                                                                     <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
                                                                     <p><label>Calificacion:</label> </p>
                                                                     <br />
-                                                                    <p><label>Email de contacto:</label>@libro.Usuarios.email</p>
+                                                                    <p><label>Email de contacto:</label>@libro.Usuarios.mail</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -297,9 +297,9 @@
                         <br />
                         <br />
                         <div class="row">
-                            @if (ViewBag.librosIntercambiados != null)
+                            @if (ViewBag.libroIntercambiados != null)
                             {
-                                foreach (var intercambio in ViewBag.librosIntercambiados)
+                                foreach (var intercambio in ViewBag.libroIntercambiados)
                                 {
                                     <div class="col-md-6 col-md-offset-3" style="text-align:center">
                                         <div class="col-md-6">

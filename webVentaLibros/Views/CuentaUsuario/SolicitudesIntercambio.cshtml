@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.css" />
 
+
     <script type="text/javascript" href="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
 
     <script src="../js/jquery-3.2.1.js"></script>
@@ -40,10 +41,10 @@
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
     <script type="text/javascript">
-    function mostrar() {
-        document.getElementById('oculto').style.display = 'block';
-        location.href = "#oculto";
-    }
+        function mostrar() {
+            document.getElementById('oculto').style.display = 'block';
+            location.href = "#oculto";
+        }
     </script>
 
     <script>
@@ -76,7 +77,6 @@
             });
         });
     </script>
-
 
 
 </head>
@@ -186,12 +186,12 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title">Solicitudes de intercambios</h3>
                             </div>
-                           
+
                             <div class="panel-body">
                                 <!--SOLICITUDES RECIBIDAS-->
                                 <h3>RECIBIDAS</h3>
                                 <div class="container">
-                                    
+
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table id="example" class="display" cellspacing="0" width="100%">
@@ -254,7 +254,7 @@
                                 <!--SOLICITUDES ENVIADAS-->
                                 <h3>ENVIADAS</h3>
                                 <div class="container">
-                                    
+
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table id="example2" class="display" cellspacing="0" width="100%">
@@ -324,9 +324,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Libro deseado</th>
-                                                        <th>Genero</th>
+                                                        <th>Dueño actual</th>
                                                         <th>Mi libro</th>
-                                                        <th>Genero</th>
+                                                        <th>Dueño actual</th>
                                                         <th>Estado</th>
                                                         <th>Fecha</th>
                                                         <th>Ver</th>
@@ -336,9 +336,9 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th>Libro deseado</th>
-                                                        <th>Genero</th>
+                                                        <th>Dueño actual</th>
                                                         <th>Mi libro</th>
-                                                        <th>Genero</th>
+                                                        <th>Dueño actual</th>
                                                         <th>Estado</th>
                                                         <th>Fecha</th>
                                                         <th>Ver</th>
@@ -349,10 +349,28 @@
                                                     @foreach (var intercambio in ViewBag.solicitudesAceptadas)
                                                     {
                                                         <tr>
-                                                            <td>@intercambio.PublicacionIntercambio.titulo</td>
-                                                            <td>@intercambio.PublicacionIntercambio.Generos.nombre</td>
-                                                            <td>@intercambio.PublicacionIntercambio1.titulo</td>
-                                                            <td>@intercambio.PublicacionIntercambio1.Generos.nombre</td>
+                                                            @if (intercambio.PublicacionIntercambio.Usuarios.idUsuario == Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]))
+                                                            {
+                                                                <td>@intercambio.PublicacionIntercambio1.titulo</td>
+    <td>@intercambio.PublicacionIntercambio1.Usuarios.nombreUsuario</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@intercambio.PublicacionIntercambio.titulo</td>
+    <td>@intercambio.PublicacionIntercambio.Usuarios.nombreUsuario</td>
+                                                            }
+                                                            
+                                                            @if (intercambio.PublicacionIntercambio.Usuarios.idUsuario == Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]))
+                                                            {
+                                                                <td>@intercambio.PublicacionIntercambio.titulo</td>
+    <td>@intercambio.PublicacionIntercambio.Usuarios.nombreUsuario</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@intercambio.PublicacionIntercambio1.titulo</td>
+    <td>@intercambio.PublicacionIntercambio1.Usuarios.nombreUsuario</td>
+                                                            }
+                                                            
                                                             <td>@intercambio.EstadosIntercambio.nombre</td>
                                                             <td>@intercambio.fechaHora</td>
                                                             <td>
@@ -386,23 +404,25 @@
                                             <table id="example4" class="display" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Libro deseado</th>
-                                                        <th>Genero</th>
-                                                        <th>Mi libro</th>
-                                                        <th>Genero</th>
+                                                        <th>Libro</th>
+                                                        <th>Dueño actual</th>
+                                                        <th>Libro</th>
+                                                        <th>Dueño actual</th>
                                                         <th>Estado</th>
                                                         <th>Fecha</th>
+
 
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
-                                                        <th>Libro deseado</th>
-                                                        <th>Genero</th>
-                                                        <th>Mi libro</th>
-                                                        <th>Genero</th>
+                                                        <th>Libro</th>
+                                                        <th>Dueño actual</th>
+                                                        <th>Libro</th>
+                                                        <th>Dueño actual</th>
                                                         <th>Estado</th>
                                                         <th>Fecha</th>
+
                                                     </tr>
                                                 </tfoot>
                                                 <tbody>
@@ -411,11 +431,12 @@
                                                     {
                                                         <tr>
                                                             <td>@intercambio.PublicacionIntercambio.titulo</td>
-                                                            <td>@intercambio.PublicacionIntercambio.Generos.nombre</td>
+                                                            <td>@intercambio.PublicacionIntercambio1.Usuarios.nombreUsuario</td>
                                                             <td>@intercambio.PublicacionIntercambio1.titulo</td>
-                                                            <td>@intercambio.PublicacionIntercambio1.Generos.nombre</td>
+                                                            <td>@intercambio.PublicacionIntercambio.Usuarios.nombreUsuario</td>
                                                             <td>@intercambio.EstadosIntercambio.nombre</td>
-                                                            <td>@intercambio.fechaHora</td>                                                            
+                                                            <td>@intercambio.fechaHora</td>
+
                                                         </tr>
                                                     }
 
@@ -424,7 +445,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
 
                         </div>
                     </div>

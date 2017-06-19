@@ -24,7 +24,7 @@ namespace webVentaLibros.Controllers
 
             ViewBag.listadoPublicaciones = from libro in bd.PublicacionIntercambio
                                      where libro.idEstado == 1
-                                     where libro.idUsuario != idUsuario
+                                     && libro.idUsuario != idUsuario
                                      select libro;
 
             return View();
@@ -38,8 +38,8 @@ namespace webVentaLibros.Controllers
                                select genero;
 
             ViewBag.librosEncontrados = (from libro in bd.PublicacionIntercambio
-                                     where libro.autor.Contains(busqueda) || libro.titulo.Contains(busqueda)
-                                     where libro.idEstado == 1
+                                     where (libro.autor.Contains(busqueda) || libro.titulo.Contains(busqueda))
+                                     && libro.idEstado == 1
                                      select libro).ToList();
 
             return View();
@@ -51,7 +51,7 @@ namespace webVentaLibros.Controllers
 
             var listaLibros = from libro in bd.PublicacionIntercambio
                               where libro.idGenero == idGenero
-                              where libro.idEstado == 1
+                              && libro.idEstado == 1
                               select libro;
                                
 
@@ -73,7 +73,7 @@ namespace webVentaLibros.Controllers
 
             ViewBag.listadoLibros = from libro in bd.PublicacionIntercambio
                                     where libro.idPublicacion == idPublicacion
-                                    where libro.idEstado == 1
+                                    && libro.idEstado == 1
                                     from genero in bd.Generos
                                     where libro.idGenero == genero.idGenero
                                     select libro;
@@ -82,6 +82,7 @@ namespace webVentaLibros.Controllers
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
             ViewBag.listadoLibrosPublicados = from publicacion in bd.PublicacionIntercambio
                                               where publicacion.idUsuario == idUsuario
+                                              && publicacion.idEstado == 1
                                               from genero in bd.Generos
                                               where publicacion.idGenero == genero.idGenero
                                               select new PublicacionIntercambioModel

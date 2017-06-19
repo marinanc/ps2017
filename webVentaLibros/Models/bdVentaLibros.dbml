@@ -21,17 +21,6 @@
       <Association Name="Usuarios_CalificacionPorLibro" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.CalificacionPorUsuario" Member="CalificacionPorUsuario">
-    <Type Name="CalificacionPorUsuario">
-      <Column Name="idUsuarioCalificado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="idUsuarioCalificador" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="calificacion" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="comentario" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Association Name="Usuarios_CalificacionPorUsuario" Member="Usuarios" ThisKey="idUsuarioCalificado" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
-      <Association Name="Usuarios_CalificacionPorUsuario1" Member="Usuarios1" ThisKey="idUsuarioCalificador" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.ComentarioPorLibro" Member="ComentarioPorLibro">
     <Type Name="ComentarioPorLibro">
       <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -166,8 +155,6 @@
       <Column Name="idPerfil" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fechaHoraAlta" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Usuarios_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="CalificacionPorLibro" />
-      <Association Name="Usuarios_CalificacionPorUsuario" Member="CalificacionPorUsuario" ThisKey="idUsuario" OtherKey="idUsuarioCalificado" Type="CalificacionPorUsuario" />
-      <Association Name="Usuarios_CalificacionPorUsuario1" Member="CalificacionPorUsuario1" ThisKey="idUsuario" OtherKey="idUsuarioCalificador" Type="CalificacionPorUsuario" />
       <Association Name="Usuarios_ComentarioPorLibro" Member="ComentarioPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="ComentarioPorLibro" />
       <Association Name="Usuarios_Pedidos" Member="Pedidos" ThisKey="idUsuario" OtherKey="idUsuario" Type="Pedidos" />
       <Association Name="Usuarios_PublicacionIntercambio" Member="PublicacionIntercambio" ThisKey="idUsuario" OtherKey="idUsuario" Type="PublicacionIntercambio" />
@@ -242,7 +229,6 @@
       <Column Name="idPublicacionUsuario1" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="idPublicacionUsuario2" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="comentario" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="calificacionUsuario1" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="calificacionUsuario2" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="idEstado" Type="System.Int32" DbType="Int" CanBeNull="true" />
