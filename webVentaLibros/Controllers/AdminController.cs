@@ -14,6 +14,24 @@ namespace webVentaLibros.Controllers
         [Authorize(Roles="Administrador")]
         public ActionResult Index()
         {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.totalLibros = (from libro in bd.Libros
+                                   where libro.stock > 0
+                                   select libro).Count();
+
+            ViewBag.totalVentasConcretadas = (from pedido in bd.Pedidos
+                                              where pedido.idEstadoPedido == 5
+                                              select pedido).Count();
+
+            ViewBag.totalPublicacionesIntercambio = (from publicacion in bd.PublicacionIntercambio
+                                                     where publicacion.idEstado == 1
+                                                     select publicacion).Count();
+
+            ViewBag.totalIntercambiosConcretados = (from intercambio in bd.Intercambios
+                                                    where intercambio.idEstado == 3
+                                                    select intercambio).Count();
+
             return View();
         }
 

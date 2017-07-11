@@ -33,6 +33,7 @@ namespace webVentaLibros.Controllers
 
             var listaLibros = (from libro in bd.Libros
                                where libro.idGenero == idGenero
+                               && libro.stock > 0
                                select new LibroModel
                                {
                                    codigoBarra = libro.codigoBarra,

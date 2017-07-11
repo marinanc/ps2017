@@ -165,6 +165,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>bdVentaLibros.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CalificacionPorLibroModel.cs" />
     <Compile Include="Models\CarritoItem.cs" />
     <Compile Include="Models\EditorialModel.cs" />
     <Compile Include="Models\GeneroModel.cs" />
@@ -228,8 +229,11 @@
     <Content Include="assets\vendor\toastr\toastr.js" />
     <Content Include="assets\vendor\toastr\toastr.min.css" />
     <Content Include="assets\vendor\toastr\toastr.min.js" />
+    <Content Include="Content\bootstrap-rating.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -377,6 +381,8 @@
     <Content Include="assets\vendor\linearicons\fonts\Linearicons-Free.ttf" />
     <Content Include="assets\vendor\linearicons\fonts\Linearicons-Free.woff" />
     <Content Include="assets\vendor\linearicons\fonts\Linearicons-Free.woff2" />
+    <Content Include="Scripts\bootstrap-rating\bootstrap-rating.js" />
+    <Content Include="Scripts\bootstrap-rating\bootstrap-rating.min.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
@@ -385,6 +391,7 @@
       <LastGenOutput>bdVentaLibros.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="img\brand1.png" />
     <Content Include="img\brand2.png" />
@@ -482,6 +489,13 @@
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />

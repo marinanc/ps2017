@@ -33,15 +33,6 @@ namespace webVentaLibros.Models
     partial void InsertAutores(Autores instance);
     partial void UpdateAutores(Autores instance);
     partial void DeleteAutores(Autores instance);
-    partial void InsertCalificacionPorLibro(CalificacionPorLibro instance);
-    partial void UpdateCalificacionPorLibro(CalificacionPorLibro instance);
-    partial void DeleteCalificacionPorLibro(CalificacionPorLibro instance);
-    partial void InsertComentarioPorLibro(ComentarioPorLibro instance);
-    partial void UpdateComentarioPorLibro(ComentarioPorLibro instance);
-    partial void DeleteComentarioPorLibro(ComentarioPorLibro instance);
-    partial void InsertDetallePorPedido(DetallePorPedido instance);
-    partial void UpdateDetallePorPedido(DetallePorPedido instance);
-    partial void DeleteDetallePorPedido(DetallePorPedido instance);
     partial void InsertEditoriales(Editoriales instance);
     partial void UpdateEditoriales(Editoriales instance);
     partial void DeleteEditoriales(Editoriales instance);
@@ -57,9 +48,6 @@ namespace webVentaLibros.Models
     partial void InsertLocalidades(Localidades instance);
     partial void UpdateLocalidades(Localidades instance);
     partial void DeleteLocalidades(Localidades instance);
-    partial void InsertPedidos(Pedidos instance);
-    partial void UpdatePedidos(Pedidos instance);
-    partial void DeletePedidos(Pedidos instance);
     partial void InsertPerfiles(Perfiles instance);
     partial void UpdatePerfiles(Perfiles instance);
     partial void DeletePerfiles(Perfiles instance);
@@ -93,6 +81,18 @@ namespace webVentaLibros.Models
     partial void InsertIntercambios(Intercambios instance);
     partial void UpdateIntercambios(Intercambios instance);
     partial void DeleteIntercambios(Intercambios instance);
+    partial void InsertEstadosPedido(EstadosPedido instance);
+    partial void UpdateEstadosPedido(EstadosPedido instance);
+    partial void DeleteEstadosPedido(EstadosPedido instance);
+    partial void InsertDetallePorPedido(DetallePorPedido instance);
+    partial void UpdateDetallePorPedido(DetallePorPedido instance);
+    partial void DeleteDetallePorPedido(DetallePorPedido instance);
+    partial void InsertPedidos(Pedidos instance);
+    partial void UpdatePedidos(Pedidos instance);
+    partial void DeletePedidos(Pedidos instance);
+    partial void InsertCalificacionPorLibro(CalificacionPorLibro instance);
+    partial void UpdateCalificacionPorLibro(CalificacionPorLibro instance);
+    partial void DeleteCalificacionPorLibro(CalificacionPorLibro instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -133,30 +133,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<CalificacionPorLibro> CalificacionPorLibro
-		{
-			get
-			{
-				return this.GetTable<CalificacionPorLibro>();
-			}
-		}
-		
-		public System.Data.Linq.Table<ComentarioPorLibro> ComentarioPorLibro
-		{
-			get
-			{
-				return this.GetTable<ComentarioPorLibro>();
-			}
-		}
-		
-		public System.Data.Linq.Table<DetallePorPedido> DetallePorPedido
-		{
-			get
-			{
-				return this.GetTable<DetallePorPedido>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Editoriales> Editoriales
 		{
 			get
@@ -194,14 +170,6 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<Localidades>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Pedidos> Pedidos
-		{
-			get
-			{
-				return this.GetTable<Pedidos>();
 			}
 		}
 		
@@ -290,6 +258,38 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<Intercambios>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EstadosPedido> EstadosPedido
+		{
+			get
+			{
+				return this.GetTable<EstadosPedido>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DetallePorPedido> DetallePorPedido
+		{
+			get
+			{
+				return this.GetTable<DetallePorPedido>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Pedidos> Pedidos
+		{
+			get
+			{
+				return this.GetTable<Pedidos>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CalificacionPorLibro> CalificacionPorLibro
+		{
+			get
+			{
+				return this.GetTable<CalificacionPorLibro>();
 			}
 		}
 	}
@@ -516,654 +516,6 @@ namespace webVentaLibros.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalificacionPorLibro")]
-	public partial class CalificacionPorLibro : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _codigoLibro;
-		
-		private int _idUsuario;
-		
-		private int _calificacion;
-		
-		private System.DateTime _fechaHora;
-		
-		private EntityRef<Libros> _Libros;
-		
-		private EntityRef<Usuarios> _Usuarios;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncodigoLibroChanging(string value);
-    partial void OncodigoLibroChanged();
-    partial void OnidUsuarioChanging(int value);
-    partial void OnidUsuarioChanged();
-    partial void OncalificacionChanging(int value);
-    partial void OncalificacionChanged();
-    partial void OnfechaHoraChanging(System.DateTime value);
-    partial void OnfechaHoraChanged();
-    #endregion
-		
-		public CalificacionPorLibro()
-		{
-			this._Libros = default(EntityRef<Libros>);
-			this._Usuarios = default(EntityRef<Usuarios>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string codigoLibro
-		{
-			get
-			{
-				return this._codigoLibro;
-			}
-			set
-			{
-				if ((this._codigoLibro != value))
-				{
-					if (this._Libros.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncodigoLibroChanging(value);
-					this.SendPropertyChanging();
-					this._codigoLibro = value;
-					this.SendPropertyChanged("codigoLibro");
-					this.OncodigoLibroChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idUsuario
-		{
-			get
-			{
-				return this._idUsuario;
-			}
-			set
-			{
-				if ((this._idUsuario != value))
-				{
-					if (this._Usuarios.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._idUsuario = value;
-					this.SendPropertyChanged("idUsuario");
-					this.OnidUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calificacion", DbType="Int NOT NULL")]
-		public int calificacion
-		{
-			get
-			{
-				return this._calificacion;
-			}
-			set
-			{
-				if ((this._calificacion != value))
-				{
-					this.OncalificacionChanging(value);
-					this.SendPropertyChanging();
-					this._calificacion = value;
-					this.SendPropertyChanged("calificacion");
-					this.OncalificacionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", AutoSync=AutoSync.Always, DbType="DateTime NOT NULL", IsDbGenerated=true, UpdateCheck=UpdateCheck.Never)]
-		public System.DateTime fechaHora
-		{
-			get
-			{
-				return this._fechaHora;
-			}
-			set
-			{
-				if ((this._fechaHora != value))
-				{
-					this.OnfechaHoraChanging(value);
-					this.SendPropertyChanging();
-					this._fechaHora = value;
-					this.SendPropertyChanged("fechaHora");
-					this.OnfechaHoraChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_CalificacionPorLibro", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
-		public Libros Libros
-		{
-			get
-			{
-				return this._Libros.Entity;
-			}
-			set
-			{
-				Libros previousValue = this._Libros.Entity;
-				if (((previousValue != value) 
-							|| (this._Libros.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Libros.Entity = null;
-						previousValue.CalificacionPorLibro.Remove(this);
-					}
-					this._Libros.Entity = value;
-					if ((value != null))
-					{
-						value.CalificacionPorLibro.Add(this);
-						this._codigoLibro = value.codigoBarra;
-					}
-					else
-					{
-						this._codigoLibro = default(string);
-					}
-					this.SendPropertyChanged("Libros");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorLibro", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
-		public Usuarios Usuarios
-		{
-			get
-			{
-				return this._Usuarios.Entity;
-			}
-			set
-			{
-				Usuarios previousValue = this._Usuarios.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuarios.Entity = null;
-						previousValue.CalificacionPorLibro.Remove(this);
-					}
-					this._Usuarios.Entity = value;
-					if ((value != null))
-					{
-						value.CalificacionPorLibro.Add(this);
-						this._idUsuario = value.idUsuario;
-					}
-					else
-					{
-						this._idUsuario = default(int);
-					}
-					this.SendPropertyChanged("Usuarios");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ComentarioPorLibro")]
-	public partial class ComentarioPorLibro : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _codigoLibro;
-		
-		private int _idUsuario;
-		
-		private string _comentario;
-		
-		private int _idComentario;
-		
-		private EntityRef<Libros> _Libros;
-		
-		private EntityRef<Usuarios> _Usuarios;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncodigoLibroChanging(string value);
-    partial void OncodigoLibroChanged();
-    partial void OnidUsuarioChanging(int value);
-    partial void OnidUsuarioChanged();
-    partial void OncomentarioChanging(string value);
-    partial void OncomentarioChanged();
-    partial void OnidComentarioChanging(int value);
-    partial void OnidComentarioChanged();
-    #endregion
-		
-		public ComentarioPorLibro()
-		{
-			this._Libros = default(EntityRef<Libros>);
-			this._Usuarios = default(EntityRef<Usuarios>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string codigoLibro
-		{
-			get
-			{
-				return this._codigoLibro;
-			}
-			set
-			{
-				if ((this._codigoLibro != value))
-				{
-					if (this._Libros.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncodigoLibroChanging(value);
-					this.SendPropertyChanging();
-					this._codigoLibro = value;
-					this.SendPropertyChanged("codigoLibro");
-					this.OncodigoLibroChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int NOT NULL")]
-		public int idUsuario
-		{
-			get
-			{
-				return this._idUsuario;
-			}
-			set
-			{
-				if ((this._idUsuario != value))
-				{
-					if (this._Usuarios.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._idUsuario = value;
-					this.SendPropertyChanged("idUsuario");
-					this.OnidUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comentario", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
-		public string comentario
-		{
-			get
-			{
-				return this._comentario;
-			}
-			set
-			{
-				if ((this._comentario != value))
-				{
-					this.OncomentarioChanging(value);
-					this.SendPropertyChanging();
-					this._comentario = value;
-					this.SendPropertyChanged("comentario");
-					this.OncomentarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idComentario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int idComentario
-		{
-			get
-			{
-				return this._idComentario;
-			}
-			set
-			{
-				if ((this._idComentario != value))
-				{
-					this.OnidComentarioChanging(value);
-					this.SendPropertyChanging();
-					this._idComentario = value;
-					this.SendPropertyChanged("idComentario");
-					this.OnidComentarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_ComentarioPorLibro", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
-		public Libros Libros
-		{
-			get
-			{
-				return this._Libros.Entity;
-			}
-			set
-			{
-				Libros previousValue = this._Libros.Entity;
-				if (((previousValue != value) 
-							|| (this._Libros.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Libros.Entity = null;
-						previousValue.ComentarioPorLibro.Remove(this);
-					}
-					this._Libros.Entity = value;
-					if ((value != null))
-					{
-						value.ComentarioPorLibro.Add(this);
-						this._codigoLibro = value.codigoBarra;
-					}
-					else
-					{
-						this._codigoLibro = default(string);
-					}
-					this.SendPropertyChanged("Libros");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_ComentarioPorLibro", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
-		public Usuarios Usuarios
-		{
-			get
-			{
-				return this._Usuarios.Entity;
-			}
-			set
-			{
-				Usuarios previousValue = this._Usuarios.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuarios.Entity = null;
-						previousValue.ComentarioPorLibro.Remove(this);
-					}
-					this._Usuarios.Entity = value;
-					if ((value != null))
-					{
-						value.ComentarioPorLibro.Add(this);
-						this._idUsuario = value.idUsuario;
-					}
-					else
-					{
-						this._idUsuario = default(int);
-					}
-					this.SendPropertyChanged("Usuarios");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DetallePorPedido")]
-	public partial class DetallePorPedido : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idPedido;
-		
-		private string _codigoLibro;
-		
-		private int _cantidad;
-		
-		private decimal _precioUnitario;
-		
-		private EntityRef<Libros> _Libros;
-		
-		private EntityRef<Pedidos> _Pedidos;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidPedidoChanging(int value);
-    partial void OnidPedidoChanged();
-    partial void OncodigoLibroChanging(string value);
-    partial void OncodigoLibroChanged();
-    partial void OncantidadChanging(int value);
-    partial void OncantidadChanged();
-    partial void OnprecioUnitarioChanging(decimal value);
-    partial void OnprecioUnitarioChanged();
-    #endregion
-		
-		public DetallePorPedido()
-		{
-			this._Libros = default(EntityRef<Libros>);
-			this._Pedidos = default(EntityRef<Pedidos>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPedido", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idPedido
-		{
-			get
-			{
-				return this._idPedido;
-			}
-			set
-			{
-				if ((this._idPedido != value))
-				{
-					if (this._Pedidos.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidPedidoChanging(value);
-					this.SendPropertyChanging();
-					this._idPedido = value;
-					this.SendPropertyChanged("idPedido");
-					this.OnidPedidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string codigoLibro
-		{
-			get
-			{
-				return this._codigoLibro;
-			}
-			set
-			{
-				if ((this._codigoLibro != value))
-				{
-					if (this._Libros.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncodigoLibroChanging(value);
-					this.SendPropertyChanging();
-					this._codigoLibro = value;
-					this.SendPropertyChanged("codigoLibro");
-					this.OncodigoLibroChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cantidad", DbType="Int NOT NULL")]
-		public int cantidad
-		{
-			get
-			{
-				return this._cantidad;
-			}
-			set
-			{
-				if ((this._cantidad != value))
-				{
-					this.OncantidadChanging(value);
-					this.SendPropertyChanging();
-					this._cantidad = value;
-					this.SendPropertyChanged("cantidad");
-					this.OncantidadChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_precioUnitario", DbType="Decimal(6,2) NOT NULL")]
-		public decimal precioUnitario
-		{
-			get
-			{
-				return this._precioUnitario;
-			}
-			set
-			{
-				if ((this._precioUnitario != value))
-				{
-					this.OnprecioUnitarioChanging(value);
-					this.SendPropertyChanging();
-					this._precioUnitario = value;
-					this.SendPropertyChanged("precioUnitario");
-					this.OnprecioUnitarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_DetallePorPedido", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
-		public Libros Libros
-		{
-			get
-			{
-				return this._Libros.Entity;
-			}
-			set
-			{
-				Libros previousValue = this._Libros.Entity;
-				if (((previousValue != value) 
-							|| (this._Libros.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Libros.Entity = null;
-						previousValue.DetallePorPedido.Remove(this);
-					}
-					this._Libros.Entity = value;
-					if ((value != null))
-					{
-						value.DetallePorPedido.Add(this);
-						this._codigoLibro = value.codigoBarra;
-					}
-					else
-					{
-						this._codigoLibro = default(string);
-					}
-					this.SendPropertyChanged("Libros");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pedidos_DetallePorPedido", Storage="_Pedidos", ThisKey="idPedido", OtherKey="idPedido", IsForeignKey=true)]
-		public Pedidos Pedidos
-		{
-			get
-			{
-				return this._Pedidos.Entity;
-			}
-			set
-			{
-				Pedidos previousValue = this._Pedidos.Entity;
-				if (((previousValue != value) 
-							|| (this._Pedidos.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Pedidos.Entity = null;
-						previousValue.DetallePorPedido.Remove(this);
-					}
-					this._Pedidos.Entity = value;
-					if ((value != null))
-					{
-						value.DetallePorPedido.Add(this);
-						this._idPedido = value.idPedido;
-					}
-					else
-					{
-						this._idPedido = default(int);
-					}
-					this.SendPropertyChanged("Pedidos");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Editoriales")]
 	public partial class Editoriales : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1288,8 +640,6 @@ namespace webVentaLibros.Models
 		
 		private string _nombre;
 		
-		private EntitySet<Pedidos> _Pedidos;
-		
 		private EntitySet<PublicacionIntercambio> _PublicacionIntercambio;
 		
     #region Definiciones de métodos de extensibilidad
@@ -1304,7 +654,6 @@ namespace webVentaLibros.Models
 		
 		public Estados()
 		{
-			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
 			OnCreated();
 		}
@@ -1349,19 +698,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_Pedidos", Storage="_Pedidos", ThisKey="idEstado", OtherKey="idEstadoPedido")]
-		public EntitySet<Pedidos> Pedidos
-		{
-			get
-			{
-				return this._Pedidos;
-			}
-			set
-			{
-				this._Pedidos.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_PublicacionIntercambio", Storage="_PublicacionIntercambio", ThisKey="idEstado", OtherKey="idEstado")]
 		public EntitySet<PublicacionIntercambio> PublicacionIntercambio
 		{
@@ -1393,18 +729,6 @@ namespace webVentaLibros.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Pedidos(Pedidos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Estados = this;
-		}
-		
-		private void detach_Pedidos(Pedidos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Estados = null;
 		}
 		
 		private void attach_PublicacionIntercambio(PublicacionIntercambio entity)
@@ -1598,11 +922,9 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<int> _idAutor4;
 		
-		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
-		
-		private EntitySet<ComentarioPorLibro> _ComentarioPorLibro;
-		
 		private EntitySet<DetallePorPedido> _DetallePorPedido;
+		
+		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
 		private EntityRef<Autores> _Autores;
 		
@@ -1654,9 +976,8 @@ namespace webVentaLibros.Models
 		
 		public Libros()
 		{
-			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
-			this._ComentarioPorLibro = new EntitySet<ComentarioPorLibro>(new Action<ComentarioPorLibro>(this.attach_ComentarioPorLibro), new Action<ComentarioPorLibro>(this.detach_ComentarioPorLibro));
 			this._DetallePorPedido = new EntitySet<DetallePorPedido>(new Action<DetallePorPedido>(this.attach_DetallePorPedido), new Action<DetallePorPedido>(this.detach_DetallePorPedido));
+			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
 			this._Autores = default(EntityRef<Autores>);
 			this._Autores1 = default(EntityRef<Autores>);
 			this._Autores2 = default(EntityRef<Autores>);
@@ -1990,32 +1311,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_CalificacionPorLibro", Storage="_CalificacionPorLibro", ThisKey="codigoBarra", OtherKey="codigoLibro")]
-		public EntitySet<CalificacionPorLibro> CalificacionPorLibro
-		{
-			get
-			{
-				return this._CalificacionPorLibro;
-			}
-			set
-			{
-				this._CalificacionPorLibro.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_ComentarioPorLibro", Storage="_ComentarioPorLibro", ThisKey="codigoBarra", OtherKey="codigoLibro")]
-		public EntitySet<ComentarioPorLibro> ComentarioPorLibro
-		{
-			get
-			{
-				return this._ComentarioPorLibro;
-			}
-			set
-			{
-				this._ComentarioPorLibro.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_DetallePorPedido", Storage="_DetallePorPedido", ThisKey="codigoBarra", OtherKey="codigoLibro")]
 		public EntitySet<DetallePorPedido> DetallePorPedido
 		{
@@ -2026,6 +1321,19 @@ namespace webVentaLibros.Models
 			set
 			{
 				this._DetallePorPedido.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_CalificacionPorLibro", Storage="_CalificacionPorLibro", ThisKey="codigoBarra", OtherKey="codigoLibro")]
+		public EntitySet<CalificacionPorLibro> CalificacionPorLibro
+		{
+			get
+			{
+				return this._CalificacionPorLibro;
+			}
+			set
+			{
+				this._CalificacionPorLibro.Assign(value);
 			}
 		}
 		
@@ -2253,30 +1561,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		private void attach_CalificacionPorLibro(CalificacionPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Libros = this;
-		}
-		
-		private void detach_CalificacionPorLibro(CalificacionPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Libros = null;
-		}
-		
-		private void attach_ComentarioPorLibro(ComentarioPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Libros = this;
-		}
-		
-		private void detach_ComentarioPorLibro(ComentarioPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Libros = null;
-		}
-		
 		private void attach_DetallePorPedido(DetallePorPedido entity)
 		{
 			this.SendPropertyChanging();
@@ -2284,6 +1568,18 @@ namespace webVentaLibros.Models
 		}
 		
 		private void detach_DetallePorPedido(DetallePorPedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.Libros = null;
+		}
+		
+		private void attach_CalificacionPorLibro(CalificacionPorLibro entity)
+		{
+			this.SendPropertyChanging();
+			entity.Libros = this;
+		}
+		
+		private void detach_CalificacionPorLibro(CalificacionPorLibro entity)
 		{
 			this.SendPropertyChanging();
 			entity.Libros = null;
@@ -2302,9 +1598,9 @@ namespace webVentaLibros.Models
 		
 		private string _nombre;
 		
-		private EntitySet<Pedidos> _Pedidos;
-		
 		private EntitySet<Usuarios> _Usuarios;
+		
+		private EntitySet<Pedidos> _Pedidos;
 		
 		private EntityRef<Provincias> _Provincias;
 		
@@ -2322,8 +1618,8 @@ namespace webVentaLibros.Models
 		
 		public Localidades()
 		{
-			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._Usuarios = new EntitySet<Usuarios>(new Action<Usuarios>(this.attach_Usuarios), new Action<Usuarios>(this.detach_Usuarios));
+			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._Provincias = default(EntityRef<Provincias>);
 			OnCreated();
 		}
@@ -2392,19 +1688,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Pedidos", Storage="_Pedidos", ThisKey="idLocalidad", OtherKey="idLocalidadEntrega")]
-		public EntitySet<Pedidos> Pedidos
-		{
-			get
-			{
-				return this._Pedidos;
-			}
-			set
-			{
-				this._Pedidos.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Usuarios", Storage="_Usuarios", ThisKey="idLocalidad", OtherKey="idLocalidad")]
 		public EntitySet<Usuarios> Usuarios
 		{
@@ -2415,6 +1698,19 @@ namespace webVentaLibros.Models
 			set
 			{
 				this._Usuarios.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Pedidos", Storage="_Pedidos", ThisKey="idLocalidad", OtherKey="idLocalidadEntrega")]
+		public EntitySet<Pedidos> Pedidos
+		{
+			get
+			{
+				return this._Pedidos;
+			}
+			set
+			{
+				this._Pedidos.Assign(value);
 			}
 		}
 		
@@ -2472,18 +1768,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		private void attach_Pedidos(Pedidos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Localidades = this;
-		}
-		
-		private void detach_Pedidos(Pedidos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Localidades = null;
-		}
-		
 		private void attach_Usuarios(Usuarios entity)
 		{
 			this.SendPropertyChanging();
@@ -2495,451 +1779,17 @@ namespace webVentaLibros.Models
 			this.SendPropertyChanging();
 			entity.Localidades = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pedidos")]
-	public partial class Pedidos : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idPedido;
-		
-		private int _idUsuario;
-		
-		private System.DateTime _fechaHora;
-		
-		private System.Nullable<System.DateTime> _fechaEntrega;
-		
-		private string _direccionEntrega;
-		
-		private int _idLocalidadEntrega;
-		
-		private int _idProvinciaEntrega;
-		
-		private int _idEstadoPedido;
-		
-		private string _comentario;
-		
-		private EntitySet<DetallePorPedido> _DetallePorPedido;
-		
-		private EntityRef<Estados> _Estados;
-		
-		private EntityRef<Localidades> _Localidades;
-		
-		private EntityRef<Provincias> _Provincias;
-		
-		private EntityRef<Usuarios> _Usuarios;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidPedidoChanging(int value);
-    partial void OnidPedidoChanged();
-    partial void OnidUsuarioChanging(int value);
-    partial void OnidUsuarioChanged();
-    partial void OnfechaHoraChanging(System.DateTime value);
-    partial void OnfechaHoraChanged();
-    partial void OnfechaEntregaChanging(System.Nullable<System.DateTime> value);
-    partial void OnfechaEntregaChanged();
-    partial void OndireccionEntregaChanging(string value);
-    partial void OndireccionEntregaChanged();
-    partial void OnidLocalidadEntregaChanging(int value);
-    partial void OnidLocalidadEntregaChanged();
-    partial void OnidProvinciaEntregaChanging(int value);
-    partial void OnidProvinciaEntregaChanged();
-    partial void OnidEstadoPedidoChanging(int value);
-    partial void OnidEstadoPedidoChanged();
-    partial void OncomentarioChanging(string value);
-    partial void OncomentarioChanged();
-    #endregion
-		
-		public Pedidos()
-		{
-			this._DetallePorPedido = new EntitySet<DetallePorPedido>(new Action<DetallePorPedido>(this.attach_DetallePorPedido), new Action<DetallePorPedido>(this.detach_DetallePorPedido));
-			this._Estados = default(EntityRef<Estados>);
-			this._Localidades = default(EntityRef<Localidades>);
-			this._Provincias = default(EntityRef<Provincias>);
-			this._Usuarios = default(EntityRef<Usuarios>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPedido", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idPedido
-		{
-			get
-			{
-				return this._idPedido;
-			}
-			set
-			{
-				if ((this._idPedido != value))
-				{
-					this.OnidPedidoChanging(value);
-					this.SendPropertyChanging();
-					this._idPedido = value;
-					this.SendPropertyChanged("idPedido");
-					this.OnidPedidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int NOT NULL")]
-		public int idUsuario
-		{
-			get
-			{
-				return this._idUsuario;
-			}
-			set
-			{
-				if ((this._idUsuario != value))
-				{
-					if (this._Usuarios.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._idUsuario = value;
-					this.SendPropertyChanged("idUsuario");
-					this.OnidUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", AutoSync=AutoSync.Always, DbType="DateTime NOT NULL", IsDbGenerated=true, UpdateCheck=UpdateCheck.Never)]
-		public System.DateTime fechaHora
-		{
-			get
-			{
-				return this._fechaHora;
-			}
-			set
-			{
-				if ((this._fechaHora != value))
-				{
-					this.OnfechaHoraChanging(value);
-					this.SendPropertyChanging();
-					this._fechaHora = value;
-					this.SendPropertyChanged("fechaHora");
-					this.OnfechaHoraChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaEntrega", DbType="DateTime")]
-		public System.Nullable<System.DateTime> fechaEntrega
-		{
-			get
-			{
-				return this._fechaEntrega;
-			}
-			set
-			{
-				if ((this._fechaEntrega != value))
-				{
-					this.OnfechaEntregaChanging(value);
-					this.SendPropertyChanging();
-					this._fechaEntrega = value;
-					this.SendPropertyChanged("fechaEntrega");
-					this.OnfechaEntregaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_direccionEntrega", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string direccionEntrega
-		{
-			get
-			{
-				return this._direccionEntrega;
-			}
-			set
-			{
-				if ((this._direccionEntrega != value))
-				{
-					this.OndireccionEntregaChanging(value);
-					this.SendPropertyChanging();
-					this._direccionEntrega = value;
-					this.SendPropertyChanged("direccionEntrega");
-					this.OndireccionEntregaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idLocalidadEntrega", DbType="Int NOT NULL")]
-		public int idLocalidadEntrega
-		{
-			get
-			{
-				return this._idLocalidadEntrega;
-			}
-			set
-			{
-				if ((this._idLocalidadEntrega != value))
-				{
-					if (this._Localidades.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidLocalidadEntregaChanging(value);
-					this.SendPropertyChanging();
-					this._idLocalidadEntrega = value;
-					this.SendPropertyChanged("idLocalidadEntrega");
-					this.OnidLocalidadEntregaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idProvinciaEntrega", DbType="Int NOT NULL")]
-		public int idProvinciaEntrega
-		{
-			get
-			{
-				return this._idProvinciaEntrega;
-			}
-			set
-			{
-				if ((this._idProvinciaEntrega != value))
-				{
-					if (this._Provincias.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidProvinciaEntregaChanging(value);
-					this.SendPropertyChanging();
-					this._idProvinciaEntrega = value;
-					this.SendPropertyChanged("idProvinciaEntrega");
-					this.OnidProvinciaEntregaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstadoPedido", DbType="Int NOT NULL")]
-		public int idEstadoPedido
-		{
-			get
-			{
-				return this._idEstadoPedido;
-			}
-			set
-			{
-				if ((this._idEstadoPedido != value))
-				{
-					if (this._Estados.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidEstadoPedidoChanging(value);
-					this.SendPropertyChanging();
-					this._idEstadoPedido = value;
-					this.SendPropertyChanged("idEstadoPedido");
-					this.OnidEstadoPedidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comentario", DbType="NVarChar(100)")]
-		public string comentario
-		{
-			get
-			{
-				return this._comentario;
-			}
-			set
-			{
-				if ((this._comentario != value))
-				{
-					this.OncomentarioChanging(value);
-					this.SendPropertyChanging();
-					this._comentario = value;
-					this.SendPropertyChanged("comentario");
-					this.OncomentarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pedidos_DetallePorPedido", Storage="_DetallePorPedido", ThisKey="idPedido", OtherKey="idPedido")]
-		public EntitySet<DetallePorPedido> DetallePorPedido
-		{
-			get
-			{
-				return this._DetallePorPedido;
-			}
-			set
-			{
-				this._DetallePorPedido.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Estados_Pedidos", Storage="_Estados", ThisKey="idEstadoPedido", OtherKey="idEstado", IsForeignKey=true)]
-		public Estados Estados
-		{
-			get
-			{
-				return this._Estados.Entity;
-			}
-			set
-			{
-				Estados previousValue = this._Estados.Entity;
-				if (((previousValue != value) 
-							|| (this._Estados.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Estados.Entity = null;
-						previousValue.Pedidos.Remove(this);
-					}
-					this._Estados.Entity = value;
-					if ((value != null))
-					{
-						value.Pedidos.Add(this);
-						this._idEstadoPedido = value.idEstado;
-					}
-					else
-					{
-						this._idEstadoPedido = default(int);
-					}
-					this.SendPropertyChanged("Estados");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Pedidos", Storage="_Localidades", ThisKey="idLocalidadEntrega", OtherKey="idLocalidad", IsForeignKey=true)]
-		public Localidades Localidades
-		{
-			get
-			{
-				return this._Localidades.Entity;
-			}
-			set
-			{
-				Localidades previousValue = this._Localidades.Entity;
-				if (((previousValue != value) 
-							|| (this._Localidades.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Localidades.Entity = null;
-						previousValue.Pedidos.Remove(this);
-					}
-					this._Localidades.Entity = value;
-					if ((value != null))
-					{
-						value.Pedidos.Add(this);
-						this._idLocalidadEntrega = value.idLocalidad;
-					}
-					else
-					{
-						this._idLocalidadEntrega = default(int);
-					}
-					this.SendPropertyChanged("Localidades");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Provincias_Pedidos", Storage="_Provincias", ThisKey="idProvinciaEntrega", OtherKey="idProvincia", IsForeignKey=true)]
-		public Provincias Provincias
-		{
-			get
-			{
-				return this._Provincias.Entity;
-			}
-			set
-			{
-				Provincias previousValue = this._Provincias.Entity;
-				if (((previousValue != value) 
-							|| (this._Provincias.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Provincias.Entity = null;
-						previousValue.Pedidos.Remove(this);
-					}
-					this._Provincias.Entity = value;
-					if ((value != null))
-					{
-						value.Pedidos.Add(this);
-						this._idProvinciaEntrega = value.idProvincia;
-					}
-					else
-					{
-						this._idProvinciaEntrega = default(int);
-					}
-					this.SendPropertyChanged("Provincias");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_Pedidos", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
-		public Usuarios Usuarios
-		{
-			get
-			{
-				return this._Usuarios.Entity;
-			}
-			set
-			{
-				Usuarios previousValue = this._Usuarios.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuarios.Entity = null;
-						previousValue.Pedidos.Remove(this);
-					}
-					this._Usuarios.Entity = value;
-					if ((value != null))
-					{
-						value.Pedidos.Add(this);
-						this._idUsuario = value.idUsuario;
-					}
-					else
-					{
-						this._idUsuario = default(int);
-					}
-					this.SendPropertyChanged("Usuarios");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_DetallePorPedido(DetallePorPedido entity)
+		private void attach_Pedidos(Pedidos entity)
 		{
 			this.SendPropertyChanging();
-			entity.Pedidos = this;
+			entity.Localidades = this;
 		}
 		
-		private void detach_DetallePorPedido(DetallePorPedido entity)
+		private void detach_Pedidos(Pedidos entity)
 		{
 			this.SendPropertyChanging();
-			entity.Pedidos = null;
+			entity.Localidades = null;
 		}
 	}
 	
@@ -3041,9 +1891,9 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<Localidades> _Localidades;
 		
-		private EntitySet<Pedidos> _Pedidos;
-		
 		private EntitySet<Usuarios> _Usuarios;
+		
+		private EntitySet<Pedidos> _Pedidos;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -3058,8 +1908,8 @@ namespace webVentaLibros.Models
 		public Provincias()
 		{
 			this._Localidades = new EntitySet<Localidades>(new Action<Localidades>(this.attach_Localidades), new Action<Localidades>(this.detach_Localidades));
-			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._Usuarios = new EntitySet<Usuarios>(new Action<Usuarios>(this.attach_Usuarios), new Action<Usuarios>(this.detach_Usuarios));
+			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			OnCreated();
 		}
 		
@@ -3116,19 +1966,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Provincias_Pedidos", Storage="_Pedidos", ThisKey="idProvincia", OtherKey="idProvinciaEntrega")]
-		public EntitySet<Pedidos> Pedidos
-		{
-			get
-			{
-				return this._Pedidos;
-			}
-			set
-			{
-				this._Pedidos.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Provincias_Usuarios", Storage="_Usuarios", ThisKey="idProvincia", OtherKey="idProvincia")]
 		public EntitySet<Usuarios> Usuarios
 		{
@@ -3139,6 +1976,19 @@ namespace webVentaLibros.Models
 			set
 			{
 				this._Usuarios.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Provincias_Pedidos", Storage="_Pedidos", ThisKey="idProvincia", OtherKey="idProvinciaEntrega")]
+		public EntitySet<Pedidos> Pedidos
+		{
+			get
+			{
+				return this._Pedidos;
+			}
+			set
+			{
+				this._Pedidos.Assign(value);
 			}
 		}
 		
@@ -3174,18 +2024,6 @@ namespace webVentaLibros.Models
 			entity.Provincias = null;
 		}
 		
-		private void attach_Pedidos(Pedidos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Provincias = this;
-		}
-		
-		private void detach_Pedidos(Pedidos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Provincias = null;
-		}
-		
 		private void attach_Usuarios(Usuarios entity)
 		{
 			this.SendPropertyChanging();
@@ -3193,6 +2031,18 @@ namespace webVentaLibros.Models
 		}
 		
 		private void detach_Usuarios(Usuarios entity)
+		{
+			this.SendPropertyChanging();
+			entity.Provincias = null;
+		}
+		
+		private void attach_Pedidos(Pedidos entity)
+		{
+			this.SendPropertyChanging();
+			entity.Provincias = this;
+		}
+		
+		private void detach_Pedidos(Pedidos entity)
 		{
 			this.SendPropertyChanging();
 			entity.Provincias = null;
@@ -3339,13 +2189,11 @@ namespace webVentaLibros.Models
 		
 		private System.DateTime _fechaHoraAlta;
 		
-		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
-		
-		private EntitySet<ComentarioPorLibro> _ComentarioPorLibro;
+		private EntitySet<PublicacionIntercambio> _PublicacionIntercambio;
 		
 		private EntitySet<Pedidos> _Pedidos;
 		
-		private EntitySet<PublicacionIntercambio> _PublicacionIntercambio;
+		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
 		private EntityRef<Localidades> _Localidades;
 		
@@ -3379,10 +2227,9 @@ namespace webVentaLibros.Models
 		
 		public Usuarios()
 		{
-			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
-			this._ComentarioPorLibro = new EntitySet<ComentarioPorLibro>(new Action<ComentarioPorLibro>(this.attach_ComentarioPorLibro), new Action<ComentarioPorLibro>(this.detach_ComentarioPorLibro));
-			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
+			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
+			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
 			this._Localidades = default(EntityRef<Localidades>);
 			this._Provincias = default(EntityRef<Provincias>);
 			OnCreated();
@@ -3596,29 +2443,16 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorLibro", Storage="_CalificacionPorLibro", ThisKey="idUsuario", OtherKey="idUsuario")]
-		public EntitySet<CalificacionPorLibro> CalificacionPorLibro
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_PublicacionIntercambio", Storage="_PublicacionIntercambio", ThisKey="idUsuario", OtherKey="idUsuario")]
+		public EntitySet<PublicacionIntercambio> PublicacionIntercambio
 		{
 			get
 			{
-				return this._CalificacionPorLibro;
+				return this._PublicacionIntercambio;
 			}
 			set
 			{
-				this._CalificacionPorLibro.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_ComentarioPorLibro", Storage="_ComentarioPorLibro", ThisKey="idUsuario", OtherKey="idUsuario")]
-		public EntitySet<ComentarioPorLibro> ComentarioPorLibro
-		{
-			get
-			{
-				return this._ComentarioPorLibro;
-			}
-			set
-			{
-				this._ComentarioPorLibro.Assign(value);
+				this._PublicacionIntercambio.Assign(value);
 			}
 		}
 		
@@ -3635,16 +2469,16 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_PublicacionIntercambio", Storage="_PublicacionIntercambio", ThisKey="idUsuario", OtherKey="idUsuario")]
-		public EntitySet<PublicacionIntercambio> PublicacionIntercambio
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorLibro", Storage="_CalificacionPorLibro", ThisKey="idUsuario", OtherKey="idUsuario")]
+		public EntitySet<CalificacionPorLibro> CalificacionPorLibro
 		{
 			get
 			{
-				return this._PublicacionIntercambio;
+				return this._CalificacionPorLibro;
 			}
 			set
 			{
-				this._PublicacionIntercambio.Assign(value);
+				this._CalificacionPorLibro.Assign(value);
 			}
 		}
 		
@@ -3736,25 +2570,13 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		private void attach_CalificacionPorLibro(CalificacionPorLibro entity)
+		private void attach_PublicacionIntercambio(PublicacionIntercambio entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = this;
 		}
 		
-		private void detach_CalificacionPorLibro(CalificacionPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuarios = null;
-		}
-		
-		private void attach_ComentarioPorLibro(ComentarioPorLibro entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuarios = this;
-		}
-		
-		private void detach_ComentarioPorLibro(ComentarioPorLibro entity)
+		private void detach_PublicacionIntercambio(PublicacionIntercambio entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = null;
@@ -3772,13 +2594,13 @@ namespace webVentaLibros.Models
 			entity.Usuarios = null;
 		}
 		
-		private void attach_PublicacionIntercambio(PublicacionIntercambio entity)
+		private void attach_CalificacionPorLibro(CalificacionPorLibro entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = this;
 		}
 		
-		private void detach_PublicacionIntercambio(PublicacionIntercambio entity)
+		private void detach_CalificacionPorLibro(CalificacionPorLibro entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = null;
@@ -5306,6 +4128,1022 @@ namespace webVentaLibros.Models
 						this._idPublicacionUsuario2 = default(int);
 					}
 					this.SendPropertyChanged("PublicacionIntercambio1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EstadosPedido")]
+	public partial class EstadosPedido : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idEstado;
+		
+		private string _nombre;
+		
+		private EntitySet<Pedidos> _Pedidos;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidEstadoChanging(int value);
+    partial void OnidEstadoChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    #endregion
+		
+		public EstadosPedido()
+		{
+			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstado", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idEstado
+		{
+			get
+			{
+				return this._idEstado;
+			}
+			set
+			{
+				if ((this._idEstado != value))
+				{
+					this.OnidEstadoChanging(value);
+					this.SendPropertyChanging();
+					this._idEstado = value;
+					this.SendPropertyChanged("idEstado");
+					this.OnidEstadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadosPedido_Pedidos", Storage="_Pedidos", ThisKey="idEstado", OtherKey="idEstadoPedido")]
+		public EntitySet<Pedidos> Pedidos
+		{
+			get
+			{
+				return this._Pedidos;
+			}
+			set
+			{
+				this._Pedidos.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Pedidos(Pedidos entity)
+		{
+			this.SendPropertyChanging();
+			entity.EstadosPedido = this;
+		}
+		
+		private void detach_Pedidos(Pedidos entity)
+		{
+			this.SendPropertyChanging();
+			entity.EstadosPedido = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DetallePorPedido")]
+	public partial class DetallePorPedido : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPedido;
+		
+		private string _codigoLibro;
+		
+		private int _cantidad;
+		
+		private decimal _precioUnitario;
+		
+		private EntityRef<Libros> _Libros;
+		
+		private EntityRef<Pedidos> _Pedidos;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPedidoChanging(int value);
+    partial void OnidPedidoChanged();
+    partial void OncodigoLibroChanging(string value);
+    partial void OncodigoLibroChanged();
+    partial void OncantidadChanging(int value);
+    partial void OncantidadChanged();
+    partial void OnprecioUnitarioChanging(decimal value);
+    partial void OnprecioUnitarioChanged();
+    #endregion
+		
+		public DetallePorPedido()
+		{
+			this._Libros = default(EntityRef<Libros>);
+			this._Pedidos = default(EntityRef<Pedidos>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPedido", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idPedido
+		{
+			get
+			{
+				return this._idPedido;
+			}
+			set
+			{
+				if ((this._idPedido != value))
+				{
+					if (this._Pedidos.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidPedidoChanging(value);
+					this.SendPropertyChanging();
+					this._idPedido = value;
+					this.SendPropertyChanged("idPedido");
+					this.OnidPedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string codigoLibro
+		{
+			get
+			{
+				return this._codigoLibro;
+			}
+			set
+			{
+				if ((this._codigoLibro != value))
+				{
+					if (this._Libros.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodigoLibroChanging(value);
+					this.SendPropertyChanging();
+					this._codigoLibro = value;
+					this.SendPropertyChanged("codigoLibro");
+					this.OncodigoLibroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cantidad", DbType="Int NOT NULL")]
+		public int cantidad
+		{
+			get
+			{
+				return this._cantidad;
+			}
+			set
+			{
+				if ((this._cantidad != value))
+				{
+					this.OncantidadChanging(value);
+					this.SendPropertyChanging();
+					this._cantidad = value;
+					this.SendPropertyChanged("cantidad");
+					this.OncantidadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_precioUnitario", DbType="Decimal(6,2) NOT NULL")]
+		public decimal precioUnitario
+		{
+			get
+			{
+				return this._precioUnitario;
+			}
+			set
+			{
+				if ((this._precioUnitario != value))
+				{
+					this.OnprecioUnitarioChanging(value);
+					this.SendPropertyChanging();
+					this._precioUnitario = value;
+					this.SendPropertyChanged("precioUnitario");
+					this.OnprecioUnitarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_DetallePorPedido", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
+		public Libros Libros
+		{
+			get
+			{
+				return this._Libros.Entity;
+			}
+			set
+			{
+				Libros previousValue = this._Libros.Entity;
+				if (((previousValue != value) 
+							|| (this._Libros.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Libros.Entity = null;
+						previousValue.DetallePorPedido.Remove(this);
+					}
+					this._Libros.Entity = value;
+					if ((value != null))
+					{
+						value.DetallePorPedido.Add(this);
+						this._codigoLibro = value.codigoBarra;
+					}
+					else
+					{
+						this._codigoLibro = default(string);
+					}
+					this.SendPropertyChanged("Libros");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pedidos_DetallePorPedido", Storage="_Pedidos", ThisKey="idPedido", OtherKey="idPedido", IsForeignKey=true)]
+		public Pedidos Pedidos
+		{
+			get
+			{
+				return this._Pedidos.Entity;
+			}
+			set
+			{
+				Pedidos previousValue = this._Pedidos.Entity;
+				if (((previousValue != value) 
+							|| (this._Pedidos.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Pedidos.Entity = null;
+						previousValue.DetallePorPedido.Remove(this);
+					}
+					this._Pedidos.Entity = value;
+					if ((value != null))
+					{
+						value.DetallePorPedido.Add(this);
+						this._idPedido = value.idPedido;
+					}
+					else
+					{
+						this._idPedido = default(int);
+					}
+					this.SendPropertyChanged("Pedidos");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pedidos")]
+	public partial class Pedidos : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPedido;
+		
+		private int _idUsuario;
+		
+		private System.Nullable<System.DateTime> _fechaHora;
+		
+		private System.Nullable<System.DateTime> _fechaEntrega;
+		
+		private string _direccionEntrega;
+		
+		private System.Nullable<int> _idLocalidadEntrega;
+		
+		private System.Nullable<int> _idProvinciaEntrega;
+		
+		private int _idEstadoPedido;
+		
+		private string _codigoPostalEntrega;
+		
+		private EntitySet<DetallePorPedido> _DetallePorPedido;
+		
+		private EntityRef<EstadosPedido> _EstadosPedido;
+		
+		private EntityRef<Localidades> _Localidades;
+		
+		private EntityRef<Provincias> _Provincias;
+		
+		private EntityRef<Usuarios> _Usuarios;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPedidoChanging(int value);
+    partial void OnidPedidoChanged();
+    partial void OnidUsuarioChanging(int value);
+    partial void OnidUsuarioChanged();
+    partial void OnfechaHoraChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaHoraChanged();
+    partial void OnfechaEntregaChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaEntregaChanged();
+    partial void OndireccionEntregaChanging(string value);
+    partial void OndireccionEntregaChanged();
+    partial void OnidLocalidadEntregaChanging(System.Nullable<int> value);
+    partial void OnidLocalidadEntregaChanged();
+    partial void OnidProvinciaEntregaChanging(System.Nullable<int> value);
+    partial void OnidProvinciaEntregaChanged();
+    partial void OnidEstadoPedidoChanging(int value);
+    partial void OnidEstadoPedidoChanged();
+    partial void OncodigoPostalEntregaChanging(string value);
+    partial void OncodigoPostalEntregaChanged();
+    #endregion
+		
+		public Pedidos()
+		{
+			this._DetallePorPedido = new EntitySet<DetallePorPedido>(new Action<DetallePorPedido>(this.attach_DetallePorPedido), new Action<DetallePorPedido>(this.detach_DetallePorPedido));
+			this._EstadosPedido = default(EntityRef<EstadosPedido>);
+			this._Localidades = default(EntityRef<Localidades>);
+			this._Provincias = default(EntityRef<Provincias>);
+			this._Usuarios = default(EntityRef<Usuarios>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPedido", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idPedido
+		{
+			get
+			{
+				return this._idPedido;
+			}
+			set
+			{
+				if ((this._idPedido != value))
+				{
+					this.OnidPedidoChanging(value);
+					this.SendPropertyChanging();
+					this._idPedido = value;
+					this.SendPropertyChanged("idPedido");
+					this.OnidPedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int NOT NULL")]
+		public int idUsuario
+		{
+			get
+			{
+				return this._idUsuario;
+			}
+			set
+			{
+				if ((this._idUsuario != value))
+				{
+					if (this._Usuarios.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._idUsuario = value;
+					this.SendPropertyChanged("idUsuario");
+					this.OnidUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaHora
+		{
+			get
+			{
+				return this._fechaHora;
+			}
+			set
+			{
+				if ((this._fechaHora != value))
+				{
+					this.OnfechaHoraChanging(value);
+					this.SendPropertyChanging();
+					this._fechaHora = value;
+					this.SendPropertyChanged("fechaHora");
+					this.OnfechaHoraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaEntrega", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaEntrega
+		{
+			get
+			{
+				return this._fechaEntrega;
+			}
+			set
+			{
+				if ((this._fechaEntrega != value))
+				{
+					this.OnfechaEntregaChanging(value);
+					this.SendPropertyChanging();
+					this._fechaEntrega = value;
+					this.SendPropertyChanged("fechaEntrega");
+					this.OnfechaEntregaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_direccionEntrega", DbType="NVarChar(100)")]
+		public string direccionEntrega
+		{
+			get
+			{
+				return this._direccionEntrega;
+			}
+			set
+			{
+				if ((this._direccionEntrega != value))
+				{
+					this.OndireccionEntregaChanging(value);
+					this.SendPropertyChanging();
+					this._direccionEntrega = value;
+					this.SendPropertyChanged("direccionEntrega");
+					this.OndireccionEntregaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idLocalidadEntrega", DbType="Int")]
+		public System.Nullable<int> idLocalidadEntrega
+		{
+			get
+			{
+				return this._idLocalidadEntrega;
+			}
+			set
+			{
+				if ((this._idLocalidadEntrega != value))
+				{
+					if (this._Localidades.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidLocalidadEntregaChanging(value);
+					this.SendPropertyChanging();
+					this._idLocalidadEntrega = value;
+					this.SendPropertyChanged("idLocalidadEntrega");
+					this.OnidLocalidadEntregaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idProvinciaEntrega", DbType="Int")]
+		public System.Nullable<int> idProvinciaEntrega
+		{
+			get
+			{
+				return this._idProvinciaEntrega;
+			}
+			set
+			{
+				if ((this._idProvinciaEntrega != value))
+				{
+					if (this._Provincias.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidProvinciaEntregaChanging(value);
+					this.SendPropertyChanging();
+					this._idProvinciaEntrega = value;
+					this.SendPropertyChanged("idProvinciaEntrega");
+					this.OnidProvinciaEntregaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstadoPedido", DbType="Int NOT NULL")]
+		public int idEstadoPedido
+		{
+			get
+			{
+				return this._idEstadoPedido;
+			}
+			set
+			{
+				if ((this._idEstadoPedido != value))
+				{
+					if (this._EstadosPedido.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidEstadoPedidoChanging(value);
+					this.SendPropertyChanging();
+					this._idEstadoPedido = value;
+					this.SendPropertyChanged("idEstadoPedido");
+					this.OnidEstadoPedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoPostalEntrega", DbType="NVarChar(10)")]
+		public string codigoPostalEntrega
+		{
+			get
+			{
+				return this._codigoPostalEntrega;
+			}
+			set
+			{
+				if ((this._codigoPostalEntrega != value))
+				{
+					this.OncodigoPostalEntregaChanging(value);
+					this.SendPropertyChanging();
+					this._codigoPostalEntrega = value;
+					this.SendPropertyChanged("codigoPostalEntrega");
+					this.OncodigoPostalEntregaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pedidos_DetallePorPedido", Storage="_DetallePorPedido", ThisKey="idPedido", OtherKey="idPedido")]
+		public EntitySet<DetallePorPedido> DetallePorPedido
+		{
+			get
+			{
+				return this._DetallePorPedido;
+			}
+			set
+			{
+				this._DetallePorPedido.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadosPedido_Pedidos", Storage="_EstadosPedido", ThisKey="idEstadoPedido", OtherKey="idEstado", IsForeignKey=true)]
+		public EstadosPedido EstadosPedido
+		{
+			get
+			{
+				return this._EstadosPedido.Entity;
+			}
+			set
+			{
+				EstadosPedido previousValue = this._EstadosPedido.Entity;
+				if (((previousValue != value) 
+							|| (this._EstadosPedido.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EstadosPedido.Entity = null;
+						previousValue.Pedidos.Remove(this);
+					}
+					this._EstadosPedido.Entity = value;
+					if ((value != null))
+					{
+						value.Pedidos.Add(this);
+						this._idEstadoPedido = value.idEstado;
+					}
+					else
+					{
+						this._idEstadoPedido = default(int);
+					}
+					this.SendPropertyChanged("EstadosPedido");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Pedidos", Storage="_Localidades", ThisKey="idLocalidadEntrega", OtherKey="idLocalidad", IsForeignKey=true)]
+		public Localidades Localidades
+		{
+			get
+			{
+				return this._Localidades.Entity;
+			}
+			set
+			{
+				Localidades previousValue = this._Localidades.Entity;
+				if (((previousValue != value) 
+							|| (this._Localidades.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Localidades.Entity = null;
+						previousValue.Pedidos.Remove(this);
+					}
+					this._Localidades.Entity = value;
+					if ((value != null))
+					{
+						value.Pedidos.Add(this);
+						this._idLocalidadEntrega = value.idLocalidad;
+					}
+					else
+					{
+						this._idLocalidadEntrega = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Localidades");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Provincias_Pedidos", Storage="_Provincias", ThisKey="idProvinciaEntrega", OtherKey="idProvincia", IsForeignKey=true)]
+		public Provincias Provincias
+		{
+			get
+			{
+				return this._Provincias.Entity;
+			}
+			set
+			{
+				Provincias previousValue = this._Provincias.Entity;
+				if (((previousValue != value) 
+							|| (this._Provincias.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Provincias.Entity = null;
+						previousValue.Pedidos.Remove(this);
+					}
+					this._Provincias.Entity = value;
+					if ((value != null))
+					{
+						value.Pedidos.Add(this);
+						this._idProvinciaEntrega = value.idProvincia;
+					}
+					else
+					{
+						this._idProvinciaEntrega = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Provincias");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_Pedidos", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
+		public Usuarios Usuarios
+		{
+			get
+			{
+				return this._Usuarios.Entity;
+			}
+			set
+			{
+				Usuarios previousValue = this._Usuarios.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuarios.Entity = null;
+						previousValue.Pedidos.Remove(this);
+					}
+					this._Usuarios.Entity = value;
+					if ((value != null))
+					{
+						value.Pedidos.Add(this);
+						this._idUsuario = value.idUsuario;
+					}
+					else
+					{
+						this._idUsuario = default(int);
+					}
+					this.SendPropertyChanged("Usuarios");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_DetallePorPedido(DetallePorPedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.Pedidos = this;
+		}
+		
+		private void detach_DetallePorPedido(DetallePorPedido entity)
+		{
+			this.SendPropertyChanging();
+			entity.Pedidos = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CalificacionPorLibro")]
+	public partial class CalificacionPorLibro : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _codigoLibro;
+		
+		private int _idUsuario;
+		
+		private int _calificacion;
+		
+		private string _comentario;
+		
+		private System.Nullable<System.DateTime> _fechaHora;
+		
+		private EntityRef<Libros> _Libros;
+		
+		private EntityRef<Usuarios> _Usuarios;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodigoLibroChanging(string value);
+    partial void OncodigoLibroChanged();
+    partial void OnidUsuarioChanging(int value);
+    partial void OnidUsuarioChanged();
+    partial void OncalificacionChanging(int value);
+    partial void OncalificacionChanged();
+    partial void OncomentarioChanging(string value);
+    partial void OncomentarioChanged();
+    partial void OnfechaHoraChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaHoraChanged();
+    #endregion
+		
+		public CalificacionPorLibro()
+		{
+			this._Libros = default(EntityRef<Libros>);
+			this._Usuarios = default(EntityRef<Usuarios>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string codigoLibro
+		{
+			get
+			{
+				return this._codigoLibro;
+			}
+			set
+			{
+				if ((this._codigoLibro != value))
+				{
+					if (this._Libros.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodigoLibroChanging(value);
+					this.SendPropertyChanging();
+					this._codigoLibro = value;
+					this.SendPropertyChanged("codigoLibro");
+					this.OncodigoLibroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idUsuario
+		{
+			get
+			{
+				return this._idUsuario;
+			}
+			set
+			{
+				if ((this._idUsuario != value))
+				{
+					if (this._Usuarios.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._idUsuario = value;
+					this.SendPropertyChanged("idUsuario");
+					this.OnidUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calificacion", DbType="Int NOT NULL")]
+		public int calificacion
+		{
+			get
+			{
+				return this._calificacion;
+			}
+			set
+			{
+				if ((this._calificacion != value))
+				{
+					this.OncalificacionChanging(value);
+					this.SendPropertyChanging();
+					this._calificacion = value;
+					this.SendPropertyChanged("calificacion");
+					this.OncalificacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_comentario", DbType="NVarChar(MAX)")]
+		public string comentario
+		{
+			get
+			{
+				return this._comentario;
+			}
+			set
+			{
+				if ((this._comentario != value))
+				{
+					this.OncomentarioChanging(value);
+					this.SendPropertyChanging();
+					this._comentario = value;
+					this.SendPropertyChanged("comentario");
+					this.OncomentarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaHora
+		{
+			get
+			{
+				return this._fechaHora;
+			}
+			set
+			{
+				if ((this._fechaHora != value))
+				{
+					this.OnfechaHoraChanging(value);
+					this.SendPropertyChanging();
+					this._fechaHora = value;
+					this.SendPropertyChanged("fechaHora");
+					this.OnfechaHoraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_CalificacionPorLibro", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
+		public Libros Libros
+		{
+			get
+			{
+				return this._Libros.Entity;
+			}
+			set
+			{
+				Libros previousValue = this._Libros.Entity;
+				if (((previousValue != value) 
+							|| (this._Libros.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Libros.Entity = null;
+						previousValue.CalificacionPorLibro.Remove(this);
+					}
+					this._Libros.Entity = value;
+					if ((value != null))
+					{
+						value.CalificacionPorLibro.Add(this);
+						this._codigoLibro = value.codigoBarra;
+					}
+					else
+					{
+						this._codigoLibro = default(string);
+					}
+					this.SendPropertyChanged("Libros");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_CalificacionPorLibro", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
+		public Usuarios Usuarios
+		{
+			get
+			{
+				return this._Usuarios.Entity;
+			}
+			set
+			{
+				Usuarios previousValue = this._Usuarios.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuarios.Entity = null;
+						previousValue.CalificacionPorLibro.Remove(this);
+					}
+					this._Usuarios.Entity = value;
+					if ((value != null))
+					{
+						value.CalificacionPorLibro.Add(this);
+						this._idUsuario = value.idUsuario;
+					}
+					else
+					{
+						this._idUsuario = default(int);
+					}
+					this.SendPropertyChanged("Usuarios");
 				}
 			}
 		}

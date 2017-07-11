@@ -22,6 +22,17 @@ namespace webVentaLibros.Controllers
                                    where usuario.idUsuario == idUsuario
                                    select usuario;
 
+            ViewBag.totalComprasConcretadas = (from pedido in bd.Pedidos
+                                    where pedido.idUsuario == idUsuario
+                                    && pedido.idEstadoPedido == 5
+                                    select pedido).Count();
+
+            ViewBag.totalIntercambiosConcretados = (from intercambio in bd.Intercambios
+                                                    where intercambio.idEstado == 3
+                                                    && (intercambio.PublicacionIntercambio.Usuarios.idUsuario == idUsuario ||
+                                                    intercambio.PublicacionIntercambio1.Usuarios.idUsuario == idUsuario)
+                                                    select intercambio).Count();
+
             ViewBag.cantidadPedidosIntercambioRecibidos = (from publicacion in bd.PublicacionIntercambio
                                                            where publicacion.idUsuario == idUsuario
                                                            from intercambio in bd.Intercambios
