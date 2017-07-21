@@ -15,10 +15,10 @@ namespace webVentaLibros.Controllers
         public ActionResult Index()
         {
             //Creo el contexto de datos 
-            var dbLibros = new bdVentaLibrosDataContext();
+            var bd = new bdVentaLibrosDataContext();
             //Recupero la lista de libros -> son de tipo Libro: entidad de dominio
 
-            var lista = (from libro in dbLibros.Libros
+            var lista = (from libro in bd.Libros
                          select new LibroModel
                          {
                              codigoBarra = libro.codigoBarra,
@@ -43,6 +43,23 @@ namespace webVentaLibros.Controllers
                 };
                 listaCompleta.Add(entidadLibro);
             }
+
+            ViewBag.masVendidos = (from libro in bd.DetallePorPedido
+                                   from libroExistencia in bd.Libros
+                                   where libro.codigoLibro == libroExistencia.codigoBarra
+                                   && libroExistencia.stock > 0
+                                  group libro by libro.codigoLibro into g
+                                  orderby g.Sum(x => x.cantidad) descending
+                                  select g.First()).Take(3);
+
+            ViewBag.mejorCalificacion = (from libro in bd.CalificacionPorLibro
+                                         from libroExistencia in bd.Libros
+                                         where libro.codigoLibro == libroExistencia.codigoBarra
+                                         && libroExistencia.stock > 0
+                                         group libro by libro.codigoLibro into g
+                                         orderby g.Average(x => x.calificacion) descending
+                                         select g.First()).Take(3);
+
            
             //Paso como parámetro a la vista la lista de inmuebles
             return View(listaCompleta);

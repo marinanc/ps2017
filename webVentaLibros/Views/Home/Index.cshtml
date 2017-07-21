@@ -235,98 +235,39 @@
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Lo más vendido</h2>
                         <a href="" class="wid-view-more">Ver todo</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/100x190.png" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                        <!-- SOLO LOS 3 MAS VENDIDOS-->
+                        @foreach (var libro in ViewBag.masVendidos)
+                        {
+                            <div class="single-wid-product">
+                                <a href="#"><img src="@libro.Libros.foto" alt="" class="product-thumb"></a>
+                                <h2><a href="#">@libro.Libros.titulo</a></h2>
+
+                                <div class="product-wid-price">
+                                    <ins>ARS $@libro.Libros.precio</ins>
+                                </div>
                             </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/100x190.png" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/100x190.png" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins>
-                            </div>
-                        </div>
+                        }
+
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="single-product-widget">
-                        <h2 class="product-wid-title">Visitas recientes</h2>
+                        <h2 class="product-wid-title">Mejores calificados</h2>
                         <a href="#" class="wid-view-more">Ver todo</a>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/100x190.png" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                        @foreach (var libro in ViewBag.mejorCalificacion)
+                        {
+                            <div class="single-wid-product">
+                                <a href="#"><img src="@libro.Libros.foto" alt="" class="product-thumb"></a>
+                                <h2><a href="single-product.html">@libro.Libros.titulo</a></h2>
+
+                                <div class="product-wid-price">
+                                    <ins>ARS $@libro.Libros.precio</ins>
+                                </div>
                             </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/100x190.png" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="single-product.html"><img src="img/100x190.png" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>$400.00</ins>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
+
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Lo más nuevo</h2>
