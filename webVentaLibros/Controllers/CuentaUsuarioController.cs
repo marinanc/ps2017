@@ -81,7 +81,7 @@ namespace webVentaLibros.Controllers
 
             if (foto != null)
             {
-                foto.SaveAs(System.IO.Path.Combine(@"D:\webVentaLibros\webVentaLibros\img\catalogoIntercambios", System.IO.Path.GetFileName(foto.FileName)));
+                foto.SaveAs(System.IO.Path.Combine(@"E:\webVentaLibros\webVentaLibros\img\catalogoIntercambios", System.IO.Path.GetFileName(foto.FileName)));
             }
 
             PublicacionIntercambio publicacion = new PublicacionIntercambio
@@ -142,7 +142,7 @@ namespace webVentaLibros.Controllers
 
             if (foto != null)
             {
-                foto.SaveAs(System.IO.Path.Combine(@"D:\webVentaLibros\webVentaLibros\img\catalogoIntercambios", System.IO.Path.GetFileName(foto.FileName)));
+                foto.SaveAs(System.IO.Path.Combine(@"E:\webVentaLibros\webVentaLibros\img\catalogoIntercambios", System.IO.Path.GetFileName(foto.FileName)));
             }
 
             var publicacionModificada = from publicacion in bd.PublicacionIntercambio

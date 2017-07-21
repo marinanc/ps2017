@@ -43,7 +43,7 @@
                         <ul>
                             @if (Request.IsAuthenticated)
                             {
-                                <li><span>Hola @WebSecurity.CurrentUserName !</span></li>
+                                <li><span>Hola @System.Web.HttpContext.Current.Session["nombreUsuario"] !</span></li>
                                 if (Roles.IsUserInRole("Administrador"))
                                 {
                                     <li>@Html.ActionLink("Panel de Control", "Index", "Admin")</li>

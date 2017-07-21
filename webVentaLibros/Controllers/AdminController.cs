@@ -106,7 +106,7 @@ namespace webVentaLibros.Controllers
             }
             else
             {
-                foto.SaveAs(System.IO.Path.Combine(@"D:\webVentaLibros\webVentaLibros\img\catalogo", System.IO.Path.GetFileName(foto.FileName)));
+                foto.SaveAs(System.IO.Path.Combine(@"E:\webVentaLibros\webVentaLibros\img\catalogo", System.IO.Path.GetFileName(foto.FileName)));
 
                 //Convierto el model (libro) en entidad
                 Libros entidadLibro = new Libros
@@ -212,7 +212,7 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             if (foto != null) { 
-                foto.SaveAs(System.IO.Path.Combine(@"D:\webVentaLibros\webVentaLibros\img\catalogo", System.IO.Path.GetFileName(foto.FileName)));
+                foto.SaveAs(System.IO.Path.Combine(@"E:\webVentaLibros\webVentaLibros\img\catalogo", System.IO.Path.GetFileName(foto.FileName)));
             }
 
             var libroModificado = from libro in bd.Libros

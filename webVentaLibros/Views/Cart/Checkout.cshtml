@@ -6,8 +6,17 @@
 @using System.Collections
 @{
     int cantidadItems = ViewBag.cantidad;
-    string cadena = "";
-    
+    string titulos = "";
+    double totalCompra = 0;
+
+    foreach (var v in Session["carrito"] as List<CarritoItem>)
+    {
+        titulos = titulos + v.Libro.titulo + "\n";
+        totalCompra = totalCompra + v.Libro.precio;
+    }
+
+    string cadena = "{\"title\":\"" + titulos + "\",\"quantity\":" + cantidadItems + ",\"currency_id\":\"ARS\",\"unit_price\":" + totalCompra + "}";
+    /*
     foreach (var v in Session["carrito"] as List<CarritoItem>)
     {
         if (cantidadItems != 1)
@@ -20,27 +29,28 @@
             cadena = cadena + "{\"title\":\"" + v.Libro.titulo + "\",\"quantity\":" + v.Cantidad + ",\"currency_id\":\"ARS\",\"unit_price\":" + v.Libro.precio + "}";
         }
     }
-    
+    */
+
     //Vendedor
     MP mp = new MP("5423337948594881", "6dJ2lH2MWshwoj1zWKH2eEMSN8gYthLl");
     //marina_nc@live.com --> MP mp = new MP("1090948874551104", "CJzH2NKUVPPKqOvZLLkRuXj61Z7jWNnk");
-    
-    
-    string data = "{"+
-	
-		"\"items\": ["+cadena+"],"+
-		"\"payer\": {"+
-            "\"email\": \"test_user_94634613@testuser.com\""+
-		"},"+
-		
-	"}";
-    
+
+
+    string data = "{" +
+
+        "\"items\": [" + cadena + "]," +
+        "\"payer\": {" +
+            "\"email\": \"test_user_94634613@testuser.com\"" +
+        "}," +
+
+    "}";
+
     Hashtable preference = mp.createPreference(data);
-    
-    
+
+
     //Hashtable preference = mp.createPreference("{\"items\":[{\"title\":\"Libros varios\",\"quantity\":1,\"currency_id\":\"ARS\",\"unit_price\":"+ViewBag.total+"}]}");
 
-    
+
 
     var url = ((Hashtable)preference["response"])["sandbox_init_point"];
 }
@@ -83,7 +93,7 @@
                         <ul>
                             @if (Request.IsAuthenticated)
                             {
-                                <li><span>Hola @WebSecurity.CurrentUserName !</span></li>
+                                <li><span>Hola @System.Web.HttpContext.Current.Session["nombreUsuario"] !</span></li>
                                 if (Roles.IsUserInRole("Administrador"))
                                 {
                                     <li>@Html.ActionLink("Panel de Control", "Index", "Admin")</li>
@@ -113,7 +123,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
         </div>
     </div> <!-- End header area -->
@@ -226,17 +236,17 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
 
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                           
 
-                           
 
-                           
+
+
+
 
                             <form enctype="multipart/form-data" action="#" class="checkout" method="post" name="checkout">
 
@@ -244,7 +254,7 @@
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
                                             <h3>Detalles de facturación</h3>
-                                            
+
 
                                             <p id="billing_first_name_field" class="form-row form-row-first validate-required">
                                                 <label class="" for="billing_first_name">
@@ -272,7 +282,7 @@
                                                 <label class="" for="billing_city">
                                                     Localidad <abbr title="required" class="required">*</abbr>
                                                 </label>
-                                                <input type="text" value=""  id="billing_city" name="billing_city" class="input-text ">
+                                                <input type="text" value="" id="billing_city" name="billing_city" class="input-text ">
                                             </p>
 
                                             <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
@@ -280,13 +290,13 @@
                                                     Domicilio <abbr title="required" class="required">*</abbr>
                                                 </label>
                                                 <input type="text" value="" id="billing_address_1" name="billing_address_1" class="input-text ">
-                                            </p>                                       
-                                            
+                                            </p>
+
                                             <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
                                                 <label class="" for="billing_postcode">
                                                     Código Postal <abbr title="required" class="required">*</abbr>
                                                 </label>
-                                                <input type="text" value=""  id="billing_postcode" name="billing_postcode" class="input-text ">
+                                                <input type="text" value="" id="billing_postcode" name="billing_postcode" class="input-text ">
                                             </p>
 
                                             <div class="clear"></div>
@@ -298,11 +308,11 @@
                                                 <input type="text" value="" placeholder="" id="billing_email" name="billing_email" class="input-text ">
                                             </p>
 
-                                            
+
                                             <div class="clear"></div>
 
 
-                                           
+
 
                                         </div>
                                     </div>
@@ -362,7 +372,7 @@
 
                                             </div>
 
-                                         
+
 
 
                                         </div>
@@ -382,15 +392,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Session["carrito"] as List<CarritoItem>) { 
-                                            <tr class="cart_item">
-                                                <td class="product-name">
-                                                    @item.Libro.titulo <strong class="product-quantity">× @item.Cantidad</strong>
-                                                </td>
-                                                <td class="product-total">
-                                                    <span class="amount">$@(item.Cantidad * item.Libro.precio)</span>
-                                                </td>
-                                            </tr>
+                                            @foreach (var item in Session["carrito"] as List<CarritoItem>)
+                                            {
+                                                <tr class="cart_item">
+                                                    <td class="product-name">
+                                                        @item.Libro.titulo <strong class="product-quantity">× @item.Cantidad</strong>
+                                                    </td>
+                                                    <td class="product-total">
+                                                        <span class="amount">$@(item.Cantidad * item.Libro.precio)</span>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                         <tfoot>
@@ -422,14 +433,14 @@
 
 
                                     <div id="payment">
-                                        
+
 
                                         <div class="form-row place-order">
 
-                                            
+
                                             <a href="@url" name="MP-Checkout" class="orange-ar-m-sq-arall">Pagar con MercadoPago</a>
-                                            
-                                            
+
+
                                         </div>
 
                                         <div class="clear"></div>
@@ -518,7 +529,6 @@
             </div>
         </div>
     </div> <!-- End footer bottom area -->
-
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
