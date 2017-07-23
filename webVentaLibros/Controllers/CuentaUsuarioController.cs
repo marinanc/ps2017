@@ -35,9 +35,15 @@ namespace webVentaLibros.Controllers
 
             ViewBag.cantidadPedidosIntercambioRecibidos = (from publicacion in bd.PublicacionIntercambio
                                                            where publicacion.idUsuario == idUsuario
+                                                           
                                                            from intercambio in bd.Intercambios
                                                            where publicacion.idPublicacion == intercambio.idPublicacionUsuario1
+                                                           && intercambio.idEstado != 3
                                                            select intercambio).Count();
+
+            ViewBag.misDatos = from usuario in bd.Usuarios
+                               where usuario.idUsuario == idUsuario
+                               select usuario;
 
             return View();
         }
@@ -113,6 +119,7 @@ namespace webVentaLibros.Controllers
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
             ViewBag.listadoLibrosPublicados = from publicacion in bd.PublicacionIntercambio
                                               where publicacion.idUsuario == idUsuario
+                                              && publicacion.idEstado != 2
                                               from genero in bd.Generos
                                               where publicacion.idGenero == genero.idGenero
                                               select new PublicacionIntercambioModel
