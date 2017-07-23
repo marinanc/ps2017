@@ -16,6 +16,8 @@ namespace webVentaLibros.Controllers
         {
             var bdVentaLibros = new bdVentaLibrosDataContext();
 
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
             ViewBag.listadoGeneros = from genero in bdVentaLibros.Generos
                                      select genero;
 
@@ -37,13 +39,18 @@ namespace webVentaLibros.Controllers
                                     };
 
             var calificacionPromedio = (from calificacion in bdVentaLibros.CalificacionPorLibro
-                                            where calificacion.codigoLibro == cod
-                                            select calificacion.calificacion).ToList();
+                                        where calificacion.codigoLibro == cod
+                                        select calificacion.calificacion).ToList();
 
             if (calificacionPromedio.Count > 0)
             {
                 ViewBag.calificacionPromedio = Convert.ToInt32(calificacionPromedio.Average());
             }
+
+            ViewBag.enListaDeseados = (from deseado in bdVentaLibros.ListaDeseados
+                                       where deseado.idUsuario == idUsuario
+                                       && deseado.codigoLibro == cod
+                                       select deseado).Count();
 
             return View(libroSeleccionado);
         }
@@ -89,7 +96,7 @@ namespace webVentaLibros.Controllers
             }
             catch (Exception e)
             {
-                TempData["Message"] = "No se pudo registrar la calificacion. Intentelo nuevamente."+e.Message;
+                TempData["Message"] = "No se pudo registrar la calificacion. Intentelo nuevamente." + e.Message;
             }
 
             return RedirectToAction("Index", new { codigo = codLibro });
@@ -119,6 +126,50 @@ namespace webVentaLibros.Controllers
             }
 
             return existe;
+        }
+
+        public ActionResult CheckLibroDeseado(bool check, string cod)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            int idUsuarioLogueado = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            if (!check) //Quitar de la lista de deseados..
+            {
+                var libroSeleccionado = from libro in bd.ListaDeseados
+                                        where libro.idUsuario == idUsuarioLogueado
+                                        && libro.codigoLibro == cod
+                                        select libro;
+
+                foreach (var libro in libroSeleccionado)
+                {
+                    bd.ListaDeseados.DeleteOnSubmit(libro);
+                }
+                TempData["Message"] = "Libro eliminado de su lista de deseados";
+            }
+            else //Agregar a la lista de deseados..
+            {
+                ListaDeseados nuevoDeseado = new ListaDeseados
+                {
+                    idUsuario = idUsuarioLogueado,
+                    codigoLibro = cod,
+                    fechaHora = DateTime.Now
+                };
+
+                bd.ListaDeseados.InsertOnSubmit(nuevoDeseado);
+                TempData["Message"] = "Libro agregado a su lista de deseados";
+            }
+
+            try
+            { 
+                bd.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = "No se pudo registrar. Intentelo nuevamente." + ex.Message;
+            }
+
+            return RedirectToAction("Index", new { cod = cod });
         }
     }
 }

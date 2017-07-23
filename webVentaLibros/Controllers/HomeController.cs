@@ -60,6 +60,13 @@ namespace webVentaLibros.Controllers
                                          orderby g.Average(x => x.calificacion) descending
                                          select g.First()).Take(3);
 
+            ViewBag.masDeseados = (from libro in bd.ListaDeseados
+                                   from libroExistencia in bd.Libros
+                                   where libro.codigoLibro == libroExistencia.codigoBarra
+                                   && libroExistencia.stock > 0
+                                   group libro by libro.codigoLibro into g
+                                   orderby g.Count() descending
+                                   select g.First()).Take(3);
            
             //Paso como parámetro a la vista la lista de inmuebles
             return View(listaCompleta);

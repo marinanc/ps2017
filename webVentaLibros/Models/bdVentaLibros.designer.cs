@@ -93,6 +93,9 @@ namespace webVentaLibros.Models
     partial void InsertCalificacionPorLibro(CalificacionPorLibro instance);
     partial void UpdateCalificacionPorLibro(CalificacionPorLibro instance);
     partial void DeleteCalificacionPorLibro(CalificacionPorLibro instance);
+    partial void InsertListaDeseados(ListaDeseados instance);
+    partial void UpdateListaDeseados(ListaDeseados instance);
+    partial void DeleteListaDeseados(ListaDeseados instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -290,6 +293,14 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<CalificacionPorLibro>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ListaDeseados> ListaDeseados
+		{
+			get
+			{
+				return this.GetTable<ListaDeseados>();
 			}
 		}
 	}
@@ -926,6 +937,8 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
+		private EntitySet<ListaDeseados> _ListaDeseados;
+		
 		private EntityRef<Autores> _Autores;
 		
 		private EntityRef<Autores> _Autores1;
@@ -978,6 +991,7 @@ namespace webVentaLibros.Models
 		{
 			this._DetallePorPedido = new EntitySet<DetallePorPedido>(new Action<DetallePorPedido>(this.attach_DetallePorPedido), new Action<DetallePorPedido>(this.detach_DetallePorPedido));
 			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
+			this._ListaDeseados = new EntitySet<ListaDeseados>(new Action<ListaDeseados>(this.attach_ListaDeseados), new Action<ListaDeseados>(this.detach_ListaDeseados));
 			this._Autores = default(EntityRef<Autores>);
 			this._Autores1 = default(EntityRef<Autores>);
 			this._Autores2 = default(EntityRef<Autores>);
@@ -1337,6 +1351,19 @@ namespace webVentaLibros.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_ListaDeseados", Storage="_ListaDeseados", ThisKey="codigoBarra", OtherKey="codigoLibro")]
+		public EntitySet<ListaDeseados> ListaDeseados
+		{
+			get
+			{
+				return this._ListaDeseados;
+			}
+			set
+			{
+				this._ListaDeseados.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Autores_Libros", Storage="_Autores", ThisKey="idAutor1", OtherKey="idAutor", IsForeignKey=true)]
 		public Autores Autores
 		{
@@ -1580,6 +1607,18 @@ namespace webVentaLibros.Models
 		}
 		
 		private void detach_CalificacionPorLibro(CalificacionPorLibro entity)
+		{
+			this.SendPropertyChanging();
+			entity.Libros = null;
+		}
+		
+		private void attach_ListaDeseados(ListaDeseados entity)
+		{
+			this.SendPropertyChanging();
+			entity.Libros = this;
+		}
+		
+		private void detach_ListaDeseados(ListaDeseados entity)
 		{
 			this.SendPropertyChanging();
 			entity.Libros = null;
@@ -2195,6 +2234,8 @@ namespace webVentaLibros.Models
 		
 		private EntitySet<CalificacionPorLibro> _CalificacionPorLibro;
 		
+		private EntitySet<ListaDeseados> _ListaDeseados;
+		
 		private EntityRef<Localidades> _Localidades;
 		
 		private EntityRef<Provincias> _Provincias;
@@ -2230,6 +2271,7 @@ namespace webVentaLibros.Models
 			this._PublicacionIntercambio = new EntitySet<PublicacionIntercambio>(new Action<PublicacionIntercambio>(this.attach_PublicacionIntercambio), new Action<PublicacionIntercambio>(this.detach_PublicacionIntercambio));
 			this._Pedidos = new EntitySet<Pedidos>(new Action<Pedidos>(this.attach_Pedidos), new Action<Pedidos>(this.detach_Pedidos));
 			this._CalificacionPorLibro = new EntitySet<CalificacionPorLibro>(new Action<CalificacionPorLibro>(this.attach_CalificacionPorLibro), new Action<CalificacionPorLibro>(this.detach_CalificacionPorLibro));
+			this._ListaDeseados = new EntitySet<ListaDeseados>(new Action<ListaDeseados>(this.attach_ListaDeseados), new Action<ListaDeseados>(this.detach_ListaDeseados));
 			this._Localidades = default(EntityRef<Localidades>);
 			this._Provincias = default(EntityRef<Provincias>);
 			OnCreated();
@@ -2482,6 +2524,19 @@ namespace webVentaLibros.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_ListaDeseados", Storage="_ListaDeseados", ThisKey="idUsuario", OtherKey="idUsuario")]
+		public EntitySet<ListaDeseados> ListaDeseados
+		{
+			get
+			{
+				return this._ListaDeseados;
+			}
+			set
+			{
+				this._ListaDeseados.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Localidades_Usuarios", Storage="_Localidades", ThisKey="idLocalidad", OtherKey="idLocalidad", IsForeignKey=true)]
 		public Localidades Localidades
 		{
@@ -2601,6 +2656,18 @@ namespace webVentaLibros.Models
 		}
 		
 		private void detach_CalificacionPorLibro(CalificacionPorLibro entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuarios = null;
+		}
+		
+		private void attach_ListaDeseados(ListaDeseados entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuarios = this;
+		}
+		
+		private void detach_ListaDeseados(ListaDeseados entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuarios = null;
@@ -5137,6 +5204,198 @@ namespace webVentaLibros.Models
 					if ((value != null))
 					{
 						value.CalificacionPorLibro.Add(this);
+						this._idUsuario = value.idUsuario;
+					}
+					else
+					{
+						this._idUsuario = default(int);
+					}
+					this.SendPropertyChanged("Usuarios");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ListaDeseados")]
+	public partial class ListaDeseados : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idUsuario;
+		
+		private string _codigoLibro;
+		
+		private System.Nullable<System.DateTime> _fechaHora;
+		
+		private EntityRef<Libros> _Libros;
+		
+		private EntityRef<Usuarios> _Usuarios;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidUsuarioChanging(int value);
+    partial void OnidUsuarioChanged();
+    partial void OncodigoLibroChanging(string value);
+    partial void OncodigoLibroChanged();
+    partial void OnfechaHoraChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaHoraChanged();
+    #endregion
+		
+		public ListaDeseados()
+		{
+			this._Libros = default(EntityRef<Libros>);
+			this._Usuarios = default(EntityRef<Usuarios>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idUsuario
+		{
+			get
+			{
+				return this._idUsuario;
+			}
+			set
+			{
+				if ((this._idUsuario != value))
+				{
+					if (this._Usuarios.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._idUsuario = value;
+					this.SendPropertyChanged("idUsuario");
+					this.OnidUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigoLibro", DbType="NVarChar(30) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string codigoLibro
+		{
+			get
+			{
+				return this._codigoLibro;
+			}
+			set
+			{
+				if ((this._codigoLibro != value))
+				{
+					if (this._Libros.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodigoLibroChanging(value);
+					this.SendPropertyChanging();
+					this._codigoLibro = value;
+					this.SendPropertyChanged("codigoLibro");
+					this.OncodigoLibroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaHora
+		{
+			get
+			{
+				return this._fechaHora;
+			}
+			set
+			{
+				if ((this._fechaHora != value))
+				{
+					this.OnfechaHoraChanging(value);
+					this.SendPropertyChanging();
+					this._fechaHora = value;
+					this.SendPropertyChanged("fechaHora");
+					this.OnfechaHoraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Libros_ListaDeseados", Storage="_Libros", ThisKey="codigoLibro", OtherKey="codigoBarra", IsForeignKey=true)]
+		public Libros Libros
+		{
+			get
+			{
+				return this._Libros.Entity;
+			}
+			set
+			{
+				Libros previousValue = this._Libros.Entity;
+				if (((previousValue != value) 
+							|| (this._Libros.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Libros.Entity = null;
+						previousValue.ListaDeseados.Remove(this);
+					}
+					this._Libros.Entity = value;
+					if ((value != null))
+					{
+						value.ListaDeseados.Add(this);
+						this._codigoLibro = value.codigoBarra;
+					}
+					else
+					{
+						this._codigoLibro = default(string);
+					}
+					this.SendPropertyChanged("Libros");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuarios_ListaDeseados", Storage="_Usuarios", ThisKey="idUsuario", OtherKey="idUsuario", IsForeignKey=true)]
+		public Usuarios Usuarios
+		{
+			get
+			{
+				return this._Usuarios.Entity;
+			}
+			set
+			{
+				Usuarios previousValue = this._Usuarios.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuarios.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuarios.Entity = null;
+						previousValue.ListaDeseados.Remove(this);
+					}
+					this._Usuarios.Entity = value;
+					if ((value != null))
+					{
+						value.ListaDeseados.Add(this);
 						this._idUsuario = value.idUsuario;
 					}
 					else

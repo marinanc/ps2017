@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bdVentaLibros" Class="bdVentaLibrosDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=MARINA-PC\SQLEXPRESS;Initial Catalog=bdVentaLibros;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bdVentaLibrosConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MARINA-NOTEBOOK\SQLEXPRESS;Initial Catalog=bdVentaLibros;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bdVentaLibrosConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Autores" Member="Autores">
     <Type Name="Autores">
       <Column Name="idAutor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -52,6 +52,7 @@
       <Column Name="idAutor4" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Libros_DetallePorPedido" Member="DetallePorPedido" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="DetallePorPedido" />
       <Association Name="Libros_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="CalificacionPorLibro" />
+      <Association Name="Libros_ListaDeseados" Member="ListaDeseados" ThisKey="codigoBarra" OtherKey="codigoLibro" Type="ListaDeseados" />
       <Association Name="Autores_Libros" Member="Autores" ThisKey="idAutor1" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
       <Association Name="Autores_Libros1" Member="Autores1" ThisKey="idAutor2" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
       <Association Name="Autores_Libros2" Member="Autores2" ThisKey="idAutor3" OtherKey="idAutor" Type="Autores" IsForeignKey="true" />
@@ -107,6 +108,7 @@
       <Association Name="Usuarios_PublicacionIntercambio" Member="PublicacionIntercambio" ThisKey="idUsuario" OtherKey="idUsuario" Type="PublicacionIntercambio" />
       <Association Name="Usuarios_Pedidos" Member="Pedidos" ThisKey="idUsuario" OtherKey="idUsuario" Type="Pedidos" />
       <Association Name="Usuarios_CalificacionPorLibro" Member="CalificacionPorLibro" ThisKey="idUsuario" OtherKey="idUsuario" Type="CalificacionPorLibro" />
+      <Association Name="Usuarios_ListaDeseados" Member="ListaDeseados" ThisKey="idUsuario" OtherKey="idUsuario" Type="ListaDeseados" />
       <Association Name="Localidades_Usuarios" Member="Localidades" ThisKey="idLocalidad" OtherKey="idLocalidad" Type="Localidades" IsForeignKey="true" />
       <Association Name="Provincias_Usuarios" Member="Provincias" ThisKey="idProvincia" OtherKey="idProvincia" Type="Provincias" IsForeignKey="true" />
     </Type>
@@ -230,6 +232,15 @@
       <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Libros_CalificacionPorLibro" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
       <Association Name="Usuarios_CalificacionPorLibro" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ListaDeseados" Member="ListaDeseados">
+    <Type Name="ListaDeseados">
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codigoLibro" Type="System.String" DbType="NVarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Libros_ListaDeseados" Member="Libros" ThisKey="codigoLibro" OtherKey="codigoBarra" Type="Libros" IsForeignKey="true" />
+      <Association Name="Usuarios_ListaDeseados" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

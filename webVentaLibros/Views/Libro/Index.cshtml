@@ -81,6 +81,32 @@
         }
     </style>
 
+    <style type="text/css">
+        .badgebox {
+            opacity: 0;
+        }
+
+            .badgebox + .badge {
+                /* Move the check mark away when unchecked */
+                text-indent: -999999px;
+                /* Makes the badge's width stay the same checked and unchecked */
+                width: 27px;
+            }
+
+            .badgebox:focus + .badge {
+                /* Set something to make the badge looks focused */
+                /* This really depends on the application, in my case it was: */
+                /* Adding a light border */
+                box-shadow: inset 0px 0px 5px;
+                /* Taking the difference out of the padding */
+            }
+
+            .badgebox:checked + .badge {
+                /* Move the check mark back when checked */
+                text-indent: 0;
+            }
+    </style>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -265,6 +291,25 @@
                                     <div class="col-sm-6">
                                         <div class="product-inner">
                                             <h2 class="product-name">@libro.titulo</h2>
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                <div class="form-group" style="text-align:center">
+                                                    @if (ViewBag.enListaDeseados > 0)
+                                                    {
+
+                                                        <label for="success" class="btn btn-success">Deseado <input type="checkbox" id="success" class="badgebox" checked onchange="eliminarDeseado(@libro.codigoBarra)"><span class="badge">&check;</span></label>
+
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <label for="success" class="btn btn-success">Deseado <input type="checkbox" id="success" class="badgebox" onchange="agregarDeseado(@libro.codigoBarra)"><span class="badge">&check;</span></label>
+
+
+                                                    }
+                                                </div>
+                                            }
                                             <div class="product-inner-price">
                                                 <ins>$@libro.precio</ins>
                                             </div>
@@ -327,6 +372,15 @@
                                                                 <input type="radio" id="r1" name="rating" value="1" checked disabled><span class="star"></span>
                                                             }
                                                         }
+                                                        else
+                                                        {
+                                                            <input type="radio" id="r5" name="rating" value="5" disabled><span class="star"></span>
+                                                            <input type="radio" id="r4" name="rating" value="4" disabled><span class="star"></span>
+                                                            <input type="radio" id="r3" name="rating" value="3" disabled><span class="star"></span>
+                                                            <input type="radio" id="r2" name="rating" value="2" disabled><span class="star"></span>
+                                                            <input type="radio" id="r1" name="rating" value="1" disabled><span class="star"></span>
+
+                                                        }
                                                     </span>
 
                                                 </div>
@@ -346,7 +400,7 @@
 
                                                     </div>
                                                     <div role="tabpanel" class="tab-pane fade" id="profile">
-                                                        <h2>Opiniones</h2>
+                                                        <h2>Tu opinión</h2>
                                                         <div class="submit-review">
                                                             @if (!Request.IsAuthenticated)
                                                             {
@@ -374,7 +428,6 @@
                                                                             <input type="radio" id="r1" name="rating" value="1"><span class="star"></span>
                                                                         </span>
 
-                                                                        <p style="margin-left: 20px">Tu calificación es de <span id="selected-rating" class="selected-rating">0</span> estrellas.</p>
                                                                         <!-- ANTES
                                                                         <div class="rating-wrap-post">
                                                                             <i class="fa fa-star"></i>
@@ -617,6 +670,21 @@
                 $(this).next('.label').text($(this).val());
             });
         });
+    </script>
+
+    <script>
+        function eliminarDeseado(codLibro) {
+            var theUrl = '@Url.Action("CheckLibroDeseado", new { check = false })'+'&cod=' +codLibro;
+
+
+                window.location = theUrl;
+            }
+
+            function agregarDeseado(codLibro) {
+                var theUrl = '@Url.Action("CheckLibroDeseado",new { check = true })'+'&cod=' + codLibro;
+
+                window.location = theUrl;
+            }
     </script>
 
     <!--Mostrar mensaje, si es que existe-->
