@@ -79,8 +79,109 @@ namespace webVentaLibros.Controllers
 
         }
 
-        public ActionResult Checkout()
+        public ActionResult DatosEnvio()
         {
+            //para datos del usuario
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+            var usuarioLogueado = from usuario in bd.Usuarios
+                                  where usuario.idUsuario == idUsuario
+                                  select usuario;
+
+            Usuarios us = usuarioLogueado.FirstOrDefault();
+            ViewBag.usuarioLogueado = usuarioLogueado;
+
+            var listadoProvincias = (from p in bd.Provincias
+                                     select new ProvinciaModel
+                                     {
+                                         idProvincia = p.idProvincia,
+                                         nombreProvincia = p.nombre
+
+                                     }).ToList();
+            List<SelectListItem> li = new List<SelectListItem>();
+
+            li.Add(new SelectListItem { Text = "Seleccione..", Value = "0", Disabled = true }); //Valor 0 por defecto..
+
+            foreach (var p in listadoProvincias)
+            {
+                if (p.idProvincia == us.idProvincia)
+                {
+                    li.Add(new SelectListItem { Text = p.nombreProvincia, Value = p.idProvincia.ToString(), Selected = true });
+                }
+                else
+                {
+                    li.Add(new SelectListItem { Text = p.nombreProvincia, Value = p.idProvincia.ToString() });
+                }
+            }
+
+            ViewData["provincias"] = li;
+
+            //LOCALIDADES DE LA PROVINCIA (PROVINCIA INGRESADA ANTERIORMENTE)
+
+            var prov = us.idProvincia;
+
+            List<SelectListItem> localidades = new List<SelectListItem>();
+
+            if (prov > 0)
+            {
+
+
+                var listaLocalidades = (from l in bd.Localidades
+                                        where l.idProvincia == prov
+                                        select new LocalidadModel
+                                        {
+                                            idLocalidad = l.idLocalidad,
+                                            nombreLocalidad = l.nombre
+                                        }).ToList();
+
+                foreach (var loc in listaLocalidades)
+                {
+                    if (loc.idLocalidad == us.idLocalidad)
+                    {
+                        localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString(), Selected = true });
+                    }
+                    else
+                    {
+                        localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString() });
+                    }
+                }
+                ViewData["localidades"] = localidades;
+            }
+            else
+            {
+                localidades.Clear();
+            }
+
+            //fin datos del usuario
+            return View();
+        }
+
+        public ActionResult Checkout(string nombreUsuario, string apellidoUsuario, int idProvincia, int idLocalidad, string codigoPostal, string mail, string direccion)
+        {
+
+            var bd = new bdVentaLibrosDataContext();
+
+            string nombreProvincia = (from provincia in bd.Provincias
+                                      where provincia.idProvincia == idProvincia
+                                      select provincia.nombre).FirstOrDefault();
+
+            string nombreLocalidad = (from localidad in bd.Localidades
+                                      where localidad.idLocalidad == idLocalidad
+                                      select localidad.nombre).FirstOrDefault();
+
+            DatosEnvioModel envio = new DatosEnvioModel
+            {
+                nombreUsuario = nombreUsuario,
+                apellidoUsuario = apellidoUsuario,
+                provincia = nombreProvincia,
+                localidad = nombreLocalidad,
+                codigoPostal = codigoPostal,
+                mail = mail,
+                direccion = direccion
+            };
+
+            ViewBag.datosEnvio = envio;
+
             double totalCompra = 0;
             List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
             int cantidad = compra.Count;
@@ -105,6 +206,37 @@ namespace webVentaLibros.Controllers
                     return i;
             }
             return -1;
+        }
+
+        public JsonResult GetLocalidades(string idProvincia)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            var prov = Convert.ToInt32(idProvincia);
+
+            List<SelectListItem> localidades = new List<SelectListItem>();
+
+            if (prov > 0)
+            {
+
+
+                var listaLocalidades = (from l in bd.Localidades
+                                        where l.idProvincia == prov
+                                        select new LocalidadModel
+                                        {
+                                            idLocalidad = l.idLocalidad,
+                                            nombreLocalidad = l.nombre
+                                        }).ToList();
+
+                foreach (var loc in listaLocalidades)
+                {
+                    localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString() });
+                }
+            }
+            else
+            {
+                localidades.Clear();
+            }
+            return Json(new SelectList(localidades, "Value", "Text"));
         }
     }
 }

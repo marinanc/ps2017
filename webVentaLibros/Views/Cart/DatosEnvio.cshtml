@@ -1,50 +1,10 @@
-﻿@{
-    ViewBag.Title = "Checkout";
+﻿
+@{
+    ViewBag.Title = "DatosEnvio";
 }
-@using mercadopago
 @using webVentaLibros.Models
 @using System.Collections
-@{
-    int cantidadItems = ViewBag.cantidad;
-    string titulos = "";
-    double totalCompra = 0;
 
-    foreach (var v in Session["carrito"] as List<CarritoItem>)
-    {
-        titulos = titulos + v.Libro.titulo + " - ";
-        totalCompra = totalCompra + v.Libro.precio;
-    }
-
-    string cadena = "{\"title\":\"" + titulos + "\",\"quantity\":" + 1 + ",\"currency_id\":\"ARS\",\"unit_price\":" + ViewBag.total + "}";
-
-
-    //Vendedor
-    MP mp = new MP("5423337948594881", "6dJ2lH2MWshwoj1zWKH2eEMSN8gYthLl");
-    //marina_nc@live.com --> MP mp = new MP("1090948874551104", "CJzH2NKUVPPKqOvZLLkRuXj61Z7jWNnk");
-
-    //tarjeta credito
-    //mastercard 5031 7557 3453 0604 APRO
-
-    string data = "{" +
-
-        "\"items\": [" + cadena + "]," +
-        "\"payment_methods\": {" +
-            "\"id\": \"master\"" +
-            "\"name\": \"APRO\"" +
-            "\"payment_type_id\": \"credit_card\"" +
-        "}," +
-
-    "}";
-
-    Hashtable preference = mp.createPreference(data);
-
-
-    //Hashtable preference = mp.createPreference("{\"items\":[{\"title\":\"Libros varios\",\"quantity\":1,\"currency_id\":\"ARS\",\"unit_price\":"+ViewBag.total+"}]}");
-
-
-
-    var url = ((Hashtable)preference["response"])["sandbox_init_point"];
-}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -232,147 +192,95 @@
                     <div class="product-content-right">
                         <div class="woocommerce">
 
-                            <form enctype="multipart/form-data" action="#" class="checkout" method="post" name="checkout">
+                            <form enctype="multipart/form-data" action=@Url.Action("Checkout","Cart") method="get" role="form">
 
                                 <div id="customer_details" class="col2-set">
 
                                     <!--Datos del usuario logueado-->
-                                    @if (ViewBag.datosEnvio != null)
+                                    @if (ViewBag.usuarioLogueado != null)
                                     {
+                                        foreach (var usuario in ViewBag.usuarioLogueado)
+                                        {
+                                            <div class="col-md-7 col-md-offset-3">
+                                                <div class="woocommerce-billing-fields">
+                                                    <h3>Detalles de facturación</h3>
 
-                                        <div class="col-md-7 col-md-offset-3">
-                                            <div class="woocommerce-billing-fields">
-                                                <h3>Detalles de facturación</h3>
+                                                    <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                                        <label class="" for="billing_first_name">
+                                                            Nombre <abbr title="required" class="required">*</abbr>
+                                                        </label>
+                                                        <input type="text" value=@usuario.nombreUsuario placeholder="" id="billing_first_name" name="nombreUsuario" class="input-text " required>
+                                                    </p>
 
-                                                <p id="billing_first_name_field" class="form-row form-row-first validate-required">
-                                                    <label class="" for="billing_first_name">
-                                                        Nombre
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.nombreUsuario placeholder="" id="billing_first_name" name="nombreUsuario" class="input-text " disabled>
-                                                </p>
+                                                    <p id="billing_last_name_field" class="form-row form-row-last validate-required">
+                                                        <label class="" for="billing_last_name">
+                                                            Apellido <abbr title="required" class="required">*</abbr>
+                                                        </label>
+                                                        <input type="text" value="" placeholder="" id="billing_last_name" name="apellidoUsuario" class="input-text " required>
+                                                    </p>
+                                                    <div class="clear"></div>
 
-                                                <p id="billing_last_name_field" class="form-row form-row-last validate-required">
-                                                    <label class="" for="billing_last_name">
-                                                        Apellido
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.apellidoUsuario placeholder="" id="billing_last_name" name="apellidoUsuario" class="input-text " disabled>
-                                                </p>
-                                                <div class="clear"></div>
+                                                    <p id="billing_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
+                                                        <label for="provincias" class="cols-sm-2 control-label">Provincia</label>
+                                                        <div class="cols-sm-10">
+                                                            <div class="input-group">
 
-                                                <p id="billing_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
-                                                    <label class="" for="billing_last_name">
-                                                        Provincia
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.provincia placeholder="" id="billing_last_name" name="provincia" class="input-text " disabled>
+                                                                @Html.DropDownList("idProvincia", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control" })
 
-                                                </p>
+                                                            </div>
+                                                        </div>
 
-                                                <p id="billing_city_field" class="form-row form-row-wide address-field validate-required" data-o_class="form-row form-row-wide address-field validate-required">
-                                                    <label class="" for="billing_last_name">
-                                                        Localidad
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.localidad placeholder="" id="billing_last_name" name="localidad" class="input-text " disabled>
+                                                    </p>
 
-                                                </p>
+                                                    <p id="billing_city_field" class="form-row form-row-wide address-field validate-required" data-o_class="form-row form-row-wide address-field validate-required">
+                                                        <label for="localidades" class="cols-sm-2 control-label">Localidad</label>
+                                                        <div class="cols-sm-10">
+                                                            <div class="input-group">
+                                                                @if (ViewData["localidades"] != null)
+                                                                {
+                                                                    @Html.DropDownList("idLocalidad", ViewData["localidades"] as List<SelectListItem>, new { @class = "form-control" })
+                                                                }
 
-                                                <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
-                                                    <label class="" for="billing_address_1">
-                                                        Domicilio
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.direccion id="billing_address_1" name="direccion" class="input-text " disabled>
-                                                </p>
+                                                            </div>
+                                                        </div>
 
-                                                <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
-                                                    <label class="" for="billing_postcode">
-                                                        Código Postal
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.codigoPostal id="billing_postcode" name="codigoPostal" class="input-text " disabled>
-                                                </p>
+                                                    </p>
 
-                                                <div class="clear"></div>
+                                                    <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
+                                                        <label class="" for="billing_address_1">
+                                                            Domicilio <abbr title="required" class="required">*</abbr>
+                                                        </label>
+                                                        <input type="text" value=@usuario.direccion id="billing_address_1" name="direccion" class="input-text " required>
+                                                    </p>
 
-                                                <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
-                                                    <label class="" for="billing_email">
-                                                        Email
-                                                    </label>
-                                                    <input type="email" value=@ViewBag.datosEnvio.mail placeholder="" id="billing_email" name="mail" class="input-text " disabled>
-                                                </p>
-                                                <div class="clear"></div>
+                                                    <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
+                                                        <label class="" for="billing_postcode">
+                                                            Código Postal <abbr title="required" class="required">*</abbr>
+                                                        </label>
+                                                        <input type="text" value="" id="billing_postcode" name="codigoPostal" class="input-text " required>
+                                                    </p>
+
+                                                    <div class="clear"></div>
+
+                                                    <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
+                                                        <label class="" for="billing_email">
+                                                            Email <abbr title="required" class="required">*</abbr>
+                                                        </label>
+                                                        <input type="email" value=@usuario.mail placeholder="" id="billing_email" name="mail" class="input-text " required>
+                                                    </p>
+                                                    <div class="clear"></div>
+                                                </div>
                                             </div>
-                                        </div>
-
+                                        }
                                     }
                                     <!--Fin de los datos del usuario logueado-->
 
 
                                 </div>
-
-                                <h3 id="order_review_heading">Tu compra</h3>
-
-                                <div id="order_review" style="position: relative;">
-                                    <table class="shop_table">
-                                        <thead>
-                                            <tr>
-                                                <th class="product-name">Libro</th>
-                                                <th class="product-total">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Session["carrito"] as List<CarritoItem>)
-                                            {
-                                                <tr class="cart_item">
-                                                    <td class="product-name">
-                                                        @item.Libro.titulo <strong class="product-quantity">× @item.Cantidad</strong>
-                                                    </td>
-                                                    <td class="product-total">
-                                                        <span class="amount">$@(item.Cantidad * item.Libro.precio)</span>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                        <tfoot>
-
-                                            <tr class="cart-subtotal">
-                                                <th>Subtotal</th>
-                                                <td>
-                                                    <span class="amount">$@ViewBag.total</span>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="shipping">
-                                                <th>Envio</th>
-                                                <td>
-
-                                                    Envio gratis
-                                                    <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
-                                                </td>
-                                            </tr>
-
-
-                                            <tr class="order-total">
-                                                <th>Total</th>
-                                                <td><strong><span class="amount">$@ViewBag.total</span></strong> </td>
-                                            </tr>
-
-                                        </tfoot>
-                                    </table>
-
-
-                                    <div id="payment">
-
-
-                                        <div class="form-row place-order" style="text-align:center">
-
-
-                                            <a href="@url" name="MP-Checkout" class="lightblue-M-Ov-ArOn" mp-mode="modal" onreturn="retornoPago">Pagar con MercadoPago</a>
-
-
-                                        </div>
-
-                                        <div class="clear"></div>
-
-                                    </div>
+                                <div class="form-group ">
+                                    <button type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button">Continuar</button>
                                 </div>
+                                
                             </form>
 
                         </div>
@@ -494,8 +402,5 @@
             })
         });
     </script>
-
-    <script type="text/javascript">
-        (function () { function $MPC_load() { window.$MPC_loaded !== true && (function () { var s = document.createElement("script"); s.type = "text/javascript"; s.async = true; s.src = document.location.protocol + "//secure.mlstatic.com/mptools/render.js"; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); window.$MPC_loaded = true; })(); } window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null; })();
-    </script>
 </body>
+

@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="../img/logo.png"></a></h1>
+                        <h1><a href="./"><img src="~/img/logo2.png"></a></h1>
                     </div>
                 </div>
 
@@ -191,7 +191,7 @@
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" action=@Url.Action("Checkout","Cart")>
+                            <form method="post" action=@Url.Action("DatosEnvio","Cart")>
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -288,29 +288,7 @@
                                     </div>
 
 
-                                    <form method="post" action="#" class="shipping_calculator">
-                                        <h2><a class="shipping-calculator-button" data-toggle="collapse" href="#calcalute-shipping-wrap" aria-expanded="false" aria-controls="calcalute-shipping-wrap">Calcular envio</a></h2>
-
-                                        <section id="calcalute-shipping-wrap" class="shipping-calculator-form collapse">
-
-                                            <p class="form-row form-row-wide">
-                                                <select rel="calc_shipping_state" class="country_to_state" id="calc_shipping_country" name="calc_shipping_country">
-                                                    <option value="">Selecciona una provincia</option>
-                                                    <option value="AX">...</option>
-                                                    <option value="AF">...</option>
-
-                                                </select>
-                                            </p>
-
-                                            <p class="form-row form-row-wide"><input type="text" id="calc_shipping_state" name="calc_shipping_state" placeholder="State / county" value="" class="input-text"> </p>
-
-                                            <p class="form-row form-row-wide"><input type="text" id="calc_shipping_postcode" name="calc_shipping_postcode" placeholder="Postcode / Zip" value="" class="input-text"></p>
-
-
-                                            <p><button class="button" value="1" name="calc_shipping" type="submit">Actualizar total</button></p>
-
-                                        </section>
-                                    </form>
+                                    
                                 }
 
                             </div>
@@ -365,18 +343,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 col-sm-6">
-                    <div class="footer-newsletter">
-                        <h2 class="footer-wid-title">Newsletter</h2>
-                        <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
-                        <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Type your email">
-                                <input type="submit" value="Subscribe">
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div> <!-- End footer top area -->
