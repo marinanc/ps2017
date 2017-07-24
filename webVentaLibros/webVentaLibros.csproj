@@ -558,6 +558,7 @@
     <Content Include="Views\CuentaUsuario\SolicitudRecibida.cshtml" />
     <Content Include="Views\CuentaUsuario\SolicitudEnviada.cshtml" />
     <Content Include="Views\CuentaUsuario\IntercambioAceptado.cshtml" />
+    <Content Include="Views\CuentaUsuario\EditarDatos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
