@@ -23,6 +23,12 @@ namespace webVentaLibros.Controllers
                                     nombreGenero = genero.nombre
                                 }).ToList();
             ViewBag.listadoGeneros = listaGeneros;
+
+            ViewBag.novedades = (from libro in bd.Libros
+                                 where libro.stock > 0
+                                 orderby libro.fechaAlta descending
+                                 select libro).Take(20);
+
             return View();
         }
 
@@ -48,6 +54,10 @@ namespace webVentaLibros.Controllers
                                     idGenero = genero.idGenero,
                                     nombreGenero = genero.nombre
                                 }).ToList();
+
+            ViewBag.nombreGenero = (from genero in bd.Generos
+                                    where genero.idGenero == idGenero
+                                    select genero.nombre).FirstOrDefault();
 
             ViewBag.listadoGeneros = listaGeneros;
             ViewBag.listadoLibros = listaLibros;

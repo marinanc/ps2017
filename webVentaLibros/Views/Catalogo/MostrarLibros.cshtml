@@ -240,7 +240,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Libro</h2>
+                        <h2>Catalogo</h2>
                     </div>
                 </div>
             </div>
@@ -272,121 +272,117 @@
                                 </div>
                             }
 
-                            </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="product-content-right">
+                </div>
+                <div class="col-md-9">
+                    <div class="product-content-right">
+                        <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                            @if (ViewBag.nombreGenero != null)
+                            {
+                                <h2>@ViewBag.nombreGenero</h2>
+                            }
+                        </div>
+                        <div class="row">
 
-                            <div class="row">
+                            <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
 
-                                <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
-
-                                @if (ViewBag.listadoLibros != null)
+                            @if (ViewBag.listadoLibros != null)
+                            {
+                                foreach (var libro in ViewBag.listadoLibros)
                                 {
-                                    foreach (var libro in ViewBag.listadoLibros)
-                                    {
-                                        <div class="col-md-4">
-                                            <div class="product-item">
-                                                <div style="width: 210px; height: 300px" class="pi-img-wrapper">
-                                                    <img style="width:100%; height:100%" src="../@libro.foto" class="img-responsive" alt="#">
-                                                    <div>
-                                                        <a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })" class="btn">Detalles</a>
-                                                    </div>
+                                    <div class="col-md-4" style="width:290px; height:445px">
+                                        <div class="product-item" style="width:100%; height:100%">
+                                            <div style="width: 210px; height: 300px" class="pi-img-wrapper">
+                                                <img style="width:100%; height:100%" src="../@libro.foto" class="img-responsive" alt="#">
+                                                <div>
+                                                    <a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })" class="btn">Detalles</a>
                                                 </div>
-                                                <br />
-                                                <h3 style="text-align:center"><a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })">@libro.titulo</a></h3>
-                                                <div class="pi-price">ARS $@libro.precio</div>
                                             </div>
+                                            <br />
+                                            <h3 style="text-align:center"><a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })">@libro.titulo</a></h3>
+                                            <div class="pi-price">ARS $@libro.precio</div>
                                         </div>
-                                    }
+                                    </div>
                                 }
+                            }
 
-                                
-                            </div>
+
                         </div>
                     </div>
-
                 </div>
-            </div>
 
-        </div>
-
-        <div class="footer-top-area">
-            <div class="zigzag-bottom"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="footer-about-us">
-                            <h2>u<span>Stora</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
-                            <div class="footer-social">
-                                <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                                <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <div class="footer-menu">
-                            <h2 class="footer-wid-title">User Navigation </h2>
-                            <ul>
-                                <li><a href="#">Mi cuenta</a></li>
-                                <li><a href="#">Historial de Pedidos</a></li>
-                                <li><a href="#">Lista de deseos</a></li>
-                                <li><a href="#">Contacto</a></li>
-                                <li><a href="#">Principal</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <div class="footer-menu">
-                            <h2 class="footer-wid-title">Libros</h2>
-                            <ul>
-                                <li><a href="#">Más vendidos</a></li>
-                                <li><a href="#">Más visitados</a></li>
-                                <li><a href="#">Novedades</a></li>
-                                <li><a href="#">Intercambios</a></li>
-                                <li><a href="#">Consultas y sugerencias</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                   
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="copyright">
-                            <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
-                        </div>
-                    </div>
-
-
-                </div>
             </div>
         </div>
 
-        <!-- Latest jQuery form server -->
-        <script src="https://code.jquery.com/jquery.min.js"></script>
+    </div>
 
-        <!-- Bootstrap JS form CDN -->
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <div class="footer-top-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>tu<span>Libreria</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- jQuery sticky menu -->
-        <script src="../js/owl.carousel.min.js"></script>
-        <script src="../js/jquery.sticky.js"></script>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Sitio </h2>
+                        <ul>
+                            <li><a href="#">Principal</a></li>
+                            <li><a href="#">Catalogo</a></li>
+                            <li><a href="#">Intercambios</a></li>
+                            <li><a href="#">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
 
-        <!-- jQuery easing -->
-        <script src="../js/jquery.easing.1.3.min.js"></script>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Usuario</h2>
+                        <ul>
+                            @if (!Request.IsAuthenticated)
+                            {
+                                <li><a href="#">Iniciar sesion</a></li>
+                            }
+                            else
+                            {
+                                <li>Mi cuenta</li>
+                                    <li><a href="#">Cerrar sesion</a></li>
+                            }
+                            <li><a href="#">Carrito</a></li>
+                            <li><a href="#">Consultas y sugerencias</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <!-- Main Script -->
-        <script src="../js/main.js"></script>
-    </body>
+
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="../js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="../js/main.js"></script>
+</body>
 

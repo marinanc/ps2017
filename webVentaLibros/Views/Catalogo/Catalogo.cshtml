@@ -24,6 +24,116 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
+    <style type="text/css">
+        .product-item {
+            padding: 15px;
+            background: #fff;
+            margin-top: 20px;
+            position: relative;
+        }
+
+            .product-item:hover {
+                box-shadow: 5px 5px rgba(234, 234, 234, 0.9);
+            }
+
+            .product-item:after {
+                content: ".";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+                font-size: 0;
+                line-height: 0;
+            }
+
+        .sticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 63px;
+            height: 63px;
+        }
+
+        .sticker-new {
+            background: url(http://keenthemes.com/assets/bootsnipp/new.png) no-repeat;
+            left: auto;
+            right: 0;
+        }
+
+        .pi-img-wrapper {
+            position: relative;
+        }
+
+            .pi-img-wrapper div {
+                background: rgba(0,0,0,0.3);
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: none;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+
+        .product-item:hover > .pi-img-wrapper > div {
+            display: block;
+        }
+
+        .pi-img-wrapper div .btn {
+            padding: 3px 10px;
+            color: #fff;
+            border: 1px #fff solid;
+            margin: -13px 5px 0;
+            background: transparent;
+            text-transform: uppercase;
+            position: relative;
+            top: 50%;
+            line-height: 1.4;
+            font-size: 12px;
+        }
+
+        .product-item .btn:hover {
+            background: #e84d1c;
+            border-color: #c8c8c8;
+        }
+
+        .product-item h3 {
+            font-size: 14px;
+            font-weight: 300;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+            .product-item h3 a {
+                color: #3e4d5c;
+            }
+
+                .product-item h3 a:hover {
+                    color: #E02222;
+                }
+
+        .pi-price {
+            color: #e84d1c;
+            font-size: 18px;
+            float: left;
+            padding-top: 1px;
+        }
+
+        .product-item .add2cart {
+            float: right;
+            color: #a8aeb3;
+            border: 1px #ededed solid;
+            padding: 3px 6px;
+            text-transform: uppercase;
+        }
+
+            .product-item .add2cart:hover {
+                color: #fff;
+                background: #e84d1c;
+                border-color: #e84d1c;
+            }
+    </style>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -131,7 +241,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Libro</h2>
+                        <h2>Catalogo</h2>
                     </div>
                 </div>
             </div>
@@ -169,12 +279,35 @@
                 </div>
                 <div class="col-md-9">
                     <div class="product-content-right">
-
+                        <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                            <h2>NOVEDADES</h2>
+                        </div>
+                        <!--SOLAMENTE NOVEDADES-->
                         <div class="row">
 
-                            <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
+                            @if (ViewBag.novedades != null)
+                            {
+                                foreach (var libro in ViewBag.novedades)
+                                {
+                                    <div class="col-md-4" style="width:290px; height:445px">
+                                        <div class="product-item" style="width:100%; height:100%">
+                                            <div style="width: 210px; height: 300px" class="pi-img-wrapper">
+                                                <img style="width:100%; height:100%" src="../@libro.foto" class="img-responsive" alt="#">
+                                                <div>
+                                                    <a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })" class="btn">Detalles</a>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <h3 style="text-align:center"><a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })">@libro.titulo</a></h3>
+                                            <div class="pi-price">ARS $@libro.precio</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
 
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -185,62 +318,52 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-4 col-sm-6">
                     <div class="footer-about-us">
-                        <h2>u<span>Stora</span></h2>
+                        <h2>tu<span>Libreria</span></h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
                         <div class="footer-social">
                             <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
                             <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                            <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">User Navigation </h2>
+                        <h2 class="footer-wid-title">Sitio </h2>
                         <ul>
-                            <li><a href="#">Mi cuenta</a></li>
-                            <li><a href="#">Historial de Pedidos</a></li>
-                            <li><a href="#">Lista de deseos</a></li>
-                            <li><a href="#">Contacto</a></li>
                             <li><a href="#">Principal</a></li>
+                            <li><a href="#">Catalogo</a></li>
+                            <li><a href="#">Intercambios</a></li>
+                            <li><a href="#">Contacto</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
-                        <h2 class="footer-wid-title">Libros</h2>
+                        <h2 class="footer-wid-title">Usuario</h2>
                         <ul>
-                            <li><a href="#">Más vendidos</a></li>
-                            <li><a href="#">Más visitados</a></li>
-                            <li><a href="#">Novedades</a></li>
-                            <li><a href="#">Intercambios</a></li>
+                            @if (!Request.IsAuthenticated)
+                            {
+                                <li><a href="#">Iniciar sesion</a></li>
+                            }
+                            else
+                            {
+                                <li>Mi cuenta</li>
+                                <li><a href="#">Cerrar sesion</a></li>
+                            }
+                            <li><a href="#">Carrito</a></li>
                             <li><a href="#">Consultas y sugerencias</a></li>
                         </ul>
                     </div>
                 </div>
-
-                
             </div>
         </div>
-    </div>
-    <div class="footer-bottom-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="copyright">
-                        <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
+    </div>   
 
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
