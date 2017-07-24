@@ -110,7 +110,7 @@ namespace webVentaLibros.Controllers
                 TempData["Message"] = "No se pudo registrar la calificacion. Intentelo nuevamente." + e.Message;
             }
 
-            return RedirectToAction("Index", new { codigo = codLibro });
+            return RedirectToAction("Index", new { cod = codLibro });
         }
 
         public bool verificarCalificacion(string codLibro, int usuario)

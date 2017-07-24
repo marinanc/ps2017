@@ -30,7 +30,10 @@ namespace webVentaLibros.Controllers
         public ActionResult Carrito(string codLibro, int quantity)
         {
             double totalCompra = 0;
+            int cantidadLibros = 0;
+
             var bd = new bdVentaLibrosDataContext();
+
             var libroAgregar = from libro in bd.Libros
                                where libro.codigoBarra == codLibro
                                select new LibroModel
@@ -47,6 +50,9 @@ namespace webVentaLibros.Controllers
                 List<CarritoItem> compra = new List<CarritoItem>();
                 compra.Add(new CarritoItem(lista.First(), quantity));
                 Session["carrito"] = compra;
+
+                //cantidad en carrito
+                Session["cantidadlibros"] = quantity;
             }
             else
             {
@@ -57,11 +63,19 @@ namespace webVentaLibros.Controllers
                 else
                     compra[indexExistente].Cantidad++;
                 Session["carrito"] = compra;
+
+                
             }
+
             foreach(var item in Session["carrito"] as List<CarritoItem>){
                 totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+                cantidadLibros = cantidadLibros + item.Cantidad;
             }
             ViewBag.total = totalCompra;
+
+            Session["totalCompra"] = totalCompra;
+            Session["cantidadLibros"] = cantidadLibros;
+
             return View();
         }
 

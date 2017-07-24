@@ -115,7 +115,14 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="Cart/Carrito">Carrito - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        @if (Session["carrito"] == null)
+                        {
+                            <a href="Cart/Carrito">Carrito - <span class="cart-amunt">ARS $0</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">0</span></a>
+                        }
+                        else
+                        {
+                            <a href="Cart/Carrito">Carrito - <span class="cart-amunt">ARS $@Session["totalCompra"]</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">@Session["cantidadLibros"]</span></a>
+                        }
                     </div>
                 </div>
             </div>
