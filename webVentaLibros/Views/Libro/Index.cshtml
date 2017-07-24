@@ -457,95 +457,25 @@
                         <div class="related-products-wrapper">
                             <h2 class="related-products-title">Libros relacionados</h2>
                             <div class="related-products-carousel">
+                                @if(ViewBag.librosRelacionados != null) {
+                                    foreach(var libroRelacionado in ViewBag.librosRelacionados) {
                                 <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/195x243.png" alt="">
+                                    <div class="product-f-image" style="width:200px; height:300px">
+                                        <img style="width:100%; height:100%" src=@libroRelacionado.foto alt="">
                                         <div class="product-hover">
 
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
+                                            <a href=@Url.Action("Index", "Libro", new { cod = libroRelacionado.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Detalles</a>
                                         </div>
                                     </div>
 
-                                    <h2><a href="">Libro 1</a></h2>
+                                    <h2><a href=@Url.Action("Index", "Libro", new { cod = libroRelacionado.codigoBarra })>@libroRelacionado.titulo</a></h2>
 
                                     <div class="product-carousel-price">
-                                        <ins>$700.00</ins>
+                                        <ins>ARS $@libroRelacionado.precio</ins>
                                     </div>
                                 </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/195x243.png" alt="">
-                                        <div class="product-hover">
-
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Libro 2</a></h2>
-                                    <div class="product-carousel-price">
-                                        <ins>$899.00</ins>
-                                    </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/195x243.png" alt="">
-                                        <div class="product-hover">
-
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Libro 3</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$400.00</ins>
-                                    </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/195x243.png" alt="">
-                                        <div class="product-hover">
-
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Libro 5</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$200.00</ins>
-                                    </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/195x243.png" alt="">
-                                        <div class="product-hover">
-
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Libro 6</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$1200.00</ins>
-                                    </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/195x243.png" alt="">
-                                        <div class="product-hover">
-
-                                            <a href="" class="view-details-link"><i class="fa fa-link"></i>Ver detalles</a>
-                                        </div>
-                                    </div>
-
-                                    <h2><a href="">Libro 7</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>$400.00</ins>
-                                    </div>
-                                </div>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

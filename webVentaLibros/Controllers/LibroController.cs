@@ -52,6 +52,17 @@ namespace webVentaLibros.Controllers
                                        && deseado.codigoLibro == cod
                                        select deseado).Count();
 
+            //libros relacionados (genero, autor...)
+            var libroElegido = (from libro in bdVentaLibros.Libros
+                                where libro.codigoBarra == cod
+                                select libro).FirstOrDefault();
+
+            ViewBag.librosRelacionados = (from libro in bdVentaLibros.Libros
+                                          where (libro.idGenero == libroElegido.idGenero
+                                          || libro.idAutor1 == libroElegido.idAutor1)
+                                          && libro.codigoBarra != libroElegido.codigoBarra
+                                          select libro).Take(7);
+
             return View(libroSeleccionado);
         }
 
