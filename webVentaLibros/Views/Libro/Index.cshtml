@@ -107,6 +107,27 @@
             }
     </style>
 
+    <!--Tabla de comentarios-->
+    <style type="text/css">
+        .table-fixed thead {
+            width: 97%;
+        }
+
+        .table-fixed tbody {
+            max-height: 230px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+            display: block;
+        }
+
+            .table-fixed tbody td, .table-fixed thead > tr > th {
+                float: left;
+                border-bottom-width: 0;
+    </style>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -419,7 +440,7 @@
                                                             }
                                                             else
                                                             {
-                                                               
+
                                                                 <form id="user-rating-form" action=@Url.Action("RegistrarCalificacion","Libro") method="POST" role="form">
                                                                     <div class="rating-chooser">
                                                                         <p>Tú calificación</p>
@@ -449,26 +470,67 @@
                                 </div>
                             }
                         }
+
+                        <!--TABLA CON OPINIONES DE OTROS USUARIOS-->
+                        @if (ViewBag.reviews.Count != 0)
+                        {
+                            <div class="row">
+                                <br />
+                                <br />
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h4>
+                                                Opiniones de otros usuarios
+                                            </h4>
+                                        </div>
+                                        <table class="table table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-xs-2">Usuario</th>
+                                                    <th class="col-xs-8">Opinion</th>
+                                                    <th class="col-xs-2">Puntaje</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var comentario in ViewBag.reviews)
+                                                {
+                                                    <tr>
+                                                        <td class="col-xs-2">@comentario.Usuarios.nombreUsuario</td>
+                                                        <td class="col-xs-8">@comentario.comentario</td>
+                                                        <td class="col-xs-2">@comentario.calificacion<span class="glyphicon glyphicon-star" style="color:yellow"></span></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--FIN COMENTARIOS DE USUARIOS-->
+
                         <div class="related-products-wrapper">
                             <h2 class="related-products-title">Libros relacionados</h2>
                             <div class="related-products-carousel">
-                                @if(ViewBag.librosRelacionados != null) {
-                                    foreach(var libroRelacionado in ViewBag.librosRelacionados) {
-                                <div class="single-product">
-                                    <div class="product-f-image" style="width:200px; height:300px">
-                                        <img style="width:100%; height:100%" src=@libroRelacionado.foto alt="">
-                                        <div class="product-hover">
+                                @if (ViewBag.librosRelacionados != null)
+                                {
+                                    foreach (var libroRelacionado in ViewBag.librosRelacionados)
+                                    {
+                                        <div class="single-product">
+                                            <div class="product-f-image" style="width:200px; height:300px">
+                                                <img style="width:100%; height:100%" src=@libroRelacionado.foto alt="">
+                                                <div class="product-hover">
 
-                                            <a href=@Url.Action("Index", "Libro", new { cod = libroRelacionado.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Detalles</a>
+                                                    <a href=@Url.Action("Index", "Libro", new { cod = libroRelacionado.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Detalles</a>
+                                                </div>
+                                            </div>
+
+                                            <h2><a href=@Url.Action("Index", "Libro", new { cod = libroRelacionado.codigoBarra })>@libroRelacionado.titulo</a></h2>
+
+                                            <div class="product-carousel-price">
+                                                <ins>ARS $@libroRelacionado.precio</ins>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <h2><a href=@Url.Action("Index", "Libro", new { cod = libroRelacionado.codigoBarra })>@libroRelacionado.titulo</a></h2>
-
-                                    <div class="product-carousel-price">
-                                        <ins>ARS $@libroRelacionado.precio</ins>
-                                    </div>
-                                </div>
                                     }
                                 }
                             </div>
@@ -523,11 +585,11 @@
                     </div>
                 </div>
 
-               
+
             </div>
         </div>
     </div>
-    
+
 
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
@@ -578,17 +640,17 @@
 
     <script>
         function eliminarDeseado(codLibro) {
-            var theUrl = '@Url.Action("CheckLibroDeseado", new { check = false })'+'&cod=' +codLibro;
+            var theUrl = '@Url.Action("CheckLibroDeseado", new { check = false })' + '&cod=' + codLibro;
 
 
-                window.location = theUrl;
-            }
+            window.location = theUrl;
+        }
 
-            function agregarDeseado(codLibro) {
-                var theUrl = '@Url.Action("CheckLibroDeseado",new { check = true })'+'&cod=' + codLibro;
+        function agregarDeseado(codLibro) {
+            var theUrl = '@Url.Action("CheckLibroDeseado",new { check = true })' + '&cod=' + codLibro;
 
-                window.location = theUrl;
-            }
+            window.location = theUrl;
+        }
     </script>
 
     <!--Mostrar mensaje, si es que existe-->

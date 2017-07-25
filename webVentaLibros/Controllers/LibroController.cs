@@ -63,6 +63,10 @@ namespace webVentaLibros.Controllers
                                           && libro.codigoBarra != libroElegido.codigoBarra
                                           select libro).Take(7);
 
+            ViewBag.reviews = (from calificacion in bdVentaLibros.CalificacionPorLibro
+                              where calificacion.codigoLibro == cod
+                              select calificacion).ToList();
+
             return View(libroSeleccionado);
         }
 
