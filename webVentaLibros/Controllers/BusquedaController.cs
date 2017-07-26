@@ -22,25 +22,26 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             var librosEncontrados = (from libro in bd.Libros
-                                    where libro.codigoBarra == busqueda || libro.titulo.Contains(busqueda)
+                                    where libro.codigoBarra == busqueda || 
+                                    libro.titulo.Contains(busqueda) ||
+                                    (libro.Autores.nombres+" "+libro.Autores.apellidos).Contains(busqueda) ||
+                                    (libro.Autores1.nombres + " " + libro.Autores1.apellidos).Contains(busqueda) ||
+                                    (libro.Autores2.nombres + " " + libro.Autores2.apellidos).Contains(busqueda) ||
+                                    (libro.Autores3.nombres + " " + libro.Autores3.apellidos).Contains(busqueda)
                                     select libro).ToList();
 
-            var listaCompleta = new List<LibroModel>();
+            ViewBag.listadoLibros = librosEncontrados;
 
-            foreach (var libro in librosEncontrados)
-            {
-                var entidadLibro = new LibroModel
-                {
-                    codigoBarra = libro.codigoBarra,
-                    foto = libro.foto,
-                    titulo = libro.titulo,
-                    sinopsis = libro.sinopsis,
-                    precio = Convert.ToDouble(libro.precio)
-                };
-                listaCompleta.Add(entidadLibro);
-            }
+            var listaGeneros = (from genero in bd.Generos
+                                select new GeneroModel
+                                {
+                                    idGenero = genero.idGenero,
+                                    nombreGenero = genero.nombre
+                                }).ToList();
 
-            return View(listaCompleta);
+            ViewBag.listadoGeneros = listaGeneros;
+
+            return View();
         }
     }
 }

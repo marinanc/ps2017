@@ -35,7 +35,8 @@ namespace webVentaLibros.Controllers
                                         sinopsis = libro.sinopsis,
                                         precio = Convert.ToDouble(libro.precio),
                                         paginas = Convert.ToInt32(libro.paginas),
-                                        genero = gen.nombre
+                                        genero = gen.nombre,
+                                        autor1 = libro.Autores.apellidos+", "+libro.Autores.nombres
                                     };
 
             var calificacionPromedio = (from calificacion in bdVentaLibros.CalificacionPorLibro

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Venta de Libros</title>
+    <title>Detalle - Venta de Libros</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -24,6 +24,115 @@
     <link rel="stylesheet" href="../css/owl.carousel.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <style type="text/css">
+        .product-item {
+            padding: 15px;
+            background: #fff;
+            margin-top: 20px;
+            position: relative;
+        }
+
+            .product-item:hover {
+                box-shadow: 5px 5px rgba(234, 234, 234, 0.9);
+            }
+
+            .product-item:after {
+                content: ".";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+                font-size: 0;
+                line-height: 0;
+            }
+
+        .sticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 63px;
+            height: 63px;
+        }
+
+        .sticker-new {
+            background: url(http://keenthemes.com/assets/bootsnipp/new.png) no-repeat;
+            left: auto;
+            right: 0;
+        }
+
+        .pi-img-wrapper {
+            position: relative;
+        }
+
+            .pi-img-wrapper div {
+                background: rgba(0,0,0,0.3);
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: none;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+
+        .product-item:hover > .pi-img-wrapper > div {
+            display: block;
+        }
+
+        .pi-img-wrapper div .btn {
+            padding: 3px 10px;
+            color: #fff;
+            border: 1px #fff solid;
+            margin: -13px 5px 0;
+            background: transparent;
+            text-transform: uppercase;
+            position: relative;
+            top: 50%;
+            line-height: 1.4;
+            font-size: 12px;
+        }
+
+        .product-item .btn:hover {
+            background: #e84d1c;
+            border-color: #c8c8c8;
+        }
+
+        .product-item h3 {
+            font-size: 14px;
+            font-weight: 300;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+            .product-item h3 a {
+                color: #3e4d5c;
+            }
+
+                .product-item h3 a:hover {
+                    color: #E02222;
+                }
+
+        .pi-price {
+            color: #e84d1c;
+            font-size: 18px;
+            float: left;
+            padding-top: 1px;
+        }
+
+        .product-item .add2cart {
+            float: right;
+            color: #a8aeb3;
+            border: 1px #ededed solid;
+            padding: 3px 6px;
+            text-transform: uppercase;
+        }
+
+            .product-item .add2cart:hover {
+                color: #fff;
+                background: #e84d1c;
+                border-color: #e84d1c;
+            }
+    </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -116,12 +225,12 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            @Html.ActionLink("Home","Index","Home")
+                            @Html.ActionLink("Principal", "Index", "Home")
                         </li>
                         <li>
-                           @Html.ActionLink("Carrito", "Carrito", "Cart")
+                            @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
-                        <li>
+                        <li class="active">
                             @Html.ActionLink("Libros", "Catalogo", "Catalogo")
                         </li>
                         <li>
@@ -134,64 +243,94 @@
         </div>
     </div> <!-- End mainmenu area -->
 
-    <div class="slider-area">
-        <div class="row">
-            <div class="single-sidebar">
-                <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
-                    <input type="text" name="busqueda" placeholder="Ingresar titulo,autor,ISBN..." required>
-                    <input type="submit" value="Buscar">
-                </form>
-            </div>
-        </div>
-
-
-    </div> <!-- End slider area -->
-    @if (Model != null)
-    {
-        <div class="maincontent-area">
-            <div class="zigzag-bottom"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="latest-product">
-                            <h2 class="section-title">Busqueda</h2>
-                            <div class="product-carousel">
-
-                                @foreach (var libro in Model)
-                                {
-
-                                    <div class="single-product">
-                                        <div class="product-f-image">
-                                            <img src="../@libro.foto" alt="">
-                                            <div class="product-hover">
-
-                                                <input type="text" name="codLibro" value="@libro.codigoBarra" style="visibility:hidden" />
-                                                <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Comprar</a>
-                                                <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoBarra }) class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
-
-
-                                            </div>
-                                        </div>
-
-                                        <h2><a href="single-product.html">@libro.titulo</a></h2>
-
-                                        <div class="product-carousel-price">
-                                            <ins>$@libro.precio</ins>
-                                        </div>
-
-                                    </div>
-
-                                }
-                            </div>
-                        </div>
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Catalogo</h2>
                     </div>
                 </div>
             </div>
-        </div> <!-- End main content area -->
-    }
+        </div>
+    </div>
 
 
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Buscar libro</h2>
+                        <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
+                            <input type="text" name="busqueda" placeholder="Ingresar titulo,autor,ISBN..." required>
+                            <input type="submit" value="Buscar">
+                        </form>
+                    </div>
 
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Generos</h2>
+                        <div class="list-group">
+
+                            @foreach (var genero in ViewBag.listadoGeneros)
+                            {
+                                <div class="list-group-item">
+                                    @Html.ActionLink((string)genero.nombreGenero, "MostrarLibros", "Catalogo", new { idGenero = genero.idGenero },null)
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="product-content-right">
+                        <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                            <h2>Resultado de tu búsqueda</h2>
+                        </div>
+                        <div class="row">
+
+                            <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
+
+                            @if (ViewBag.listadoLibros.Count > 0)
+                            {
+                                foreach (var libro in ViewBag.listadoLibros)
+                                {
+                                    <div class="col-md-4" style="width:290px; height:445px">
+                                        <div class="product-item" style="width:100%; height:100%">
+                                            <div style="width: 210px; height: 300px" class="pi-img-wrapper">
+                                                <img style="width:100%; height:100%" src="../@libro.foto" class="img-responsive" alt="#">
+                                                <div>
+                                                    <a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })" class="btn">Detalles</a>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <h3 style="text-align:center"><a href="@Url.Action("Index", "Libro", new { cod = libro.codigoBarra })">@libro.titulo</a></h3>
+                                            <div class="pi-price">ARS $@libro.precio</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <h2 style="color:gray">No se encontraron libros</h2>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
@@ -242,9 +381,9 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End footer top area -->
+    </div>
 
-   
+
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -260,8 +399,4 @@
 
     <!-- Main Script -->
     <script src="../js/main.js"></script>
-
-    <!-- Slider -->
-    <script type="text/javascript" src="../js/bxslider.min.js"></script>
-    <script type="text/javascript" src="../js/script.slider.js"></script>
 </body>

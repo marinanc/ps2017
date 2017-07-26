@@ -561,5 +561,10 @@ namespace webVentaLibros.Controllers
             return Json(new SelectList(localidades, "Value", "Text"));
         }
 
+        public ActionResult MiListaDeseados()
+        {
+            return View();
+        }
+
     }
 }

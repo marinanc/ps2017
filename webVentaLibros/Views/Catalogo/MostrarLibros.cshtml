@@ -294,7 +294,7 @@
 
                             <!--ACA VA TODO EL CATALOGO SEGUN GENERO-->
 
-                            @if (ViewBag.listadoLibros != null)
+                            @if (ViewBag.listadoLibros.Count > 0)
                             {
                                 foreach (var libro in ViewBag.listadoLibros)
                                 {
@@ -312,6 +312,17 @@
                                         </div>
                                     </div>
                                 }
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <h2 style="color:gray">No se encontraron libros</h2>
+                                    </div>
+                                </div>
                             }
 
 
