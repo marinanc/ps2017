@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using webVentaLibros.Models;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace webVentaLibros.Controllers
 {
@@ -23,9 +25,9 @@ namespace webVentaLibros.Controllers
                                    select usuario;
 
             ViewBag.totalComprasConcretadas = (from pedido in bd.Pedidos
-                                    where pedido.idUsuario == idUsuario
-                                    && pedido.idEstadoPedido == 5
-                                    select pedido).Count();
+                                               where pedido.idUsuario == idUsuario
+                                               && pedido.idEstadoPedido == 5
+                                               select pedido).Count();
 
             ViewBag.totalIntercambiosConcretados = (from intercambio in bd.Intercambios
                                                     where intercambio.idEstado == 3
@@ -34,12 +36,12 @@ namespace webVentaLibros.Controllers
                                                     select intercambio).Count();
 
             ViewBag.totalIntercambiosPendientes = (from publicacion in bd.PublicacionIntercambio
-                                                           where publicacion.idUsuario == idUsuario
-                                                           
-                                                           from intercambio in bd.Intercambios
-                                                           where publicacion.idPublicacion == intercambio.idPublicacionUsuario1
-                                                           && intercambio.idEstado != 3
-                                                           select intercambio).Count();
+                                                   where publicacion.idUsuario == idUsuario
+
+                                                   from intercambio in bd.Intercambios
+                                                   where publicacion.idPublicacion == intercambio.idPublicacionUsuario1
+                                                   && intercambio.idEstado != 3
+                                                   select intercambio).Count();
 
             ViewBag.cantidadLibrosDeseados = (from deseado in bd.ListaDeseados
                                               where deseado.idUsuario == idUsuario
@@ -211,7 +213,7 @@ namespace webVentaLibros.Controllers
             ViewBag.solicitudesAceptadas = from publicacion in bd.PublicacionIntercambio
                                            where publicacion.idUsuario == idUsuario
                                            from intercambio in bd.Intercambios
-                                           where (publicacion.idPublicacion == intercambio.idPublicacionUsuario2 
+                                           where (publicacion.idPublicacion == intercambio.idPublicacionUsuario2
                                            || publicacion.idPublicacion == intercambio.idPublicacionUsuario1)
                                            && intercambio.idEstado == 2
                                            select intercambio;
@@ -300,11 +302,11 @@ namespace webVentaLibros.Controllers
                                         select intercambio;
 
             var rechazarOtros = (from intercambio in bd.Intercambios
-                                where (intercambio.idPublicacionUsuario1 == idPublicacion1 ||
-                                intercambio.idPublicacionUsuario2 == idPublicacion1 ||
-                                intercambio.idPublicacionUsuario1 == idPublicacion2 ||
-                                intercambio.idPublicacionUsuario2 == idPublicacion2)                                
-                                select intercambio).Except(actualizarIntercambio);
+                                 where (intercambio.idPublicacionUsuario1 == idPublicacion1 ||
+                                 intercambio.idPublicacionUsuario2 == idPublicacion1 ||
+                                 intercambio.idPublicacionUsuario1 == idPublicacion2 ||
+                                 intercambio.idPublicacionUsuario2 == idPublicacion2)
+                                 select intercambio).Except(actualizarIntercambio);
 
             var deshabilitarPublicaciones = from publicacion in bd.PublicacionIntercambio
                                             where publicacion.idPublicacion == idPublicacion1 ||
@@ -422,7 +424,7 @@ namespace webVentaLibros.Controllers
                                          select publicacion;
 
             //Vuelvo a habilitar las publicaciones de los dos libros involucrados
-            foreach(var publicacion in habilitarPublicaciones)
+            foreach (var publicacion in habilitarPublicaciones)
             {
                 publicacion.idEstado = 1; // 1 => 'ACTIVO'
             }
@@ -437,12 +439,12 @@ namespace webVentaLibros.Controllers
             {
                 bd.SubmitChanges();
                 TempData["Message"] = "Ups! Lamentamos el fracaso en el intercambio. Tu libro ha vuelto a publicarse";
-            } 
+            }
             catch (Exception e)
             {
                 TempData["Message"] = "No se pudo cancelar el intercambio. Intentelo de nuevo";
             }
-            
+
             return RedirectToAction("SolicitudesIntercambio");
         }
 
@@ -454,8 +456,8 @@ namespace webVentaLibros.Controllers
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
 
             var usuarioLogueado = from usuario in bd.Usuarios
-                                      where usuario.idUsuario == idUsuario
-                                      select usuario;
+                                  where usuario.idUsuario == idUsuario
+                                  select usuario;
 
             Usuarios us = usuarioLogueado.FirstOrDefault();
 
@@ -474,16 +476,16 @@ namespace webVentaLibros.Controllers
 
             foreach (var p in listadoProvincias)
             {
-                if(p.idProvincia == us.idProvincia)
+                if (p.idProvincia == us.idProvincia)
                 {
-                    li.Add(new SelectListItem { Text = p.nombreProvincia, Value = p.idProvincia.ToString() , Selected=true});
+                    li.Add(new SelectListItem { Text = p.nombreProvincia, Value = p.idProvincia.ToString(), Selected = true });
                 }
                 else
-                { 
+                {
                     li.Add(new SelectListItem { Text = p.nombreProvincia, Value = p.idProvincia.ToString() });
                 }
             }
-            
+
             ViewData["provincias"] = li;
 
             //LOCALIDADES DE LA PROVINCIA (PROVINCIA INGRESADA ANTERIORMENTE)
@@ -491,42 +493,75 @@ namespace webVentaLibros.Controllers
             var prov = us.idProvincia;
 
             List<SelectListItem> localidades = new List<SelectListItem>();
+            localidades.Add(new SelectListItem { Text = "Seleccione..", Value = "0" }); //Valor 0 por defecto..
 
-            if (prov > 0)
+            //if (prov > 0)
+            //{
+
+
+            var listaLocalidades = (from l in bd.Localidades
+                                    where l.idProvincia == prov
+                                    select new LocalidadModel
+                                    {
+                                        idLocalidad = l.idLocalidad,
+                                        nombreLocalidad = l.nombre
+                                    }).ToList();
+
+            foreach (var loc in listaLocalidades)
             {
-
-
-                var listaLocalidades = (from l in bd.Localidades
-                                        where l.idProvincia == prov
-                                        select new LocalidadModel
-                                        {
-                                            idLocalidad = l.idLocalidad,
-                                            nombreLocalidad = l.nombre
-                                        }).ToList();
-
-                foreach (var loc in listaLocalidades)
+                if (loc.idLocalidad == us.idLocalidad)
                 {
-                    if(loc.idLocalidad == us.idLocalidad)
-                    {
-                        localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString(), Selected=true });
-                    } else
-                    {                    
-                        localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString() });
-                    }
+                    localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString(), Selected = true });
                 }
-                ViewData["localidades"] = localidades;
+                else
+                {
+                    localidades.Add(new SelectListItem { Text = loc.nombreLocalidad, Value = loc.idLocalidad.ToString() });
+                }
             }
-            else
-            {
-                localidades.Clear();
-            }
+            ViewData["localidades"] = localidades;
+            //}
+            //else
+            //{
+            //    localidades.Clear();
+            //}
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult EditarDatos(string nombreUsuario, string direccion, int idProvincia, int idLocalidad, string mail, string contraseña)
+        public ActionResult EditarDatos(UserModel usu)
         {
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+            var bd = new bdVentaLibrosDataContext();
+
+            var usuarioLogueado = (from usuario in bd.Usuarios
+                                   where usuario.idUsuario == idUsuario
+                                   select usuario).ToList();
+
+            foreach (var u in usuarioLogueado)
+            {
+                u.nombreUsuario = usu.nombreUsuario;
+                u.mail = usu.mail;
+                u.direccion = usu.direccion;
+                if (usu.idProvincia > 0)
+                {
+                    u.idProvincia = usu.idProvincia;
+                    if (usu.idLocalidad > 0)
+                    {
+                        u.idLocalidad = usu.idLocalidad;
+                    }
+                }
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Sus datos fueron modificados exitosamente";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo modificar sus datos." + e.ToString();
+            }
             return View();
         }
 
@@ -536,7 +571,7 @@ namespace webVentaLibros.Controllers
             var prov = Convert.ToInt32(idProvincia);
 
             List<SelectListItem> localidades = new List<SelectListItem>();
-
+            localidades.Add(new SelectListItem { Text = "Seleccione..", Value = "0" }); //Valor 0 por defecto..
             if (prov > 0)
             {
 
@@ -559,6 +594,60 @@ namespace webVentaLibros.Controllers
                 localidades.Clear();
             }
             return Json(new SelectList(localidades, "Value", "Text"));
+        }
+
+        [HttpGet]
+        public ActionResult EditarContraseña()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditarContraseña(string contraseñaAntigua, string contraseñaNueva)
+        {
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+            var bd = new bdVentaLibrosDataContext();
+
+            var emailUsuarioLogueado = (from usuario in bd.Usuarios
+                                        where usuario.idUsuario == idUsuario
+                                        select usuario.mail).FirstOrDefault();
+
+            var usuarioLogueado =
+                        from usuario in bd.Usuarios
+                        where usuario.idUsuario == idUsuario
+                        && usuario.contraseña == contraseñaAntigua
+                        select usuario;
+
+
+            if (usuarioLogueado.Count() > 0)
+            {
+                foreach (var usuario in usuarioLogueado)
+                {
+                    usuario.contraseña = contraseñaNueva;
+                }
+                WebSecurity.ChangePassword(emailUsuarioLogueado, contraseñaAntigua, contraseñaNueva);
+                bd.SubmitChanges();
+                TempData["Message"] = "Contraseña actualizada exitosamente";
+            }
+            else
+            {
+                TempData["Message"] = "No se puedo actualizar su contraseña. Verifique los datos ingresados.";
+            }
+
+            //try
+            //{
+            //    WebSecurity.ChangePassword(emailUsuarioLogueado, contraseñaAntigua, contraseñaNueva);
+            //    bd.SubmitChanges();
+            //    TempData["Message"] = "Contraseña actualizada exitosamente";
+            //}
+            //catch(Exception e)
+            //{
+            //    TempData["Message"] = "No se puedo actualizar su contraseña. Verifique los datos ingresados.";
+            //}
+            
+
+            return View();
         }
 
         public ActionResult MiListaDeseados()

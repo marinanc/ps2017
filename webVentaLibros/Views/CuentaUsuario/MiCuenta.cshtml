@@ -276,12 +276,19 @@
                                                         <i class="glyphicon glyphicon-calendar"></i>Usuario desde: @usuario.fechaHoraAlta.ToShortDateString()
                                                     </p>
                                                     <!-- Split button -->
-                                                    <div class="btn-group">
-                                                        <form action=@Url.Action("EditarDatos", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
-                                                            <button type="submit" class="btn btn-primary">Editar</button>
-                                                        </form>
-                                                    </div>
-
+                                                    <fieldset>
+                                                        <legend style="color:dimgrey; font-size:small">Modificar</legend>
+                                                        <div class="btn-group">
+                                                            <form action=@Url.Action("EditarDatos", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                                <button type="submit" class="btn btn-primary">Datos</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <form action=@Url.Action("EditarContraseña", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                                <button type="submit" class="btn btn-primary">Contraseña</button>
+                                                            </form>
+                                                        </div>
+                                                    </fieldset>
                                                 </div>
 
                                             </div>

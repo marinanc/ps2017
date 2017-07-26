@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "EditarDatos";
+    ViewBag.Title = "EditarContraseña";
 }
 
 @using webVentaLibros.Models;
@@ -170,77 +170,39 @@
                         <div class="panel">
                             <div class="panel-heading" style="text-align:center">
                                 <br />
-                                <h3 class="panel-title">Ingrese sus datos</h3>
+                                <h3 class="panel-title">Actualizar contraseña</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="col-md-6 col-md-offset-3">
-                                    @if (ViewBag.usuarioLogueado != null)
-                                    {
-                                        foreach (var usuario in ViewBag.usuarioLogueado)
-                                        {
-                                            <form action=@Url.Action("EditarDatos","CuentaUsuario") method="POST" role="form">
-                                                <h5>(*) Datos obligatorios</h5>
-                                                <div class="form-group">
-                                                    <label for="name" class="cols-sm-2 control-label">Nombre (*)</label>
-                                                    <div class="cols-sm-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                                            <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" placeholder="Ingrese su nombre" value=@usuario.nombreUsuario required />
-                                                        </div>
-                                                    </div>
+
+                                    <form action=@Url.Action("EditarContraseña","CuentaUsuario") method="POST" role="form">
+                                        <h5>(*) Datos obligatorios</h5>
+                                        <div class="form-group">
+                                            <label for="name" class="cols-sm-2 control-label">Contraseña actual</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                                                    <input type="password" class="form-control" name="contraseñaAntigua" id="contraseñaAntigua" placeholder="Ingrese su contraseña actual" required />
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="email" class="cols-sm-2 control-label">Email (*)</label>
-                                                    <div class="cols-sm-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                                            <input type="email" class="form-control" name="mail" id="mail" placeholder="Ingresa tu email" value=@usuario.mail required />
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="cols-sm-2 control-label">Contraseña nueva</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                                                    <input type="password" class="form-control" name="contraseñaNueva" id="contraseñaNueva" placeholder="Ingrese su nueva contraseña" required />
                                                 </div>
+                                            </div>
+                                        </div>
 
-                                                <div class="form-group">
+                                        <div class="form-group" style="text-align:center">
+                                            <br />
+                                            <button type="submit" id="button" class="btn btn-primary btn-md login-button">Actualizar contraseña</button>
+                                        </div>
 
-                                                    <label for="provincias" class="cols-sm-2 control-label">Provincia</label>
-                                                    <div class="cols-sm-10">
-                                                        <div class="input-group">
+                                    </form>
 
-                                                            @Html.DropDownList("idProvincia", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control" })
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="localidades" class="cols-sm-2 control-label">Localidad</label>
-                                                    <div class="cols-sm-10">
-                                                        <div class="input-group">
-                                                            @if (ViewData["localidades"] != null)
-                                                            {
-                                                                @Html.DropDownList("idLocalidad", ViewData["localidades"] as List<SelectListItem>, new { @class = "form-control" })
-                                                            }
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="confirm" class="cols-sm-2 control-label">Domicilio</label>
-                                                    <div class="cols-sm-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                                            <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingresa su domicilio (calle, nro, piso, depto)" value=@usuario.direccion />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style="text-align:center">
-                                                    <br />
-                                                    <button type="submit" id="button" class="btn btn-primary btn-md login-button">Editar</button>
-                                                </div>
-
-                                            </form>
-
-                                            @Html.ValidationSummary(true)
-                                        }
-                                    }
                                 </div>
                             </div>
                         </div>
@@ -300,8 +262,6 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-
-    
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -323,39 +283,6 @@
     <script type="text/javascript" src="../js/script.slider.js"></script>
     <script src="../assets/vendor/toastr/toastr.min.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //Dropdownlist Selectedchange event
-            $("#idProvincia").change(function () {
-                $("#idLocalidad").empty();
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("GetLocalidades")', // we are calling json method
-
-                    dataType: 'json',
-
-                    data: { idProvincia: $("#idProvincia").val() },
-                    // here we are get value of selected country and passing same value as inputto json method GetStates.
-
-                    success: function (localidades) {
-                        // states contains the JSON formatted list
-                        // of states passed from the controller
-
-                        $.each(localidades, function (i, localidad) {
-                            $("#idLocalidad").append('<option value="' + localidad.Value + '">' +
-                                 localidad.Text + '</option>');
-                            // here we are adding option for States
-
-                        });
-                    },
-                    error: function (ex) {
-                        alert('Failed to retrieve states.' + ex);
-                    }
-                });
-                return false;
-            })
-        });
-    </script>
 
     @if (TempData["Message"] != null)
     {
