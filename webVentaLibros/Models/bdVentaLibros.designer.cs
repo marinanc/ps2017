@@ -96,6 +96,12 @@ namespace webVentaLibros.Models
     partial void InsertListaDeseados(ListaDeseados instance);
     partial void UpdateListaDeseados(ListaDeseados instance);
     partial void DeleteListaDeseados(ListaDeseados instance);
+    partial void InsertTipoMensajeUsuario(TipoMensajeUsuario instance);
+    partial void UpdateTipoMensajeUsuario(TipoMensajeUsuario instance);
+    partial void DeleteTipoMensajeUsuario(TipoMensajeUsuario instance);
+    partial void InsertMensajeUsuario(MensajeUsuario instance);
+    partial void UpdateMensajeUsuario(MensajeUsuario instance);
+    partial void DeleteMensajeUsuario(MensajeUsuario instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -301,6 +307,22 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<ListaDeseados>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TipoMensajeUsuario> TipoMensajeUsuario
+		{
+			get
+			{
+				return this.GetTable<TipoMensajeUsuario>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MensajeUsuario> MensajeUsuario
+		{
+			get
+			{
+				return this.GetTable<MensajeUsuario>();
 			}
 		}
 	}
@@ -5403,6 +5425,343 @@ namespace webVentaLibros.Models
 						this._idUsuario = default(int);
 					}
 					this.SendPropertyChanged("Usuarios");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoMensajeUsuario")]
+	public partial class TipoMensajeUsuario : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idTipoMensaje;
+		
+		private string _nombre;
+		
+		private EntitySet<MensajeUsuario> _MensajeUsuario;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidTipoMensajeChanging(int value);
+    partial void OnidTipoMensajeChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    #endregion
+		
+		public TipoMensajeUsuario()
+		{
+			this._MensajeUsuario = new EntitySet<MensajeUsuario>(new Action<MensajeUsuario>(this.attach_MensajeUsuario), new Action<MensajeUsuario>(this.detach_MensajeUsuario));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idTipoMensaje", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idTipoMensaje
+		{
+			get
+			{
+				return this._idTipoMensaje;
+			}
+			set
+			{
+				if ((this._idTipoMensaje != value))
+				{
+					this.OnidTipoMensajeChanging(value);
+					this.SendPropertyChanging();
+					this._idTipoMensaje = value;
+					this.SendPropertyChanged("idTipoMensaje");
+					this.OnidTipoMensajeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoMensajeUsuario_MensajeUsuario", Storage="_MensajeUsuario", ThisKey="idTipoMensaje", OtherKey="idTipoMensaje")]
+		public EntitySet<MensajeUsuario> MensajeUsuario
+		{
+			get
+			{
+				return this._MensajeUsuario;
+			}
+			set
+			{
+				this._MensajeUsuario.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_MensajeUsuario(MensajeUsuario entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoMensajeUsuario = this;
+		}
+		
+		private void detach_MensajeUsuario(MensajeUsuario entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoMensajeUsuario = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MensajeUsuario")]
+	public partial class MensajeUsuario : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idMensaje;
+		
+		private string _nombre;
+		
+		private string _email;
+		
+		private string _mensaje;
+		
+		private int _idTipoMensaje;
+		
+		private System.Nullable<System.DateTime> _fechaHora;
+		
+		private EntityRef<TipoMensajeUsuario> _TipoMensajeUsuario;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidMensajeChanging(int value);
+    partial void OnidMensajeChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OnmensajeChanging(string value);
+    partial void OnmensajeChanged();
+    partial void OnidTipoMensajeChanging(int value);
+    partial void OnidTipoMensajeChanged();
+    partial void OnfechaHoraChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaHoraChanged();
+    #endregion
+		
+		public MensajeUsuario()
+		{
+			this._TipoMensajeUsuario = default(EntityRef<TipoMensajeUsuario>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idMensaje", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idMensaje
+		{
+			get
+			{
+				return this._idMensaje;
+			}
+			set
+			{
+				if ((this._idMensaje != value))
+				{
+					this.OnidMensajeChanging(value);
+					this.SendPropertyChanging();
+					this._idMensaje = value;
+					this.SendPropertyChanged("idMensaje");
+					this.OnidMensajeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mensaje", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string mensaje
+		{
+			get
+			{
+				return this._mensaje;
+			}
+			set
+			{
+				if ((this._mensaje != value))
+				{
+					this.OnmensajeChanging(value);
+					this.SendPropertyChanging();
+					this._mensaje = value;
+					this.SendPropertyChanged("mensaje");
+					this.OnmensajeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idTipoMensaje", DbType="Int NOT NULL")]
+		public int idTipoMensaje
+		{
+			get
+			{
+				return this._idTipoMensaje;
+			}
+			set
+			{
+				if ((this._idTipoMensaje != value))
+				{
+					if (this._TipoMensajeUsuario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidTipoMensajeChanging(value);
+					this.SendPropertyChanging();
+					this._idTipoMensaje = value;
+					this.SendPropertyChanged("idTipoMensaje");
+					this.OnidTipoMensajeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaHora
+		{
+			get
+			{
+				return this._fechaHora;
+			}
+			set
+			{
+				if ((this._fechaHora != value))
+				{
+					this.OnfechaHoraChanging(value);
+					this.SendPropertyChanging();
+					this._fechaHora = value;
+					this.SendPropertyChanged("fechaHora");
+					this.OnfechaHoraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoMensajeUsuario_MensajeUsuario", Storage="_TipoMensajeUsuario", ThisKey="idTipoMensaje", OtherKey="idTipoMensaje", IsForeignKey=true)]
+		public TipoMensajeUsuario TipoMensajeUsuario
+		{
+			get
+			{
+				return this._TipoMensajeUsuario.Entity;
+			}
+			set
+			{
+				TipoMensajeUsuario previousValue = this._TipoMensajeUsuario.Entity;
+				if (((previousValue != value) 
+							|| (this._TipoMensajeUsuario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TipoMensajeUsuario.Entity = null;
+						previousValue.MensajeUsuario.Remove(this);
+					}
+					this._TipoMensajeUsuario.Entity = value;
+					if ((value != null))
+					{
+						value.MensajeUsuario.Add(this);
+						this._idTipoMensaje = value.idTipoMensaje;
+					}
+					else
+					{
+						this._idTipoMensaje = default(int);
+					}
+					this.SendPropertyChanged("TipoMensajeUsuario");
 				}
 			}
 		}

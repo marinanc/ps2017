@@ -243,4 +243,22 @@
       <Association Name="Usuarios_ListaDeseados" Member="Usuarios" ThisKey="idUsuario" OtherKey="idUsuario" Type="Usuarios" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.TipoMensajeUsuario" Member="TipoMensajeUsuario">
+    <Type Name="TipoMensajeUsuario">
+      <Column Name="idTipoMensaje" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoMensajeUsuario_MensajeUsuario" Member="MensajeUsuario" ThisKey="idTipoMensaje" OtherKey="idTipoMensaje" Type="MensajeUsuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MensajeUsuario" Member="MensajeUsuario">
+    <Type Name="MensajeUsuario">
+      <Column Name="idMensaje" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="mensaje" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="idTipoMensaje" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="TipoMensajeUsuario_MensajeUsuario" Member="TipoMensajeUsuario" ThisKey="idTipoMensaje" OtherKey="idTipoMensaje" Type="TipoMensajeUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
 </Database>

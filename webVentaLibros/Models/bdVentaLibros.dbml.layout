@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.75, 20.375" name="bdVentaLibros">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 16.375, 20.375" name="bdVentaLibros">
   <DataContextMoniker Name="/bdVentaLibrosDataContext" />
   <nestedChildShapes>
     <classShape Id="1b6862cc-e5b1-4270-b164-ab8bb52b1fba" absoluteBounds="0.75, 3.875, 2, 1.3862939453125005">
@@ -114,7 +114,7 @@
         <classShapeMoniker Id="d6c55196-6e1f-4141-ba15-fc4f676bcac0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 1.59699625651042); (4.5 : 1.59699625651042); (4.5 : 2.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 1.59699625651042); (4.4687475 : 1.59699625651042); (4.4687475 : 2.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Editoriales/Editoriales_Libros" />
       <nodes>
         <classShapeMoniker Id="45a83e27-6073-4063-b341-cecd5fe48b27" />
@@ -135,7 +135,7 @@
         <classShapeMoniker Id="ecca12dd-a36b-42ec-b249-4e375b574842" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 10.0340734863281); (2.88541666666667 : 10.0340734863281 : JumpStart); (3.05208333333333 : 10.0340734863281 : JumpEnd); (3.5 : 10.0340734863281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 10.0340734863281); (3.5 : 10.0340734863281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Localidades/Localidades_Usuarios" />
       <nodes>
         <classShapeMoniker Id="ecca12dd-a36b-42ec-b249-4e375b574842" />
@@ -156,7 +156,7 @@
         <classShapeMoniker Id="6e4268c7-48f6-4fd3-9b55-0aed9994eccd" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(10.75 : 16.7219962565104); (10.9166666666667 : 16.7219962565104 : JumpStart); (11.0833333333333 : 16.7219962565104 : JumpEnd); (12.5 : 16.7219962565104); (12.5 : 2.31899251302083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(10.75 : 16.7219962565104); (10.9166666666667 : 16.7219962565104 : JumpStart); (11.0833333333333 : 16.7219962565104 : JumpEnd); (13.46875 : 16.7219962565104); (13.46875 : 2.31899251302083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/UserProfile/UserProfile_webpages_UsersInRoles" />
       <nodes>
         <classShapeMoniker Id="613d4579-bcdf-490f-8a3b-afaa288efed7" />
@@ -169,21 +169,21 @@
         <elementListCompartment Id="a014a6e3-56ef-43a6-a740-87cc16ec6ae0" absoluteBounds="6.14, 13.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.09375 : 16); (1.09375 : 14.5969962565104); (3.07291666666667 : 14.5969962565104 : JumpStart); (3.23958333333333 : 14.5969962565104 : JumpEnd); (6.125 : 14.5969962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.09375 : 16); (1.09375 : 14.5969962565104); (3.07291666666667 : 14.5969962565104 : JumpStart); (3.23958333333333 : 14.5969962565104 : JumpEnd); (4.64322816666667 : 14.5969962565104 : JumpStart); (4.80989483333333 : 14.5969962565104 : JumpEnd); (4.99478966666667 : 14.5969962565104 : JumpStart); (5.16145633333333 : 14.5969962565104 : JumpEnd); (5.63541666666667 : 14.5969962565104 : JumpStart); (5.80208333333333 : 14.5969962565104 : JumpEnd); (6.125 : 14.5969962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Estados/Estados_PublicacionIntercambio" />
       <nodes>
         <classShapeMoniker Id="b29dc664-9506-4cf5-a3b2-660cf1a8cf18" />
         <classShapeMoniker Id="da132348-8672-4240-a64f-428292dab451" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 7.80174638476563); (4.68229291666667 : 7.80174638476563 : JumpStart); (4.84895958333333 : 7.80174638476563 : JumpEnd); (5.63541666666667 : 7.80174638476563 : JumpStart); (5.80208333333333 : 7.80174638476563 : JumpEnd); (5.80729166666667 : 7.80174638476563 : JumpStart); (5.97395833333333 : 7.80174638476563 : JumpEnd); (6.41666666666667 : 7.80174638476563 : JumpStart); (6.58333333333333 : 7.80174638476563 : JumpEnd); (6.875 : 7.80174638476563); (6.875 : 8.57859537760417); (7.656252 : 8.57859537760417); (7.656252 : 12.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 7.80174638476563); (4.68229291666667 : 7.80174638476563 : JumpStart); (4.84895958333333 : 7.80174638476563 : JumpEnd); (6.875 : 7.80174638476563); (6.875 : 8.57859537760417); (7.656252 : 8.57859537760417); (7.656252 : 12.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Generos/Generos_PublicacionIntercambio" />
       <nodes>
         <classShapeMoniker Id="406c369e-454d-4661-b5ae-338fd972fdfd" />
         <classShapeMoniker Id="da132348-8672-4240-a64f-428292dab451" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 10.4143770626002); (5.63541666666667 : 10.4143770626002 : JumpStart); (5.80208333333333 : 10.4143770626002 : JumpEnd); (5.80729166666667 : 10.4143770626002 : JumpStart); (5.97395833333333 : 10.4143770626002 : JumpEnd); (7.125 : 10.4143770626002); (7.125 : 12.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 10.4143770626002); (7.125 : 10.4143770626002); (7.125 : 12.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Usuarios/Usuarios_PublicacionIntercambio" />
       <nodes>
         <classShapeMoniker Id="7c31723f-84e6-458a-8d61-3fdcbed1b9c5" />
@@ -235,7 +235,7 @@
         <elementListCompartment Id="fc650e5c-d3b7-494f-b8a0-b8f10aa61a37" absoluteBounds="7.14, 7.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.76562625 : 6.4439111328125); (4.76562625 : 8.0651708811849); (5.63541666666667 : 8.0651708811849 : JumpStart); (5.80208333333333 : 8.0651708811849 : JumpEnd); (5.80729166666667 : 8.0651708811849 : JumpStart); (5.97395833333333 : 8.0651708811849 : JumpEnd); (6.41666666666667 : 8.0651708811849 : JumpStart); (6.58333333333333 : 8.0651708811849 : JumpEnd); (6.79166666666667 : 8.0651708811849 : JumpStart); (6.95833333333333 : 8.0651708811849 : JumpEnd); (7.125 : 8.0651708811849)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.76562625 : 6.4439111328125); (4.76562625 : 8.0651708811849); (7.125 : 8.0651708811849)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Libros/Libros_DetallePorPedido" />
       <nodes>
         <classShapeMoniker Id="d6c55196-6e1f-4141-ba15-fc4f676bcac0" />
@@ -248,7 +248,7 @@
         <elementListCompartment Id="8b9fbc10-2002-44d3-b5fb-3239ffd2e677" absoluteBounds="4.515, 16.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.71875 : 15.75); (5.71875 : 7.27587319238281); (5.80729166666667 : 7.27587319238281 : JumpStart); (5.97395833333333 : 7.27587319238281 : JumpEnd); (6.41666666666667 : 7.27587319238281 : JumpStart); (6.58333333333333 : 7.27587319238281 : JumpEnd); (7.125 : 7.27587319238281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.71875 : 15.75); (5.71875 : 7.27587319238281); (7.125 : 7.27587319238281)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Pedidos/Pedidos_DetallePorPedido" />
       <nodes>
         <classShapeMoniker Id="370fbbb9-41ac-41f1-8e97-f8287c9aa6b0" />
@@ -262,7 +262,7 @@
         <classShapeMoniker Id="370fbbb9-41ac-41f1-8e97-f8287c9aa6b0" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 10.4431469726562); (3.25 : 10.4431469726562); (3.25 : 11.9824039713542); (5.078123 : 11.9824039713542); (5.078123 : 15.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 10.4431469726562); (3.25 : 10.4431469726562); (3.25 : 11.9824039713542); (4.64322816666667 : 11.9824039713542 : JumpStart); (4.80989483333333 : 11.9824039713542 : JumpEnd); (5.078123 : 11.9824039713542); (5.078123 : 15.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Localidades/Localidades_Pedidos" />
       <nodes>
         <classShapeMoniker Id="ecca12dd-a36b-42ec-b249-4e375b574842" />
@@ -289,14 +289,14 @@
         <elementListCompartment Id="188d6b1a-22e9-4629-93cd-e9850e1d7288" absoluteBounds="6.14, 3.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 4.26044840494792); (5.80729166666667 : 4.26044840494792 : JumpStart); (5.97395833333333 : 4.26044840494792 : JumpEnd); (6.125 : 4.26044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 4.26044840494792); (6.125 : 4.26044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Libros/Libros_CalificacionPorLibro" />
       <nodes>
         <classShapeMoniker Id="d6c55196-6e1f-4141-ba15-fc4f676bcac0" />
         <classShapeMoniker Id="ea4f6139-cac1-4acf-bd30-8464d392942e" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 9.6759360313001); (5.63541666666667 : 9.6759360313001 : JumpStart); (5.80208333333333 : 9.6759360313001 : JumpEnd); (5.80729166666667 : 9.6759360313001 : JumpStart); (5.97395833333333 : 9.6759360313001 : JumpEnd); (6.5 : 9.6759360313001); (6.5 : 5.14589680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 9.6759360313001); (5.63541666666667 : 9.6759360313001 : JumpStart); (5.80208333333333 : 9.6759360313001 : JumpEnd); (6.5 : 9.6759360313001); (6.5 : 5.14589680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Usuarios/Usuarios_CalificacionPorLibro" />
       <nodes>
         <classShapeMoniker Id="7c31723f-84e6-458a-8d61-3fdcbed1b9c5" />
@@ -316,11 +316,30 @@
         <classShapeMoniker Id="a5ca17d0-b76f-44d1-85d0-b6aa62c6540d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 11.1046430169772); (5.63541666666667 : 11.1046430169772 : JumpStart); (5.80208333333333 : 11.1046430169772 : JumpEnd); (5.890625 : 11.1046430169772); (5.890625 : 2.1362939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 11.1046430169772); (5.63541666666667 : 11.1046430169772 : JumpStart); (5.80208333333333 : 11.1046430169772 : JumpEnd); (5.890625 : 11.1046430169772); (5.890625 : 2.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/bdVentaLibrosDataContext/Usuarios/Usuarios_ListaDeseados" />
       <nodes>
         <classShapeMoniker Id="7c31723f-84e6-458a-8d61-3fdcbed1b9c5" />
         <classShapeMoniker Id="a5ca17d0-b76f-44d1-85d0-b6aa62c6540d" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="02e4cdae-426b-47ba-aa75-dc35af0a35d4" absoluteBounds="11.375, 10.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/bdVentaLibrosDataContext/TipoMensajeUsuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b52a8e16-dfa3-4fdf-a811-03d9e068ceaf" absoluteBounds="11.39, 10.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2ebba684-32ee-4710-9340-18dc7a153d83" absoluteBounds="14.125, 9.875, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/bdVentaLibrosDataContext/MensajeUsuario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1beda0d2-324e-4ce9-a163-5db02bd84b84" absoluteBounds="14.14, 10.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(13.375 : 10.8469962565104); (13.3854166666667 : 10.8469962565104 : JumpStart); (13.5520833333333 : 10.8469962565104 : JumpEnd); (14.125 : 10.8469962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/bdVentaLibrosDataContext/TipoMensajeUsuario/TipoMensajeUsuario_MensajeUsuario" />
+      <nodes>
+        <classShapeMoniker Id="02e4cdae-426b-47ba-aa75-dc35af0a35d4" />
+        <classShapeMoniker Id="2ebba684-32ee-4710-9340-18dc7a153d83" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
