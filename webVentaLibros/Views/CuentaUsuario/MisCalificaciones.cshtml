@@ -31,63 +31,9 @@
 
     <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
 
-    <style type="text/css">
-        .btn-file {
-            position: relative;
-            overflow: hidden;
-        }
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
 
-            .btn-file input[type=file] {
-                position: absolute;
-                top: 0;
-                right: 0;
-                min-width: 100%;
-                min-height: 100%;
-                font-size: 100px;
-                text-align: right;
-                filter: alpha(opacity=0);
-                opacity: 0;
-                outline: none;
-                background: white;
-                cursor: inherit;
-                display: block;
-            }
-
-        #img-upload {
-            width: 100%;
-        }
-    </style>
-    <style type="text/css">
-        .input-group-addon.primary {
-            color: rgb(255, 255, 255);
-            background-color: rgb(50, 118, 177);
-            border-color: rgb(40, 94, 142);
-        }
-
-        .input-group-addon.success {
-            color: rgb(255, 255, 255);
-            background-color: rgb(92, 184, 92);
-            border-color: rgb(76, 174, 76);
-        }
-
-        .input-group-addon.info {
-            color: rgb(255, 255, 255);
-            background-color: rgb(57, 179, 215);
-            border-color: rgb(38, 154, 188);
-        }
-
-        .input-group-addon.warning {
-            color: rgb(255, 255, 255);
-            background-color: rgb(240, 173, 78);
-            border-color: rgb(238, 162, 54);
-        }
-
-        .input-group-addon.danger {
-            color: rgb(255, 255, 255);
-            background-color: rgb(217, 83, 79);
-            border-color: rgb(212, 63, 58);
-        }
-    </style>
 
     <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
     </script>
@@ -96,53 +42,42 @@
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
     <script>
-    $(document).ready(function () {
-        $(document).on('change', '.btn-file :file', function () {
-            var input = $(this),
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [label]);
-        });
+        'use strict';
+        var $ = jQuery;
+        $.getScript("https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js", function () {
 
-        $('.btn-file :file').on('fileselect', function (event, label) {
+            $('#example').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": false,
+                "language": {
 
-            var input = $(this).parents('.input-group').find(':text'),
-                log = label;
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
 
-            if (input.length) {
-                input.val(log);
-            } else {
-                if (log) alert(log);
-            }
-
-        });
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#img-upload').attr('src', e.target.result);
                 }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#imgInp").change(function () {
-            readURL(this);
+            });
         });
-    });
-    </script>
-    <script>
-    'use strict';
-    var $ = jQuery;
-    $.getScript("https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js", function () {
-
-        $('#example').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false
-        });
-    });
     </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -246,6 +181,12 @@
                         </li>
                         <li>
                             @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mi lista de deseados", "MiListaDeseados", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mis compras", "MisCompras", "CuentaUsuario")
                         </li>
                         <li><a href="#">Contacto</a></li>
                     </ul>

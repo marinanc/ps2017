@@ -732,5 +732,16 @@ namespace webVentaLibros.Controllers
             }
             return RedirectToAction("MisCalificaciones");
         }
+
+        public ActionResult MisCompras()
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            ViewBag.misCompras = (from compra in bd.Pedidos
+                                  where compra.idUsuario == idUsuario
+                                  select compra).ToList();
+            return View();
+        }
     }
 }

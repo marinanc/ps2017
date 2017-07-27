@@ -176,12 +176,14 @@
     <Compile Include="Models\CalificacionPorLibroModel.cs" />
     <Compile Include="Models\CarritoItem.cs" />
     <Compile Include="Models\DatosEnvioModel.cs" />
+    <Compile Include="Models\DetallePorPedidoModel.cs" />
     <Compile Include="Models\EditorialModel.cs" />
     <Compile Include="Models\GeneroModel.cs" />
     <Compile Include="Models\IntercambioModel.cs" />
     <Compile Include="Models\LibroModel.cs" />
     <Compile Include="Models\LocalidadModel.cs" />
     <Compile Include="Models\MensajeUsuarioModel.cs" />
+    <Compile Include="Models\PedidoModel.cs" />
     <Compile Include="Models\ProvinciaModel.cs" />
     <Compile Include="Models\PublicacionIntercambioModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -567,6 +569,7 @@
     <Content Include="Views\Contacto\Contacto.cshtml" />
     <Content Include="Views\CuentaUsuario\EditarContraseña.cshtml" />
     <Content Include="Views\CuentaUsuario\MisCalificaciones.cshtml" />
+    <Content Include="Views\CuentaUsuario\MisCompras.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
