@@ -77,42 +77,7 @@ namespace webVentaLibros.Controllers
             FormsAuthentication.SignOut(); //cerrar sesion
             System.Web.HttpContext.Current.Session["IDUSUARIO"] = null;
             return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public ActionResult CambiarContraseña()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CambiarContraseña(UserModel userModel)
-        {
-            var bdVentaLibros = new bdVentaLibrosDataContext();
-
-            var updateContraseña =
-                        from user in bdVentaLibros.Usuarios
-                        where user.mail == userModel.mail
-                        select user;
-
-
-            if (updateContraseña != null)
-            {
-                foreach (var user in updateContraseña)
-                {
-                    user.contraseña = userModel.contraseña;
-                }
-
-                bdVentaLibros.SubmitChanges();
-            }
-            else
-            {
-                ModelState.AddModelError("", "No se realizo cambio de contraseña"); //Mensaje de error si no realizo el cambio de contraseña
-            }
-
-            //return RedirectToAction("Index","Home");
-            return View();
-        }
+        }        
 
         public ActionResult RegistrarUsuario()
         {

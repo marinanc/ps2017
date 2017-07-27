@@ -51,6 +51,10 @@ namespace webVentaLibros.Controllers
                                where usuario.idUsuario == idUsuario
                                select usuario;
 
+            ViewBag.ultimasCalificaciones = (from calificacion in bd.CalificacionPorLibro
+                                             where calificacion.idUsuario == idUsuario
+                                             select calificacion).Take(5).ToList();
+
             return View();
         }
 
@@ -652,8 +656,52 @@ namespace webVentaLibros.Controllers
 
         public ActionResult MiListaDeseados()
         {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            ViewBag.listaDeseados = (from deseado in bd.ListaDeseados
+                                     where deseado.idUsuario == idUsuario
+                                     select deseado).ToList();
             return View();
         }
 
+        public ActionResult MisCalificaciones()
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            ViewBag.misCalificaciones = (from calificacion in bd.CalificacionPorLibro
+                                         where calificacion.idUsuario == idUsuario
+                                         select calificacion).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EliminarCalificacion(string codLibro)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            var calificacionElegida = (from calificacion in bd.CalificacionPorLibro
+                                       where calificacion.idUsuario == idUsuario
+                                       && calificacion.codigoLibro == codLibro
+                                       select calificacion).ToList();
+
+            foreach(var c in calificacionElegida)
+            {
+                bd.CalificacionPorLibro.DeleteOnSubmit(c);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Calificacion eliminada.";
+            }
+            catch(Exception e)
+            {
+                TempData["Message"] = "No se pudo eliminar la calificacion. Intentelo nuevamente";
+            }
+            return RedirectToAction("MisCalificaciones");
+        }
     }
 }

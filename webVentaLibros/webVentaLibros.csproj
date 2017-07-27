@@ -566,6 +566,7 @@
     <Content Include="Views\CuentaUsuario\MiListaDeseados.cshtml" />
     <Content Include="Views\Contacto\Contacto.cshtml" />
     <Content Include="Views\CuentaUsuario\EditarContraseña.cshtml" />
+    <Content Include="Views\CuentaUsuario\MisCalificaciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
