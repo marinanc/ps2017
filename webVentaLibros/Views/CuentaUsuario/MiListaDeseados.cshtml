@@ -2,6 +2,439 @@
 @{
     ViewBag.Title = "MiListaDeseados";
 }
+@using webVentaLibros.Models;
+@using WebMatrix.WebData;
 
-<h2>MiListaDeseados</h2>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Intercambios - Venta de Libros</title>
 
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/owl.carousel.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
+
+    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
+
+    <style type="text/css">
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+
+        #img-upload {
+            width: 100%;
+        }
+    </style>
+    <style type="text/css">
+        .input-group-addon.primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(50, 118, 177);
+            border-color: rgb(40, 94, 142);
+        }
+
+        .input-group-addon.success {
+            color: rgb(255, 255, 255);
+            background-color: rgb(92, 184, 92);
+            border-color: rgb(76, 174, 76);
+        }
+
+        .input-group-addon.info {
+            color: rgb(255, 255, 255);
+            background-color: rgb(57, 179, 215);
+            border-color: rgb(38, 154, 188);
+        }
+
+        .input-group-addon.warning {
+            color: rgb(255, 255, 255);
+            background-color: rgb(240, 173, 78);
+            border-color: rgb(238, 162, 54);
+        }
+
+        .input-group-addon.danger {
+            color: rgb(255, 255, 255);
+            background-color: rgb(217, 83, 79);
+            border-color: rgb(212, 63, 58);
+        }
+    </style>
+
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function () {
+            readURL(this);
+        });
+    });
+    </script>
+    <script>
+    'use strict';
+    var $ = jQuery;
+    $.getScript("https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js", function () {
+
+        $('#example').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false
+        });
+    });
+    </script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-menu">
+                        <ul>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li><span>Hola @System.Web.HttpContext.Current.Session["nombreUsuario"] !</span></li>
+                                if (Roles.IsUserInRole("Administrador"))
+                                {
+                                    <li>@Html.ActionLink("Panel de Control", "Index", "Admin")</li>
+                                }
+                                else
+                                {
+                                    <li><a href="../CuentaUsuario/MiCuenta"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                                }
+                            }
+                            @if (!Roles.IsUserInRole("Administrador"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Carrito", "Carrito", "Cart")
+                                </li>
+                            }
+                            <li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Cerrar sesión", "Logout", "User")
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Iniciar sesión", "Login", "User")
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div> <!-- End header area -->
+
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="./"><img src="~/img/logo2.png"></a></h1>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="shopping-item">
+                        @if (Session["carrito"] == null)
+                        {
+                            <a href="Cart/Carrito">Carrito - <span class="cart-amunt">ARS $0</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">0</span></a>
+                        }
+                        else
+                        {
+                            <a href="Cart/Carrito">Carrito - <span class="cart-amunt">ARS $@Session["totalCompra"]</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">@Session["cantidadLibros"]</span></a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+
+    <div class="mainmenu-area" style="background-color: #363636">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Solicitudes", "SolicitudesIntercambio", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
+                        </li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- INPUT GROUPS -->
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Mi lista de deseados</h3>
+                            </div>
+
+
+                            <!--TABLA CON LISTADO DE PUBLICACIONES-->
+                            <div class="panel-body">
+
+                                <div class="container">
+                                    <div class="row">
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <table id="example" class="display" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Autor</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+                                                        <th>Eliminar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Libro</th>
+                                                        <th>Genero</th>
+                                                        <th>Autor</th>
+                                                        <th>Fecha</th>
+                                                        <th>Ver</th>
+                                                        <th>Eliminar</th>
+
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+
+                                                    @foreach (var libroDeseado in ViewBag.listaDeseados)
+                                                    {
+                                                        <tr>
+                                                            <td style="width: 50px; height: 70px">
+                                                                <img src="../@libroDeseado.Libros.foto" style="width:100%; height:100%" />
+                                                            </td>
+                                                            <td>@libroDeseado.Libros.titulo</td>  
+                                                            <td>@libroDeseado.Libros.Generos.nombre</td>    
+                                                            <td>@libroDeseado.Libros.Autores.apellidos @libroDeseado.Libros.Autores.nombres</td>                                                     
+                                                            <td>@libroDeseado.fechaHora.ToShortDateString()</td>     
+                                                            <td>
+                                                                <form action=@Url.Action("Index", "Libro") enctype="multipart/form-data" method="get" role="form">
+                                                                    <input type="text" value="@libroDeseado.codigoLibro" id="cod" name="cod" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-lg">
+                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>                                                       
+                                                            <td>
+                                                                <form action=@Url.Action("EliminarDeseado", "CuentaUsuario") enctype="multipart/form-data" method="post" role="form">
+                                                                    <input type="text" value="@libroDeseado.codigoLibro" id="codLibro" name="codLibro" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-lg">
+                                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <!--FIN LISTADO PUBLICACIONES-->
+
+                        </div>
+                        <!-- END INPUT GROUPS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <div class="footer-top-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>tu<span>Libreria</span></h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <div class="footer-social">
+                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Sitio </h2>
+                        <ul>
+                            <li><a href="#">Principal</a></li>
+                            <li><a href="#">Catalogo</a></li>
+                            <li><a href="#">Intercambios</a></li>
+                            <li><a href="#">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">Usuario</h2>
+                        <ul>
+                            @if (!Request.IsAuthenticated)
+                            {
+                                <li><a href="#">Iniciar sesion</a></li>
+                            }
+                            else
+                            {
+                                <li>Mi cuenta</li>
+                                <li><a href="#">Cerrar sesion</a></li>
+                            }
+                            <li><a href="#">Carrito</a></li>
+                            <li><a href="#">Consultas y sugerencias</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End footer top area -->
+    <!-- Latest jQuery form server -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+
+    <!-- Bootstrap JS form CDN -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- jQuery sticky menu -->
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.sticky.js"></script>
+
+    <!-- jQuery easing -->
+    <script src="../js/jquery.easing.1.3.min.js"></script>
+
+    <!-- Main Script -->
+    <script src="../js/main.js"></script>
+
+    <!-- Slider -->
+    <script type="text/javascript" src="../js/bxslider.min.js"></script>
+    <script type="text/javascript" src="../js/script.slider.js"></script>
+
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/vendor/toastr/toastr.min.js"></script>
+
+    @if (TempData["Message"] != null)
+    {
+
+        <div id="toast-container" class="toast-top-right">
+            <div class="toast toast-info" aria-live="polite" style="display: block;">
+                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
+                <div class="toast-message">@TempData["Message"]</div>
+            </div>
+        </div>
+    }
+</body>

@@ -665,6 +665,35 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult EliminarDeseado(string codLibro)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            var libro = (from deseado in bd.ListaDeseados
+                                where deseado.idUsuario == idUsuario
+                                && deseado.codigoLibro == codLibro
+                                select deseado).ToList();
+
+            foreach(var li in libro)
+            {
+                bd.ListaDeseados.DeleteOnSubmit(li);
+                TempData["Message"] = "Libro eliminado de su lista de deseados.";
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo eliminar de la lista. Intentelo nuevamente";
+            }
+
+            return RedirectToAction("MiListaDeseados");
+        }
+
         public ActionResult MisCalificaciones()
         {
             var bd = new bdVentaLibrosDataContext();
