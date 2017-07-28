@@ -20,17 +20,33 @@ namespace webVentaLibros.Controllers
                                    where libro.stock > 0
                                    select libro).Count();
 
+            //ventas concretadas en el mes actual
             ViewBag.totalVentasConcretadas = (from pedido in bd.Pedidos
                                               where pedido.idEstadoPedido == 5
+                                              && pedido.fechaHora.Value.Year == DateTime.Now.Year
+                                              && pedido.fechaHora.Value.Month == DateTime.Now.Month
                                               select pedido).Count();
 
             ViewBag.totalPublicacionesIntercambio = (from publicacion in bd.PublicacionIntercambio
                                                      where publicacion.idEstado == 1
                                                      select publicacion).Count();
 
+            //intercambios contreados en el mes actual
             ViewBag.totalIntercambiosConcretados = (from intercambio in bd.Intercambios
                                                     where intercambio.idEstado == 3
+                                                    && intercambio.fechaHora.Year == DateTime.Now.Year
+                                                    && intercambio.fechaHora.Month == DateTime.Now.Month
                                                     select intercambio).Count();
+
+            //pedidos pagados por el cliente pendientes para envio (los 5 mas antiguos en fecha de pedido)
+            ViewBag.pedidosPagados = (from pedido in bd.Pedidos
+                                           where pedido.idEstadoPedido == 2
+                                           select pedido).OrderBy(x => x.fechaHora).Take(5).ToList();
+
+            //libros con stock minimo o menos (los 5 con menos stock)
+            ViewBag.librosStockMinimo = (from libro in bd.Libros
+                                         where libro.stock < 30
+                                         select libro).OrderBy(x => x.stock).Take(5).ToList();
 
             return View();
         }
@@ -484,6 +500,17 @@ namespace webVentaLibros.Controllers
                 }
             }
             return existe;
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult Mensajes()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.mensajes = (from mensaje in bd.MensajeUsuario
+                                      select mensaje).ToList();
+
+            return View();
         }
     }
 }

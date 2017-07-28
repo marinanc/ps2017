@@ -37,26 +37,13 @@
 
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="lnr lnr-alarm"></i>
-                                <span class="badge bg-danger">5</span>
-                            </a>
-                            <ul class="dropdown-menu notifications">
-                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-                                <li><a href="#" class="more">See all notifications</a></li>
-                            </ul>
-                        </li>
+                       
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>@System.Web.HttpContext.Current.Session["nombreUsuario"]</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="lnr lnr-user"></i> <span>Mi perfil</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
+                                <li><a href="Admin/Mensajes"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
                                 <li><a href="#"><i class="lnr lnr-cog"></i> <span>Configuración</span></a></li>
                                 <li><a href="#"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
                             </ul>
@@ -88,7 +75,7 @@
                         </li>
                         <li><a href="Admin/ActualizarStock" class=""><i class="lnr lnr-sync"></i> <span>Actualizar stock</span></a></li>
                         <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a></li>
-                        <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notificaciones</span></a></li>
+                        <li><a href="Admin/Mensajes" class=""><i class="lnr lnr-alarm"></i> <span>Mensajes</span></a></li>
                         <li>
                             <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Páginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesPaginas" class="collapse ">
@@ -118,47 +105,181 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="fa fa-book"></i></span>
-                                        <p>
-                                            <span class="number">@ViewBag.totalLibros</span>
-                                            <span class="title">Libros en venta</span>
-                                        </p>
-                                    </div>
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>Concretados en este mes</legend>
+                                        <div class="col-md-6">
+                                            <div class="metric">
+                                                <span class="icon"><i class="fa fa-book"></i></span>
+                                                <p>
+                                                    <span class="number">@ViewBag.totalVentasConcretadas</span>
+                                                    <span class="title">Ventas</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="metric">
+                                                <span class="icon"><i class="fa fa-shopping-bag"></i></span>
+                                                <p>
+                                                    <span class="number">@ViewBag.totalIntercambiosConcretados</span>
+                                                    <span class="title">Intercambios</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="fa fa-shopping-bag"></i></span>
-                                        <p>
-                                            <span class="number">@ViewBag.totalVentasConcretadas</span>
-                                            <span class="title">Ventas concretadas</span>
-                                        </p>
-                                    </div>
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>Libros en catalogo</legend>
+                                        <div class="col-md-6">
+                                            <div class="metric">
+                                                <span class="icon"><i class="fa fa-exchange"></i></span>
+                                                <p>
+                                                    <span class="number">@ViewBag.totalLibros</span>
+                                                    <span class="title">Para venta</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="metric">
+                                                <span class="icon"><i class="fa fa-handshake-o"></i></span>
+                                                <p>
+                                                    <span class="number">@ViewBag.totalPublicacionesIntercambio</span>
+                                                    <span class="title">Para intercambio</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="fa fa-exchange"></i></span>
-                                        <p>
-                                            <span class="number">@ViewBag.totalPublicacionesIntercambio</span>
-                                            <span class="title">Libros (intercambio)</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="fa fa-handshake-o"></i></span>
-                                        <p>
-                                            <span class="number">@ViewBag.totalIntercambiosConcretados</span>
-                                            <span class="title">Intercambios</span>
-                                        </p>
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="row">
+                                <div class="col-md-5">
+                                    
+                                        <!--TABLA CON pedidos pendientes de envio-->
+                                        @if (ViewBag.pedidosPagados.Count != 0)
+                                        {
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading" style="text-align:center">
+                                                    <h4>
+                                                        Pedidos pendientes de envio
+                                                    </h4>
+                                                </div>
+                                                <table class="table table-fixed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-xs-2">#Pedido</th>
+                                                            <th class="col-xs-6">Libros</th>
+                                                            <th class="col-xs-2">Fecha</th>
+                                                            <th class="col-xs-2" style="text-align:center">Ver</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var pedido in ViewBag.pedidosPagados)
+                                                        {
+                                                            <tr>
+                                                                <td class="col-xs-2">@pedido.idPedido</td>
+                                                                <td class="col-xs-8">
+                                                                @foreach (var detalle in pedido.DetallePorPedido)
+                                                                {
+                                                                    <p>@detalle.Libros.titulo x @detalle.cantidad</p>
+                                                                }
+                                                                </td>
+                                                                <td class="col-xs-2" style="text-align:center">@pedido.fechaHora.ToShortDateString()</td>
+                                                                <td>
+                                                                    <form action=@Url.Action("DatosDePedido", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
+                                                                        <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
+                                                                        <button type="submit" class="btn btn-default btn-sm">
+                                                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                            </span>
+                                                                        </button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="btn-group">
+                                                <form action=@Url.Action("MisCalificaciones", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                    <button type="submit" class="btn btn-primary">Ver más</button>
+                                                </form>
+                                            </div>
 
 
+                                        }
+                                        else
+                                        {
+                                            //mostrar que no ha realizado ninguna calificacion
+                                            <h3>Aún no ha calificado ningún libro</h3>
+                                        }
+                                        <!--FIN pedidos pendientes-->
+
+                                    
+                                </div>
+
+                                <!--listado libros con stock minimo-->
+                                <div class="col-md-7">
+
+                                    <!--TABLA CON pedidos pendientes de envio-->
+                                    @if (ViewBag.librosStockMinimo.Count != 0)
+                                    {
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading" style="text-align:center">
+                                                <h4>
+                                                    Libros en stock mínimo
+                                                </h4>
+                                            </div>
+                                            <table class="table table-fixed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-xs-3"></th>
+                                                        <th class="col-xs-2">ISBN</th>
+                                                        <th class="col-xs-6">Titulo</th>
+                                                        <th class="col-xs-2">Stock</th>
+                                                        <th class="col-xs-1" style="text-align:center">Ver</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var libro in ViewBag.librosStockMinimo)
+                                                    {
+                                                        <tr>
+                                                            <td class="col-xs-3" style="width: 50px; height: 70px"><img src="../@libro.foto" style="width:100%; height:100%" /></td>
+                                                            <td class="col-xs-2">@libro.codigoBarra</td>
+                                                            <td class="col-xs-6">@libro.titulo</td>
+                                                            <td class="col-xs-1">@libro.stock</td>
+                                                            <td>
+                                                                <form action=@Url.Action("DatosDePedido", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
+                                                                    <input type="text" value="@libro.codigoBarra" id="idPedido" name="idPedido" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-sm">
+                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                            <div class="btn-group">
+                                                <form action=@Url.Action("ActualizarStock", "Admin") enctype="multipart/form-data" method="GET" role="form">
+                                                    <button type="submit" class="btn btn-primary">Ver más</button>
+                                                </form>
+                                            </div>
+
+
+                                    }
+                                    else
+                                    {
+                                        //mostrar que no ha realizado ninguna calificacion
+                                        <h3>Aún no ha calificado ningún libro</h3>
+                                    }
+                                    <!--FIN pedidos pendientes-->
+
+
+                                </div>
+
+                                <!--fin libros stock minimo-->
                             </div>
                         </div>
                     </div>
@@ -183,6 +304,22 @@
         $(function () {
             var data, options;
 
+            // line chart
+            options = {
+                height: "300px",
+                showPoint: true,
+                axisX: {
+                    showGrid: false
+                },
+                lineSmooth: false,
+            };
+
+            new Chartist.Line('#demo-line-chart', data, options);
+
+            //fin MIO
+
+
+
             // headline charts
             data = {
                 labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -191,7 +328,7 @@
                     [14, 25, 18, 34, 29, 38, 44],
                 ]
             };
-
+            
             options = {
                 height: 300,
                 showArea: true,
@@ -206,10 +343,9 @@
 
             new Chartist.Line('#headline-chart', data, options);
 
-
             // visits trend charts
             data = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                 series: [{
                     name: 'series-real',
                     data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
