@@ -512,5 +512,31 @@ namespace webVentaLibros.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult EliminarMensaje(int id)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var mensaje = (from m in bd.MensajeUsuario
+                           where m.idMensaje == id
+                           select m).ToList();
+
+            foreach(var m in mensaje)
+            {
+                bd.MensajeUsuario.DeleteOnSubmit(m);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Mensaje eliminado";
+            } catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo eliminar el mensaje";
+            }
+
+            return RedirectToAction("Mensajes");
+        }
     }
 }
