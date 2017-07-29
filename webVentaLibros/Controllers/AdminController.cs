@@ -11,7 +11,7 @@ namespace webVentaLibros.Controllers
     {
         //
         // GET: /Admin/
-        [Authorize(Roles="Administrador")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             var bd = new bdVentaLibrosDataContext();
@@ -40,8 +40,8 @@ namespace webVentaLibros.Controllers
 
             //pedidos pagados por el cliente pendientes para envio (los 5 mas antiguos en fecha de pedido)
             ViewBag.pedidosPagados = (from pedido in bd.Pedidos
-                                           where pedido.idEstadoPedido == 2
-                                           select pedido).OrderBy(x => x.fechaHora).Take(5).ToList();
+                                      where pedido.idEstadoPedido == 2
+                                      select pedido).OrderBy(x => x.fechaHora).Take(5).ToList();
 
             //libros con stock minimo o menos (los 5 con menos stock)
             ViewBag.librosStockMinimo = (from libro in bd.Libros
@@ -101,7 +101,7 @@ namespace webVentaLibros.Controllers
                                    editorial = libro.Editoriales.nombre,
                                    precio = Convert.ToDouble(libro.precio)
                                }).ToList();
-            
+
             ViewBag.listadoAutores = listaAutores;
             ViewBag.listadoGeneros = listaGeneros;
             ViewBag.listadoEditoriales = listaEditoriales;
@@ -158,7 +158,7 @@ namespace webVentaLibros.Controllers
         public ActionResult ModificarLibro(string codBarra)
         {
             var bd = new bdVentaLibrosDataContext();
-            
+
             var listaGeneros = ((from genero in bd.Generos
                                  select new GeneroModel
                                  {
@@ -180,7 +180,7 @@ namespace webVentaLibros.Controllers
                                          idEditorial = editorial.idEditorial,
                                          nombre = editorial.nombre
                                      }).OrderBy(e => e.nombre)).ToList();
-            
+
             ViewBag.listadoAutores = listaAutores;
             ViewBag.listadoGeneros = listaGeneros;
             ViewBag.listadoEditoriales = listaEditoriales;
@@ -196,7 +196,8 @@ namespace webVentaLibros.Controllers
                                .Where(a => a.idAutor == libro.idAutor2).DefaultIfEmpty()
                                .Where(a => a.idAutor == libro.idAutor3).DefaultIfEmpty()
                                .Where(a => a.idAutor == libro.idAutor4).DefaultIfEmpty()
-                               select new LibroModel{
+                               select new LibroModel
+                               {
                                    codigoBarra = libro.codigoBarra,
                                    titulo = libro.titulo,
                                    idAutor1 = libro.Autores.idAutor,
@@ -227,13 +228,14 @@ namespace webVentaLibros.Controllers
         {
             var bd = new bdVentaLibrosDataContext();
 
-            if (foto != null) { 
+            if (foto != null)
+            {
                 foto.SaveAs(System.IO.Path.Combine(@"E:\webVentaLibros\webVentaLibros\img\catalogo", System.IO.Path.GetFileName(foto.FileName)));
             }
 
             var libroModificado = from libro in bd.Libros
                                   where libroElegido.codigoBarra == libro.codigoBarra
-                                  select libro;                     
+                                  select libro;
 
             //Cambio los datos del inmueble
             if (foto != null)
@@ -408,7 +410,7 @@ namespace webVentaLibros.Controllers
             try
             {
                 bd.SubmitChanges();
-                TempData["Message"] = "Stock de ISBN "+codBarra+" fue actualizado";
+                TempData["Message"] = "Stock de ISBN " + codBarra + " fue actualizado";
 
                 ViewBag.listadoLibros = (from libro in bd.Libros
                                          from editorial in bd.Editoriales
@@ -508,7 +510,7 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             ViewBag.mensajes = (from mensaje in bd.MensajeUsuario
-                                      select mensaje).ToList();
+                                select mensaje).ToList();
 
             return View();
         }
@@ -522,7 +524,7 @@ namespace webVentaLibros.Controllers
                            where m.idMensaje == id
                            select m).ToList();
 
-            foreach(var m in mensaje)
+            foreach (var m in mensaje)
             {
                 bd.MensajeUsuario.DeleteOnSubmit(m);
             }
@@ -531,12 +533,66 @@ namespace webVentaLibros.Controllers
             {
                 bd.SubmitChanges();
                 TempData["Message"] = "Mensaje eliminado";
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 TempData["Message"] = "No se pudo eliminar el mensaje";
             }
 
             return RedirectToAction("Mensajes");
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ReporteVentas(DateTime inicio, DateTime fin)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            ViewBag.fechaDesde = inicio.ToShortDateString();
+            ViewBag.fechaHasta = fin.ToShortDateString();
+            double totalIngresos = 0;
+            int totalLibrosVendidos = 0;
+
+            ViewBag.ventasPeriodo = (from pedido in bd.Pedidos
+                                     where pedido.idEstadoPedido == 5
+                                     && (pedido.fechaHora >= inicio && pedido.fechaHora <= fin)
+                                     select pedido
+                                     ).ToList();
+
+            if (ViewBag.ventasPeriodo.Count > 0)
+            {
+                foreach (var venta in ViewBag.ventasPeriodo)
+                {
+                    foreach(var detalle in venta.DetallePorPedido)
+                    {
+                        totalIngresos = totalIngresos + (Convert.ToDouble(detalle.precioUnitario) * detalle.cantidad);
+                        totalLibrosVendidos = totalLibrosVendidos + detalle.cantidad;
+                    }
+                }
+            }
+            ViewBag.totalIngresos = totalIngresos;
+            ViewBag.totalLibrosVendidos = totalLibrosVendidos;
+
+            ViewBag.masVendidoPeriodo = (from libroVendido in bd.DetallePorPedido
+                                         from pedido in bd.Pedidos
+                                         where libroVendido.idPedido == pedido.idPedido
+                                         && (pedido.fechaHora >= inicio && pedido.fechaHora <= fin)
+                                         from libro in bd.Libros
+                                         where libro.codigoBarra == libroVendido.codigoLibro
+                                         group libroVendido by libroVendido.codigoLibro into g
+                                         orderby g.Sum(x => x.cantidad) descending
+                                         select g.First()).Take(5);
+
+            ViewBag.generosMasVendidos = (from pedido in bd.Pedidos
+                                          where pedido.fechaHora >= inicio && pedido.fechaHora <= fin
+                                          from detalle in bd.DetallePorPedido
+                                          where detalle.idPedido == pedido.idPedido
+                                          from libro in bd.Libros
+                                          where detalle.codigoLibro == libro.codigoBarra
+                                          from genero in bd.Generos
+                                          where detalle.Libros.idGenero == genero.idGenero
+                                          group genero by genero.nombre into g
+                                          orderby g.Count() descending
+                                          select g.First()).Take(3).ToList();
+            return View();
         }
     }
 }

@@ -4,7 +4,7 @@
 @using WebMatrix.WebData;
 
 <head>
-    <title>Dashboard | Klorofil - Free Bootstrap Dashboard Template</title>
+    <title>Panel de control - Administrador</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -37,7 +37,7 @@
 
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right">
-                       
+
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>@System.Web.HttpContext.Current.Session["nombreUsuario"]</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
@@ -74,7 +74,21 @@
                             </div>
                         </li>
                         <li><a href="Admin/ActualizarStock" class=""><i class="lnr lnr-sync"></i> <span>Actualizar stock</span></a></li>
-                        <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a></li>
+                        <li>
+                            <a href="#subPagesReportes" data-toggle="collapse" class="collapsed"><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a>
+                            <div id="subPagesReportes" class="collapse">
+                                <ul class="nav">
+                                    @{ 
+                                        int var_mesActual = DateTime.Now.Month; // obtengo el mes actual
+                                        int var_anio = DateTime.Now.Year; // obtengo el año actual
+                                        int var_mesSiguiente = DateTime.Now.Month + 1; // obtengo el mes siguiente
+                                        var finicio = Convert.ToDateTime("01/" + var_mesActual + "/" + var_anio);// pongo el 1 porque siempre es el primer día obvio
+                                        var ffin = Convert.ToDateTime("01/" + var_mesSiguiente + "/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
+                                    }
+                                    <li>@Html.ActionLink("Ventas", "ReporteVentas", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
+                                </ul>
+                            </div>
+                        </li>
                         <li><a href="Admin/Mensajes" class=""><i class="lnr lnr-alarm"></i> <span>Mensajes</span></a></li>
                         <li>
                             <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Páginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -109,20 +123,20 @@
                                     <fieldset>
                                         <legend>Concretados en este mes</legend>
                                         <div class="col-md-6">
-                                            <div class="metric">
+                                            <div class="metric" style="background-color:darkcyan">
                                                 <span class="icon"><i class="fa fa-book"></i></span>
                                                 <p>
-                                                    <span class="number">@ViewBag.totalVentasConcretadas</span>
-                                                    <span class="title">Ventas</span>
+                                                    <span class="number" style="font-weight:bold; color:white">@ViewBag.totalVentasConcretadas</span>
+                                                    <span class="title" style="color:white">Ventas</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="metric">
+                                            <div class="metric"  style="background-color:darkslateblue">
                                                 <span class="icon"><i class="fa fa-shopping-bag"></i></span>
                                                 <p>
-                                                    <span class="number">@ViewBag.totalIntercambiosConcretados</span>
-                                                    <span class="title">Intercambios</span>
+                                                    <span class="number" style="font-weight:bold; color:white">@ViewBag.totalIntercambiosConcretados</span>
+                                                    <span class="title" style="color:white">Intercambios</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -132,20 +146,20 @@
                                     <fieldset>
                                         <legend>Libros en catalogo</legend>
                                         <div class="col-md-6">
-                                            <div class="metric">
+                                            <div class="metric" style="background-color:darkcyan">
                                                 <span class="icon"><i class="fa fa-exchange"></i></span>
                                                 <p>
-                                                    <span class="number">@ViewBag.totalLibros</span>
-                                                    <span class="title">Para venta</span>
+                                                    <span class="number" style="font-weight:bold; color:white">@ViewBag.totalLibros</span>
+                                                    <span class="title" style="color:white">Para venta</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="metric">
+                                            <div class="metric"  style="background-color:darkslateblue">
                                                 <span class="icon"><i class="fa fa-handshake-o"></i></span>
                                                 <p>
-                                                    <span class="number">@ViewBag.totalPublicacionesIntercambio</span>
-                                                    <span class="title">Para intercambio</span>
+                                                    <span class="number" style="font-weight:bold; color:white">@ViewBag.totalPublicacionesIntercambio</span>
+                                                    <span class="title" style="color:white">Para intercambio</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -154,51 +168,51 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-5">
-                                    
-                                        <!--TABLA CON pedidos pendientes de envio-->
-                                        @if (ViewBag.pedidosPagados.Count != 0)
-                                        {
-                                            <div class="panel panel-primary">
-                                                <div class="panel-heading" style="text-align:center">
-                                                    <h4>
-                                                        Pedidos pendientes de envio
-                                                    </h4>
-                                                </div>
-                                                <table class="table table-fixed">
-                                                    <thead>
+
+                                    <!--TABLA CON pedidos pendientes de envio-->
+                                    @if (ViewBag.pedidosPagados.Count != 0)
+                                    {
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading" style="text-align:center">
+                                                <h4>
+                                                    Pedidos pendientes de envio
+                                                </h4>
+                                            </div>
+                                            <table class="table table-fixed">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="col-xs-2">#Pedido</th>
+                                                        <th class="col-xs-6">Libros</th>
+                                                        <th class="col-xs-2">Fecha</th>
+                                                        <th class="col-xs-2" style="text-align:center">Ver</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var pedido in ViewBag.pedidosPagados)
+                                                    {
                                                         <tr>
-                                                            <th class="col-xs-2">#Pedido</th>
-                                                            <th class="col-xs-6">Libros</th>
-                                                            <th class="col-xs-2">Fecha</th>
-                                                            <th class="col-xs-2" style="text-align:center">Ver</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var pedido in ViewBag.pedidosPagados)
-                                                        {
-                                                            <tr>
-                                                                <td class="col-xs-2">@pedido.idPedido</td>
-                                                                <td class="col-xs-8">
+                                                            <td class="col-xs-2">@pedido.idPedido</td>
+                                                            <td class="col-xs-8">
                                                                 @foreach (var detalle in pedido.DetallePorPedido)
                                                                 {
                                                                     <p>@detalle.Libros.titulo x @detalle.cantidad</p>
                                                                 }
-                                                                </td>
-                                                                <td class="col-xs-2" style="text-align:center">@pedido.fechaHora.ToShortDateString()</td>
-                                                                <td>
-                                                                    <form action=@Url.Action("DatosDePedido", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
-                                                                        <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
-                                                                        <button type="submit" class="btn btn-default btn-sm">
-                                                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
-                                                                            </span>
-                                                                        </button>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                            </td>
+                                                            <td class="col-xs-2" style="text-align:center">@pedido.fechaHora.ToShortDateString()</td>
+                                                            <td>
+                                                                <form action=@Url.Action("DatosDePedido", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
+                                                                    <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
+                                                                    <button type="submit" class="btn btn-default btn-sm">
+                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                             <div class="btn-group">
                                                 <form action=@Url.Action("MisCalificaciones", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
                                                     <button type="submit" class="btn btn-primary">Ver más</button>
@@ -206,15 +220,15 @@
                                             </div>
 
 
-                                        }
-                                        else
-                                        {
-                                            //mostrar que no ha realizado ninguna calificacion
-                                            <h3>Aún no ha calificado ningún libro</h3>
-                                        }
-                                        <!--FIN pedidos pendientes-->
+                                    }
+                                    else
+                                    {
+                                        //mostrar que no ha realizado ninguna calificacion
+                                        <h3>Aún no ha calificado ningún libro</h3>
+                                    }
+                                    <!--FIN pedidos pendientes-->
 
-                                    
+
                                 </div>
 
                                 <!--listado libros con stock minimo-->
@@ -261,11 +275,11 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                            <div class="btn-group">
-                                                <form action=@Url.Action("ActualizarStock", "Admin") enctype="multipart/form-data" method="GET" role="form">
-                                                    <button type="submit" class="btn btn-primary">Ver más</button>
-                                                </form>
-                                            </div>
+                                        <div class="btn-group">
+                                            <form action=@Url.Action("ActualizarStock", "Admin") enctype="multipart/form-data" method="GET" role="form">
+                                                <button type="submit" class="btn btn-primary">Ver más</button>
+                                            </form>
+                                        </div>
 
 
                                     }
@@ -290,7 +304,7 @@
         </div>
         <!-- END MAIN -->
         <div class="clearfix"></div>
-       
+
     </div>
     <!-- END WRAPPER -->
     <!-- Javascript -->
@@ -328,7 +342,7 @@
                     [14, 25, 18, 34, 29, 38, 44],
                 ]
             };
-            
+
             options = {
                 height: 300,
                 showArea: true,
