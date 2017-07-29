@@ -594,5 +594,41 @@ namespace webVentaLibros.Controllers
                                           select g.First()).Take(3).ToList();
             return View();
         }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ReportesVarios(DateTime inicio, DateTime fin)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            ViewBag.fechaDesde = inicio.ToShortDateString();
+            ViewBag.fechaHasta = fin.ToShortDateString();
+
+            ViewBag.cantidadIntercambios = (from intercambio in bd.Intercambios
+                                            where intercambio.fechaHora >= inicio && intercambio.fechaHora <= fin
+                                            select intercambio).Count();
+
+            ViewBag.cantidadIntercambiosPublicados = (from publicacion in bd.PublicacionIntercambio
+                                                      where publicacion.fechaHoraAlta >= inicio && publicacion.fechaHoraAlta <= fin
+                                                      select publicacion).Count();
+
+            ViewBag.usuariosRegistrados = (from usuario in bd.Usuarios
+                                           where usuario.fechaHoraAlta >= inicio && usuario.fechaHoraAlta <= fin
+                                           select usuario).Count();
+
+            ViewBag.masDeseados = (from deseado in bd.ListaDeseados
+                                   where deseado.fechaHora >= inicio && deseado.fechaHora <= fin
+                                   group deseado by deseado.Libros.codigoBarra into g
+                                   orderby g.Count() descending
+                                   select g.First()).Take(5).ToList();
+
+            ViewBag.cantidadLibrosNuevos = (from libro in bd.Libros
+                                            where libro.fechaAlta >= inicio && libro.fechaAlta <= fin
+                                            select libro).Count();
+
+            ViewBag.cantidadLibrosSinStock = (from libro in bd.Libros
+                                              where libro.stock == 0
+                                              select libro).Count();
+
+            return View();
+        }
     }
 }
