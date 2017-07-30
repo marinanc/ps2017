@@ -166,34 +166,25 @@
 
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Sugerencias</h2>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
+                        @if (Session["sugerencias"] != null)
+                        {
+                            int i = 0;
+                            foreach (var libro in Session["sugerencias"] as List<Libros>)
+                            {
+                                if (i < 4)
+                                {
+                                    <div class="thubmnail-recent">
+                                        <img src="../@libro.foto" class="recent-thumb" alt="">
+                                        <h2><a href="single-product.html">@libro.titulo</a></h2>
+                                        <div class="product-sidebar-price">
+                                            <ins>ARS$@libro.precio</ins>
+                                        </div>
+                                    </div>
+                                    i = i + 1;
+                                }
+                            }
+                        }
+
                     </div>
                 </div>
 
@@ -216,55 +207,61 @@
 
                                                     <p id="billing_first_name_field" class="form-row form-row-first validate-required">
                                                         <label class="" for="billing_first_name">
-                                                            Nombre <abbr title="required" class="required">*</abbr>
+                                                            Nombre
                                                         </label>
-                                                        <input type="text" value=@usuario.nombreUsuario placeholder="" id="billing_first_name" name="nombreUsuario" class="input-text " required>
+                                                        <input type="text" value="@usuario.nombreUsuario" placeholder="" id="billing_first_name" name="nombreUsuario" class="input-text " required>
                                                     </p>
 
                                                     <p id="billing_last_name_field" class="form-row form-row-last validate-required">
                                                         <label class="" for="billing_last_name">
-                                                            Apellido <abbr title="required" class="required">*</abbr>
+                                                            Apellido
                                                         </label>
                                                         <input type="text" value="" placeholder="" id="billing_last_name" name="apellidoUsuario" class="input-text " required>
                                                     </p>
                                                     <div class="clear"></div>
 
-                                                    <p id="billing_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
-                                                        <label for="provincias" class="cols-sm-2 control-label">Provincia</label>
+
+                                                    <div class="form-group">
+
+                                                        <label for="idProvincia" class="cols-sm-2 control-label">Provincia</label>
                                                         <div class="cols-sm-10">
                                                             <div class="input-group">
 
-                                                                @Html.DropDownList("idProvincia", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control" })
+                                                                @Html.DropDownList("idProvincia", ViewData["provincias"] as List<SelectListItem>, new { @class = "form-control", @style = "height:42px" })
 
                                                             </div>
                                                         </div>
+                                                    </div>
 
-                                                    </p>
 
-                                                    <p id="billing_city_field" class="form-row form-row-wide address-field validate-required" data-o_class="form-row form-row-wide address-field validate-required">
+                                                    <div class="form-group">
                                                         <label for="localidades" class="cols-sm-2 control-label">Localidad</label>
                                                         <div class="cols-sm-10">
+
+
+
                                                             <div class="input-group">
+
                                                                 @if (ViewData["localidades"] != null)
                                                                 {
-                                                                    @Html.DropDownList("idLocalidad", ViewData["localidades"] as List<SelectListItem>, new { @class = "form-control" })
+                                                                    @Html.DropDownList("idLocalidad", ViewData["localidades"] as List<SelectListItem>, new { @class = "form-control" , @style = "height:42px"})
                                                                 }
 
                                                             </div>
                                                         </div>
+                                                    </div>
 
-                                                    </p>
 
                                                     <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
                                                         <label class="" for="billing_address_1">
-                                                            Domicilio <abbr title="required" class="required">*</abbr>
+                                                            Domicilio
                                                         </label>
-                                                        <input type="text" value=@usuario.direccion id="billing_address_1" name="direccion" class="input-text " required>
+                                                        <input type="text" value="@usuario.direccion" id="billing_address_1" name="direccion" class="input-text " required>
                                                     </p>
 
                                                     <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
                                                         <label class="" for="billing_postcode">
-                                                            Código Postal <abbr title="required" class="required">*</abbr>
+                                                            Código Postal
                                                         </label>
                                                         <input type="text" value="" id="billing_postcode" name="codigoPostal" class="input-text " required>
                                                     </p>
@@ -273,9 +270,9 @@
 
                                                     <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
                                                         <label class="" for="billing_email">
-                                                            Email <abbr title="required" class="required">*</abbr>
+                                                            Email
                                                         </label>
-                                                        <input type="email" value=@usuario.mail placeholder="" id="billing_email" name="mail" class="input-text " required>
+                                                        <input type="email" value="@usuario.mail" placeholder="" id="billing_email" name="mail" class="input-text " required>
                                                     </p>
                                                     <div class="clear"></div>
                                                 </div>
@@ -286,10 +283,12 @@
 
 
                                 </div>
-                                <div class="form-group ">
-                                    <button type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button">Continuar</button>
+                                <div class="row">
+                                    <div class="form-group col-md-6 col-md-offset-3">
+                                        <br />
+                                        <button type="submit" id="button" class="btn btn-primary btn-lg btn-block login-button">Continuar</button>
+                                    </div>
                                 </div>
-                                
                             </form>
 
                         </div>
@@ -350,7 +349,6 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 

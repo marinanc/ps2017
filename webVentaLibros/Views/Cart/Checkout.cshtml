@@ -15,7 +15,7 @@
         totalCompra = totalCompra + v.Libro.precio;
     }
 
-    string cadena = "{\"title\":\"" + titulos + "\",\"quantity\":" + 1 + ",\"currency_id\":\"ARS\",\"unit_price\":" + ViewBag.total + "}";
+    string cadena = "{\"title\":\"" + titulos.ToString() + "\",\"quantity\":" + 1 + ",\"currency_id\":\"ARS\",\"unit_price\":" + ViewBag.total + "}";
 
 
     //Vendedor
@@ -28,10 +28,8 @@
     string data = "{" +
 
         "\"items\": [" + cadena + "]," +
-        "\"payment_methods\": {" +
-            "\"id\": \"master\"" +
-            "\"name\": \"APRO\"" +
-            "\"payment_type_id\": \"credit_card\"" +
+        "\"payer\": {" +
+            "\"email\": \"test_user_94634613@testuser.com\"" +
         "}," +
 
     "}";
@@ -206,34 +204,24 @@
 
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Sugerencias</h2>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
+                       @if (Session["sugerencias"] != null)
+                       {
+                           int i = 0;
+                           foreach (var libro in Session["sugerencias"] as List<Libros>)
+                           {
+                               if (i < 4)
+                               {
+                                <div class="thubmnail-recent">
+                                    <img src="../@libro.foto" class="recent-thumb" alt="">
+                                    <h2><a href="single-product.html">@libro.titulo</a></h2>
+                                    <div class="product-sidebar-price">
+                                        <ins>ARS$@libro.precio</ins>
+                                    </div>
+                                </div>
+                                   i = i + 1;
+                               }
+                           }
+                       }
                     </div>
                 </div>
 
@@ -373,7 +361,7 @@
                                         <div class="form-row place-order" style="text-align:center">
 
 
-                                            <a href="@url" name="MP-Checkout" class="lightblue-M-Ov-ArOn" mp-mode="modal" onreturn="retornoPago">Pagar con MercadoPago</a>
+                                            <a href="@url" name="MP-Checkout" class="lightblue-M-Ov-ArOn" mp-mode="modal">Pagar con MercadoPago</a>
 
 
                                         </div>

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "MisCompras";
 }
 @using webVentaLibros.Models;
@@ -9,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Intercambios - Venta de Libros</title>
+    <title>MiCuenta - MisCompras</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -30,15 +29,25 @@
     <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
 
     <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.css" />
+
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css" />
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
 
+    <script type="text/javascript" href="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
+
+    <script src="~/js/jquery-3.2.1.js"></script>
+    <script src="~/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
     </script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <style type="text/css">
+        .main-content {
+    padding: 28px 10px;
+    </style>
 
     <script>
         'use strict';
@@ -233,35 +242,33 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
+                
+                    
                         <!-- INPUT GROUPS -->
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Mi lista de deseados</h3>
+                                <h3 class="panel-title">Mis compras</h3>
                             </div>
 
 
                             <!--TABLA CON LISTADO DE PUBLICACIONES-->
                             <div class="panel-body">
 
-                                <div class="container">
+                                
+                                    
                                     <div class="row">
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-10">
+                                        <div class="col-md-10">
                                             <table id="example" class="display" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>Libro</th>
                                                         <th>Titulo</th>
                                                         <th>#Pedido</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Precio unitario</th>
-                                                        <th>Fecha</th>
-                                                        <th>Estado</th>
-                                                        <th>Cancelar</th>
+                                                        <th style="text-align:center">Cantidad</th>
+                                                        <th style="text-align:center">Precio unitario</th>
+                                                        <th style="text-align:center">Fecha</th>
+                                                        <th style="text-align:center">Estado</th>
+                                                        <th style="text-align:center">Cancelar</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
@@ -269,11 +276,11 @@
                                                         <th>Libro</th>
                                                         <th>Titulo</th>
                                                         <th>#Pedido</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Precio unitario</th>
-                                                        <th>Fecha</th>
-                                                        <th>Estado</th>
-                                                        <th>Cancelar</th>
+                                                        <th style="text-align:center">Cantidad</th>
+                                                        <th style="text-align:center">Precio unitario</th>
+                                                        <th style="text-align:center">Fecha</th>
+                                                        <th style="text-align:center">Estado</th>
+                                                        <th style="text-align:center">Cancelar</th>
 
                                                     </tr>
                                                 </tfoot>
@@ -290,19 +297,19 @@
                                                                 </td>
                                                                 <td>@detalle.Libros.titulo</td>
                                                                 <td>Pedido #@pedido.idPedido</td>
-                                                                <td>@detalle.cantidad</td>
-                                                                <td>@detalle.precioUnitario</td>
+                                                                <td style="text-align:center">@detalle.cantidad</td>
+                                                                <td style="text-align:center">@detalle.precioUnitario</td>
                                                                 
                                                             
-                                                            <td>@pedido.fechaHora</td>
-                                                            <td>@pedido.EstadosPedido.nombre</td>
+                                                            <td style="text-align:center">@pedido.fechaHora</td>
+                                                            <td style="text-align:center">@pedido.EstadosPedido.nombre</td>
 
-                                                            <td>
+                                                            <td style="text-align:center">
                                                                 @if(pedido.idEstadoPedido < 4) { 
                                                                 <form action=@Url.Action("CancelarPedido", "CuentaUsuario") enctype="multipart/form-data" method="post" role="form">
                                                                     <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
                                                                     <button type="submit" class="btn btn-default btn-lg">
-                                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true">
                                                                         </span>
                                                                     </button>
                                                                 </form>
@@ -316,7 +323,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                
 
 
                             </div>
@@ -325,8 +332,8 @@
 
                         </div>
                         <!-- END INPUT GROUPS -->
-                    </div>
-                </div>
+                    
+                
             </div>
         </div>
         <!-- END MAIN CONTENT -->
@@ -389,18 +396,18 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <!-- jQuery sticky menu -->
-    <script src="../js/owl.carousel.min.js"></script>
-    <script src="../js/jquery.sticky.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
 
     <!-- jQuery easing -->
-    <script src="../js/jquery.easing.1.3.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.min.js"></script>
 
     <!-- Main Script -->
-    <script src="../js/main.js"></script>
+    <script src="~/js/main.js"></script>
 
     <!-- Slider -->
-    <script type="text/javascript" src="../js/bxslider.min.js"></script>
-    <script type="text/javascript" src="../js/script.slider.js"></script>
+    <script type="text/javascript" src="~/js/bxslider.min.js"></script>
+    <script type="text/javascript" src="~/js/script.slider.js"></script>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
