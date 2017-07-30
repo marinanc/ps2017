@@ -242,7 +242,7 @@
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Lo más vendido</h2>
-                        <a href="" class="wid-view-more">Ver todo</a>
+                        <a href=@Url.Action("LoMasVendido","Catalogo") class="wid-view-more">Ver todo</a>
                         <!-- SOLO LOS 3 MAS VENDIDOS-->
                         @foreach (var libro in ViewBag.masVendidos)
                         {
@@ -261,7 +261,7 @@
                 <div class="col-md-4">
                     <div class="single-product-widget">
                         <h2 class="product-wid-title">Mejores calificados</h2>
-                        <a href="#" class="wid-view-more">Ver todo</a>
+                        <a href=@Url.Action("MejoresCalificados","Catalogo") class="wid-view-more">Ver todo</a>
                         <!--SOLO LOS 3 MEJORES-->
                         @foreach (var libro in ViewBag.mejorCalificacion)
                         {
@@ -281,7 +281,7 @@
                     <div class="single-product-widget">
                         <!--SOLO LOS 3 PRIMEROS EN MAS WISH LIST-->
                         <h2 class="product-wid-title">Lo más deseado</h2>
-                        <a href="#" class="wid-view-more">Ver todo</a>
+                        <a href=@Url.Action("LoMasDeseado","Catalogo") class="wid-view-more">Ver todo</a>
                         @foreach(var libro in ViewBag.masDeseados) { 
                         <div class="single-wid-product">
                             <a href=@Url.Action("Index", "Libro", new { cod = libro.codigoLibro })><img src="@libro.Libros.foto" alt="" class="product-thumb"></a>
@@ -320,7 +320,7 @@
                         <h2 class="footer-wid-title">Sitio </h2>
                         <ul>
                             <li><a href="#">Principal</a></li>
-                            <li><a href="#">Catalogo</a></li>
+                            <li><a href="#">Libros</a></li>
                             <li><a href="#">Intercambios</a></li>
                             <li><a href="#">Contacto</a></li>
                         </ul>

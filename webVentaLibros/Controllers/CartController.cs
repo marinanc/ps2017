@@ -23,6 +23,7 @@ namespace webVentaLibros.Controllers
                 }
                 ViewBag.total = totalCompra;
             }
+
             return View();
         }
 
@@ -34,15 +35,49 @@ namespace webVentaLibros.Controllers
 
             var bd = new bdVentaLibrosDataContext();
 
+            //sugerencias
+            var libroElegido = (from libro in bd.Libros
+                                where libro.codigoBarra == codLibro
+                                select libro).FirstOrDefault();
+            var librosRelacionados = (from libro in bd.Libros
+                                      where (libro.idGenero == libroElegido.idGenero
+                                      || libro.idAutor1 == libroElegido.idAutor1)
+                                      && libro.codigoBarra != libroElegido.codigoBarra
+                                      orderby libro.codigoBarra
+                                      select libro).Take(4);
+
+            if (Session["sugerencias"] == null)
+            {
+                List<Libros> sugerencias = new List<Libros>();
+                foreach (var libro in librosRelacionados)
+                {
+                    sugerencias.Add(libro);
+                }
+                Session["sugerencias"] = sugerencias;
+            }
+            else
+            {
+                List<Libros> sugerencias = (List<Libros>)Session["sugerencias"];
+                int indexExistente = getIndex(codLibro);
+                if (indexExistente == -1)
+                    foreach (var libro in librosRelacionados)
+                    {
+                        sugerencias.Add(libro);
+                    }
+
+                Session["sugerencias"] = sugerencias;
+            }
+            //fin sugerencias
+
             var libroAgregar = from libro in bd.Libros
                                where libro.codigoBarra == codLibro
                                select new LibroModel
                                {
-                                     codigoBarra = libro.codigoBarra,
-                                     foto = libro.foto,
-                                     titulo = libro.titulo, 
-                                     precio = Convert.ToDouble(libro.precio)
-                                };
+                                   codigoBarra = libro.codigoBarra,
+                                   foto = libro.foto,
+                                   titulo = libro.titulo,
+                                   precio = Convert.ToDouble(libro.precio)
+                               };
             var lista = libroAgregar.ToList();
 
             if (Session["carrito"] == null)
@@ -63,11 +98,10 @@ namespace webVentaLibros.Controllers
                 else
                     compra[indexExistente].Cantidad++;
                 Session["carrito"] = compra;
-
-                
             }
 
-            foreach(var item in Session["carrito"] as List<CarritoItem>){
+            foreach (var item in Session["carrito"] as List<CarritoItem>)
+            {
                 totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
                 cantidadLibros = cantidadLibros + item.Cantidad;
             }
@@ -82,13 +116,19 @@ namespace webVentaLibros.Controllers
         public ActionResult Eliminar(string codLibro)
         {
             double totalCompra = 0;
+            int cantidadLibros = 0;
             List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
             compra.RemoveAt(getIndex(codLibro));
             foreach (var item in Session["carrito"] as List<CarritoItem>)
             {
                 totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+                cantidadLibros = cantidadLibros + item.Cantidad;
             }
             ViewBag.total = totalCompra;
+
+            Session["totalCompra"] = totalCompra;
+            Session["cantidadLibros"] = cantidadLibros;
+
             return View("Carrito");
 
         }

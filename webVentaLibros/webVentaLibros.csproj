@@ -655,6 +655,9 @@
     <Content Include="Views\Admin\Mensajes.cshtml" />
     <Content Include="Views\Admin\ReporteVentas.cshtml" />
     <Content Include="Views\Admin\ReportesVarios.cshtml" />
+    <Content Include="Views\Catalogo\LoMasVendido.cshtml" />
+    <Content Include="Views\Catalogo\MejoresCalificados.cshtml" />
+    <Content Include="Views\Catalogo\LoMasDeseado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

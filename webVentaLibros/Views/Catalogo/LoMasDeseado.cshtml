@@ -1,15 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Contacto";
+    ViewBag.Title = "LoMasDeseado";
 }
-
-@using webVentaLibros.Models;
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detalle - Venta de Libros</title>
+    <title>Catalogo - Venta de Libros</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -27,27 +24,114 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
-
     <style type="text/css">
-        .jumbotron {
-            background: #358CCE;
-            color: #FFF;
-            border-radius: 0px;
+        .product-item {
+            padding: 15px;
+            background: #fff;
+            margin-top: 20px;
+            position: relative;
         }
 
-        .jumbotron-sm {
-            padding-top: 24px;
-            padding-bottom: 24px;
+            .product-item:hover {
+                box-shadow: 5px 5px rgba(234, 234, 234, 0.9);
+            }
+
+            .product-item:after {
+                content: ".";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+                font-size: 0;
+                line-height: 0;
+            }
+
+        .sticker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 63px;
+            height: 63px;
         }
 
-        .jumbotron small {
-            color: #FFF;
+        .sticker-new {
+            background: url(http://keenthemes.com/assets/bootsnipp/new.png) no-repeat;
+            left: auto;
+            right: 0;
         }
 
-        .h1 small {
-            font-size: 24px;
+        .pi-img-wrapper {
+            position: relative;
         }
+
+            .pi-img-wrapper div {
+                background: rgba(0,0,0,0.3);
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: none;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+            }
+
+        .product-item:hover > .pi-img-wrapper > div {
+            display: block;
+        }
+
+        .pi-img-wrapper div .btn {
+            padding: 3px 10px;
+            color: #fff;
+            border: 1px #fff solid;
+            margin: -13px 5px 0;
+            background: transparent;
+            text-transform: uppercase;
+            position: relative;
+            top: 50%;
+            line-height: 1.4;
+            font-size: 12px;
+        }
+
+        .product-item .btn:hover {
+            background: #e84d1c;
+            border-color: #c8c8c8;
+        }
+
+        .product-item h3 {
+            font-size: 14px;
+            font-weight: 300;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+            .product-item h3 a {
+                color: #3e4d5c;
+            }
+
+                .product-item h3 a:hover {
+                    color: #E02222;
+                }
+
+        .pi-price {
+            color: #e84d1c;
+            font-size: 18px;
+            float: left;
+            padding-top: 1px;
+        }
+
+        .product-item .add2cart {
+            float: right;
+            color: #a8aeb3;
+            border: 1px #ededed solid;
+            padding: 3px 6px;
+            text-transform: uppercase;
+        }
+
+            .product-item .add2cart:hover {
+                color: #fff;
+                background: #e84d1c;
+                border-color: #e84d1c;
+            }
     </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -146,13 +230,13 @@
                         <li>
                             @Html.ActionLink("Carrito", "Carrito", "Cart")
                         </li>
-                        <li>
+                        <li class="active">
                             @Html.ActionLink("Libros", "Catalogo", "Catalogo")
                         </li>
                         <li>
                             @Html.ActionLink("Intercambios", "Intercambios", "Intercambio")
                         </li>
-                        <li class="active">
+                        <li>
                             @Html.ActionLink("Contacto", "Contacto", "Contacto")
                         </li>
                     </ul>
@@ -166,7 +250,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Contacto</h2>
+                        <h2>Libros</h2>
                     </div>
                 </div>
             </div>
@@ -178,82 +262,75 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-
-                <div class="col-md-8">
-                    <div class="well well-sm">
-                        <form action=@Url.Action("EnviarMensaje","Contacto") method="POST" role="form">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="nombre">
-                                            Nombre
-                                        </label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre" required="required" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">
-                                            Email
-                                        </label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-envelope"></span>
-                                            </span>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email" required="required" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="subject">
-                                            Asunto
-                                        </label>
-                                        <select id="idTipoMensaje" name="idTipoMensaje" class="form-control" required>
-                                            <option value="" selected>Seleccione...</option>
-                                            @foreach(var tipo in ViewBag.tiposMensaje)
-                                            {
-                                                <option value="@tipo.idTipoMensaje">@tipo.nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mensaje">
-                                            Su mensaje
-                                        </label>
-                                        <textarea name="mensaje" id="mensaje" class="form-control" rows="9" cols="25" required="required"
-                                                  placeholder="Ingrese su mensaje"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
-                                        Enviar
-                                    </button>
-                                </div>
-                            </div>
+                <div class="col-md-3">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Buscar libro</h2>
+                        <form action=@Url.Action("BuscarLibro","Busqueda") method="POST" role="form">
+                            <input type="text" name="busqueda" placeholder="Ingresar titulo,autor,ISBN..." required>
+                            <input type="submit" value="Buscar">
                         </form>
                     </div>
+
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Generos</h2>
+                        <div class="list-group">
+
+                            @foreach (var genero in ViewBag.listadoGeneros)
+                            {
+                                <div class="list-group-item">
+                                    @Html.ActionLink((string)genero.nombreGenero, "MostrarLibros", new { idGenero = genero.idGenero })
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <form>
-                        <legend><span class="glyphicon glyphicon-globe"></span> Nuestra oficina</legend>
-                        <address>
-                            <strong>TuLibreria</strong><br>
-                            Calle 200, Local 1<br>
-                            Córdoba Capital, Argentina<br>
+                <div class="col-md-9">
+                    <div class="product-content-right">
+                        <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                            <h2>Los 10 más deseados</h2>
+                        </div>
+                        <!--SOLAMENTE NOVEDADES-->
+                        <div class="row">
 
-                                Tel:
+                            @if (ViewBag.loMasDeseado.Count > 0)
+                            {
+                                foreach (var libro in ViewBag.loMasDeseado)
+                                {
+                                    <div class="col-md-4" style="width:290px; height:445px">
+                                        <div class="product-item" style="width:100%; height:100%">
+                                            <div style="width: 210px; height: 300px" class="pi-img-wrapper">
+                                                <img style="width:100%; height:100%" src="../@libro.Libros.foto" class="img-responsive" alt="#">
+                                                <div>
+                                                    <a href="@Url.Action("Index", "Libro", new { cod = libro.Libros.codigoBarra })" class="btn">Detalles</a>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <h3 style="text-align:center"><a href="@Url.Action("Index", "Libro", new { cod = libro.Libros.codigoBarra })">@libro.Libros.titulo</a></h3>
+                                            <div class="pi-price">ARS $@libro.Libros.precio</div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <h2 style="color:gray">No se encontraron libros</h2>
+                                    </div>
+                                </div>
+                            }
 
-                            (123) 456-7890
-                        </address>
-                        <address>
-                            <strong>Nuestro email</strong><br>
-                            <a href="mailto:#">tulibreria@example.com</a>
-                        </address>
-                    </form>
+                        </div>
+
+                    </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 
     <div class="footer-top-area">
@@ -307,7 +384,6 @@
         </div>
     </div>
 
-
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -323,20 +399,4 @@
 
     <!-- Main Script -->
     <script src="../js/main.js"></script>
-    <script src="../assets/vendor/toastr/toastr.min.js"></script>
-
-    <script src="../js/jquery-3.2.1.js"></script>
-    <script src="../js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-
-    @if (TempData["Message"] != null)
-    {
-
-        <div id="toast-container" class="toast-top-right">
-            <div class="toast toast-info" aria-live="polite" style="display: block;">
-                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
-                <div class="toast-message">@TempData["Message"]</div>
-            </div>
-        </div>
-    }
 </body>

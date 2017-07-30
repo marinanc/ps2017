@@ -64,5 +64,71 @@ namespace webVentaLibros.Controllers
 
             return View();
         }
+
+        public ActionResult LoMasVendido()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.loMasVendido = (from libro in bd.DetallePorPedido
+                                    from libroExistencia in bd.Libros
+                                    where libro.codigoLibro == libroExistencia.codigoBarra
+                                    && libroExistencia.stock > 0
+                                    group libro by libro.codigoLibro into g
+                                    orderby g.Sum(x => x.cantidad) descending
+                                    select g.First()).Take(10).ToList();
+
+            ViewBag.listadoGeneros = (from genero in bd.Generos
+                                    select new GeneroModel
+                                    {
+                                        idGenero = genero.idGenero,
+                                        nombreGenero = genero.nombre
+                                    }).ToList();
+
+            return View();
+        }
+
+        public ActionResult MejoresCalificados()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.mejorCalificacion = (from libro in bd.CalificacionPorLibro
+                                         from libroExistencia in bd.Libros
+                                         where libro.codigoLibro == libroExistencia.codigoBarra
+                                         && libroExistencia.stock > 0
+                                         group libro by libro.codigoLibro into g
+                                         orderby g.Average(x => x.calificacion) descending
+                                         select g.First()).Take(10).ToList();
+
+            ViewBag.listadoGeneros = (from genero in bd.Generos
+                                    select new GeneroModel
+                                    {
+                                        idGenero = genero.idGenero,
+                                        nombreGenero = genero.nombre
+                                    }).ToList();
+
+            return View();
+        }
+
+        public ActionResult LoMasDeseado()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.loMasDeseado = (from libro in bd.ListaDeseados
+                                    from libroExistencia in bd.Libros
+                                    where libro.codigoLibro == libroExistencia.codigoBarra
+                                    && libroExistencia.stock > 0
+                                    group libro by libro.codigoLibro into g
+                                    orderby g.Count() descending
+                                    select g.First()).Take(10).ToList();
+
+            ViewBag.listadoGeneros = (from genero in bd.Generos
+                                    select new GeneroModel
+                                    {
+                                        idGenero = genero.idGenero,
+                                        nombreGenero = genero.nombre
+                                    }).ToList();
+
+            return View();
+        }
     }
 }

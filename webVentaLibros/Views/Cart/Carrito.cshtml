@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="")><img src="~/img/logo2.png"></a></h1>
+                        <h1><a href="" )><img src="~/img/logo2.png"></a></h1>
                     </div>
                 </div>
 
@@ -164,34 +164,26 @@
 
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Sugerencias</h2>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="../img/100x190.png" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Libro</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins>
-                            </div>
-                        </div>
+                        @if (Session["sugerencias"] != null)
+                        {
+                            int i = 0;
+                            foreach (var libro in Session["sugerencias"] as List<Libros>)
+                            {
+                                if (i < 4)
+                                {
+                                    <div class="thubmnail-recent">
+                                        <img src="../@libro.foto" class="recent-thumb" alt="">
+                                        <h2><a href="single-product.html">@libro.titulo</a></h2>
+                                        <div class="product-sidebar-price">
+                                            <ins>ARS$@libro.precio</ins>
+                                        </div>
+                                    </div>
+                                    i = i + 1;
+                                }
+                            }
+                        }
+
+
                     </div>
 
 
@@ -297,7 +289,7 @@
                                     </div>
 
 
-                                    
+
                                 }
 
                             </div>
@@ -359,8 +351,6 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-
-    
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
