@@ -78,9 +78,6 @@ namespace webVentaLibros.Models
     partial void InsertEstadosIntercambio(EstadosIntercambio instance);
     partial void UpdateEstadosIntercambio(EstadosIntercambio instance);
     partial void DeleteEstadosIntercambio(EstadosIntercambio instance);
-    partial void InsertIntercambios(Intercambios instance);
-    partial void UpdateIntercambios(Intercambios instance);
-    partial void DeleteIntercambios(Intercambios instance);
     partial void InsertEstadosPedido(EstadosPedido instance);
     partial void UpdateEstadosPedido(EstadosPedido instance);
     partial void DeleteEstadosPedido(EstadosPedido instance);
@@ -102,6 +99,9 @@ namespace webVentaLibros.Models
     partial void InsertMensajeUsuario(MensajeUsuario instance);
     partial void UpdateMensajeUsuario(MensajeUsuario instance);
     partial void DeleteMensajeUsuario(MensajeUsuario instance);
+    partial void InsertIntercambios(Intercambios instance);
+    partial void UpdateIntercambios(Intercambios instance);
+    partial void DeleteIntercambios(Intercambios instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -262,14 +262,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Intercambios> Intercambios
-		{
-			get
-			{
-				return this.GetTable<Intercambios>();
-			}
-		}
-		
 		public System.Data.Linq.Table<EstadosPedido> EstadosPedido
 		{
 			get
@@ -323,6 +315,14 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<MensajeUsuario>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Intercambios> Intercambios
+		{
+			get
+			{
+				return this.GetTable<Intercambios>();
 			}
 		}
 	}
@@ -3937,311 +3937,6 @@ namespace webVentaLibros.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Intercambios")]
-	public partial class Intercambios : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idPublicacionUsuario1;
-		
-		private int _idPublicacionUsuario2;
-		
-		private System.DateTime _fechaHora;
-		
-		private System.Nullable<int> _calificacionUsuario1;
-		
-		private System.Nullable<int> _calificacionUsuario2;
-		
-		private System.Nullable<int> _idEstado;
-		
-		private EntityRef<EstadosIntercambio> _EstadosIntercambio;
-		
-		private EntityRef<PublicacionIntercambio> _PublicacionIntercambio;
-		
-		private EntityRef<PublicacionIntercambio> _PublicacionIntercambio1;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidPublicacionUsuario1Changing(int value);
-    partial void OnidPublicacionUsuario1Changed();
-    partial void OnidPublicacionUsuario2Changing(int value);
-    partial void OnidPublicacionUsuario2Changed();
-    partial void OnfechaHoraChanging(System.DateTime value);
-    partial void OnfechaHoraChanged();
-    partial void OncalificacionUsuario1Changing(System.Nullable<int> value);
-    partial void OncalificacionUsuario1Changed();
-    partial void OncalificacionUsuario2Changing(System.Nullable<int> value);
-    partial void OncalificacionUsuario2Changed();
-    partial void OnidEstadoChanging(System.Nullable<int> value);
-    partial void OnidEstadoChanged();
-    #endregion
-		
-		public Intercambios()
-		{
-			this._EstadosIntercambio = default(EntityRef<EstadosIntercambio>);
-			this._PublicacionIntercambio = default(EntityRef<PublicacionIntercambio>);
-			this._PublicacionIntercambio1 = default(EntityRef<PublicacionIntercambio>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPublicacionUsuario1", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idPublicacionUsuario1
-		{
-			get
-			{
-				return this._idPublicacionUsuario1;
-			}
-			set
-			{
-				if ((this._idPublicacionUsuario1 != value))
-				{
-					if (this._PublicacionIntercambio.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidPublicacionUsuario1Changing(value);
-					this.SendPropertyChanging();
-					this._idPublicacionUsuario1 = value;
-					this.SendPropertyChanged("idPublicacionUsuario1");
-					this.OnidPublicacionUsuario1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPublicacionUsuario2", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int idPublicacionUsuario2
-		{
-			get
-			{
-				return this._idPublicacionUsuario2;
-			}
-			set
-			{
-				if ((this._idPublicacionUsuario2 != value))
-				{
-					if (this._PublicacionIntercambio1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidPublicacionUsuario2Changing(value);
-					this.SendPropertyChanging();
-					this._idPublicacionUsuario2 = value;
-					this.SendPropertyChanged("idPublicacionUsuario2");
-					this.OnidPublicacionUsuario2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", AutoSync=AutoSync.Always, DbType="DateTime NOT NULL", IsDbGenerated=true, UpdateCheck=UpdateCheck.Never)]
-		public System.DateTime fechaHora
-		{
-			get
-			{
-				return this._fechaHora;
-			}
-			set
-			{
-				if ((this._fechaHora != value))
-				{
-					this.OnfechaHoraChanging(value);
-					this.SendPropertyChanging();
-					this._fechaHora = value;
-					this.SendPropertyChanged("fechaHora");
-					this.OnfechaHoraChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calificacionUsuario1", DbType="Int")]
-		public System.Nullable<int> calificacionUsuario1
-		{
-			get
-			{
-				return this._calificacionUsuario1;
-			}
-			set
-			{
-				if ((this._calificacionUsuario1 != value))
-				{
-					this.OncalificacionUsuario1Changing(value);
-					this.SendPropertyChanging();
-					this._calificacionUsuario1 = value;
-					this.SendPropertyChanged("calificacionUsuario1");
-					this.OncalificacionUsuario1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_calificacionUsuario2", DbType="Int")]
-		public System.Nullable<int> calificacionUsuario2
-		{
-			get
-			{
-				return this._calificacionUsuario2;
-			}
-			set
-			{
-				if ((this._calificacionUsuario2 != value))
-				{
-					this.OncalificacionUsuario2Changing(value);
-					this.SendPropertyChanging();
-					this._calificacionUsuario2 = value;
-					this.SendPropertyChanged("calificacionUsuario2");
-					this.OncalificacionUsuario2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstado", DbType="Int")]
-		public System.Nullable<int> idEstado
-		{
-			get
-			{
-				return this._idEstado;
-			}
-			set
-			{
-				if ((this._idEstado != value))
-				{
-					if (this._EstadosIntercambio.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidEstadoChanging(value);
-					this.SendPropertyChanging();
-					this._idEstado = value;
-					this.SendPropertyChanged("idEstado");
-					this.OnidEstadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadosIntercambio_Intercambios", Storage="_EstadosIntercambio", ThisKey="idEstado", OtherKey="idEstado", IsForeignKey=true)]
-		public EstadosIntercambio EstadosIntercambio
-		{
-			get
-			{
-				return this._EstadosIntercambio.Entity;
-			}
-			set
-			{
-				EstadosIntercambio previousValue = this._EstadosIntercambio.Entity;
-				if (((previousValue != value) 
-							|| (this._EstadosIntercambio.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EstadosIntercambio.Entity = null;
-						previousValue.Intercambios.Remove(this);
-					}
-					this._EstadosIntercambio.Entity = value;
-					if ((value != null))
-					{
-						value.Intercambios.Add(this);
-						this._idEstado = value.idEstado;
-					}
-					else
-					{
-						this._idEstado = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("EstadosIntercambio");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios", Storage="_PublicacionIntercambio", ThisKey="idPublicacionUsuario1", OtherKey="idPublicacion", IsForeignKey=true)]
-		public PublicacionIntercambio PublicacionIntercambio
-		{
-			get
-			{
-				return this._PublicacionIntercambio.Entity;
-			}
-			set
-			{
-				PublicacionIntercambio previousValue = this._PublicacionIntercambio.Entity;
-				if (((previousValue != value) 
-							|| (this._PublicacionIntercambio.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PublicacionIntercambio.Entity = null;
-						previousValue.Intercambios.Remove(this);
-					}
-					this._PublicacionIntercambio.Entity = value;
-					if ((value != null))
-					{
-						value.Intercambios.Add(this);
-						this._idPublicacionUsuario1 = value.idPublicacion;
-					}
-					else
-					{
-						this._idPublicacionUsuario1 = default(int);
-					}
-					this.SendPropertyChanged("PublicacionIntercambio");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios1", Storage="_PublicacionIntercambio1", ThisKey="idPublicacionUsuario2", OtherKey="idPublicacion", IsForeignKey=true)]
-		public PublicacionIntercambio PublicacionIntercambio1
-		{
-			get
-			{
-				return this._PublicacionIntercambio1.Entity;
-			}
-			set
-			{
-				PublicacionIntercambio previousValue = this._PublicacionIntercambio1.Entity;
-				if (((previousValue != value) 
-							|| (this._PublicacionIntercambio1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PublicacionIntercambio1.Entity = null;
-						previousValue.Intercambios1.Remove(this);
-					}
-					this._PublicacionIntercambio1.Entity = value;
-					if ((value != null))
-					{
-						value.Intercambios1.Add(this);
-						this._idPublicacionUsuario2 = value.idPublicacion;
-					}
-					else
-					{
-						this._idPublicacionUsuario2 = default(int);
-					}
-					this.SendPropertyChanged("PublicacionIntercambio1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EstadosPedido")]
 	public partial class EstadosPedido : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5762,6 +5457,263 @@ namespace webVentaLibros.Models
 						this._idTipoMensaje = default(int);
 					}
 					this.SendPropertyChanged("TipoMensajeUsuario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Intercambios")]
+	public partial class Intercambios : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPublicacionUsuario1;
+		
+		private int _idPublicacionUsuario2;
+		
+		private System.Nullable<System.DateTime> _fechaHora;
+		
+		private int _idEstado;
+		
+		private EntityRef<EstadosIntercambio> _EstadosIntercambio;
+		
+		private EntityRef<PublicacionIntercambio> _PublicacionIntercambio;
+		
+		private EntityRef<PublicacionIntercambio> _PublicacionIntercambio1;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPublicacionUsuario1Changing(int value);
+    partial void OnidPublicacionUsuario1Changed();
+    partial void OnidPublicacionUsuario2Changing(int value);
+    partial void OnidPublicacionUsuario2Changed();
+    partial void OnfechaHoraChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaHoraChanged();
+    partial void OnidEstadoChanging(int value);
+    partial void OnidEstadoChanged();
+    #endregion
+		
+		public Intercambios()
+		{
+			this._EstadosIntercambio = default(EntityRef<EstadosIntercambio>);
+			this._PublicacionIntercambio = default(EntityRef<PublicacionIntercambio>);
+			this._PublicacionIntercambio1 = default(EntityRef<PublicacionIntercambio>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPublicacionUsuario1", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idPublicacionUsuario1
+		{
+			get
+			{
+				return this._idPublicacionUsuario1;
+			}
+			set
+			{
+				if ((this._idPublicacionUsuario1 != value))
+				{
+					if (this._PublicacionIntercambio.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidPublicacionUsuario1Changing(value);
+					this.SendPropertyChanging();
+					this._idPublicacionUsuario1 = value;
+					this.SendPropertyChanged("idPublicacionUsuario1");
+					this.OnidPublicacionUsuario1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPublicacionUsuario2", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idPublicacionUsuario2
+		{
+			get
+			{
+				return this._idPublicacionUsuario2;
+			}
+			set
+			{
+				if ((this._idPublicacionUsuario2 != value))
+				{
+					if (this._PublicacionIntercambio1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidPublicacionUsuario2Changing(value);
+					this.SendPropertyChanging();
+					this._idPublicacionUsuario2 = value;
+					this.SendPropertyChanged("idPublicacionUsuario2");
+					this.OnidPublicacionUsuario2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaHora", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaHora
+		{
+			get
+			{
+				return this._fechaHora;
+			}
+			set
+			{
+				if ((this._fechaHora != value))
+				{
+					this.OnfechaHoraChanging(value);
+					this.SendPropertyChanging();
+					this._fechaHora = value;
+					this.SendPropertyChanged("fechaHora");
+					this.OnfechaHoraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstado", DbType="Int NOT NULL")]
+		public int idEstado
+		{
+			get
+			{
+				return this._idEstado;
+			}
+			set
+			{
+				if ((this._idEstado != value))
+				{
+					if (this._EstadosIntercambio.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidEstadoChanging(value);
+					this.SendPropertyChanging();
+					this._idEstado = value;
+					this.SendPropertyChanged("idEstado");
+					this.OnidEstadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadosIntercambio_Intercambios", Storage="_EstadosIntercambio", ThisKey="idEstado", OtherKey="idEstado", IsForeignKey=true)]
+		public EstadosIntercambio EstadosIntercambio
+		{
+			get
+			{
+				return this._EstadosIntercambio.Entity;
+			}
+			set
+			{
+				EstadosIntercambio previousValue = this._EstadosIntercambio.Entity;
+				if (((previousValue != value) 
+							|| (this._EstadosIntercambio.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EstadosIntercambio.Entity = null;
+						previousValue.Intercambios.Remove(this);
+					}
+					this._EstadosIntercambio.Entity = value;
+					if ((value != null))
+					{
+						value.Intercambios.Add(this);
+						this._idEstado = value.idEstado;
+					}
+					else
+					{
+						this._idEstado = default(int);
+					}
+					this.SendPropertyChanged("EstadosIntercambio");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios", Storage="_PublicacionIntercambio", ThisKey="idPublicacionUsuario1", OtherKey="idPublicacion", IsForeignKey=true)]
+		public PublicacionIntercambio PublicacionIntercambio
+		{
+			get
+			{
+				return this._PublicacionIntercambio.Entity;
+			}
+			set
+			{
+				PublicacionIntercambio previousValue = this._PublicacionIntercambio.Entity;
+				if (((previousValue != value) 
+							|| (this._PublicacionIntercambio.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PublicacionIntercambio.Entity = null;
+						previousValue.Intercambios.Remove(this);
+					}
+					this._PublicacionIntercambio.Entity = value;
+					if ((value != null))
+					{
+						value.Intercambios.Add(this);
+						this._idPublicacionUsuario1 = value.idPublicacion;
+					}
+					else
+					{
+						this._idPublicacionUsuario1 = default(int);
+					}
+					this.SendPropertyChanged("PublicacionIntercambio");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PublicacionIntercambio_Intercambios1", Storage="_PublicacionIntercambio1", ThisKey="idPublicacionUsuario2", OtherKey="idPublicacion", IsForeignKey=true)]
+		public PublicacionIntercambio PublicacionIntercambio1
+		{
+			get
+			{
+				return this._PublicacionIntercambio1.Entity;
+			}
+			set
+			{
+				PublicacionIntercambio previousValue = this._PublicacionIntercambio1.Entity;
+				if (((previousValue != value) 
+							|| (this._PublicacionIntercambio1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PublicacionIntercambio1.Entity = null;
+						previousValue.Intercambios1.Remove(this);
+					}
+					this._PublicacionIntercambio1.Entity = value;
+					if ((value != null))
+					{
+						value.Intercambios1.Add(this);
+						this._idPublicacionUsuario2 = value.idPublicacion;
+					}
+					else
+					{
+						this._idPublicacionUsuario2 = default(int);
+					}
+					this.SendPropertyChanged("PublicacionIntercambio1");
 				}
 			}
 		}

@@ -22,23 +22,29 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../css/font-awesome.min.css">
 
+    <!--KLOROFIL-->
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/owl.carousel.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
-
     <link rel="stylesheet" href="../assets/vendor/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../assets/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/se-1.2.2/datatables.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
 
+    <script type="text/javascript" href="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
+
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
     </script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
 
     <script>
         'use strict';
@@ -198,8 +204,7 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
+                
                         <!-- INPUT GROUPS -->
                         <div class="panel">
                             <div class="panel-heading">
@@ -215,28 +220,28 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-12">
                                             <table id="example" class="display" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th></th>
                                                         <th>Libro</th>
-                                                        <th>Genero</th>
-                                                        <th>Autor</th>
-                                                        <th>Fecha</th>
-                                                        <th>Ver</th>
-                                                        <th>Eliminar</th>
+                                                        <th style="text-align:center">Genero</th>
+                                                        <th style="text-align:center">Autor</th>
+                                                        <th style="text-align:center">Fecha</th>
+                                                        <th style="text-align:center">Ver</th>
+                                                        <th style="text-align:center">Eliminar</th>
                                                     </tr>
                                                 </thead>
                                                 <tfoot>
                                                     <tr>
                                                         <th></th>
                                                         <th>Libro</th>
-                                                        <th>Genero</th>
-                                                        <th>Autor</th>
-                                                        <th>Fecha</th>
-                                                        <th>Ver</th>
-                                                        <th>Eliminar</th>
+                                                        <th style="text-align:center">Genero</th>
+                                                        <th style="text-align:center">Autor</th>
+                                                        <th style="text-align:center">Fecha</th>
+                                                        <th style="text-align:center">Ver</th>
+                                                        <th style="text-align:center">Eliminar</th>
 
                                                     </tr>
                                                 </tfoot>
@@ -249,22 +254,22 @@
                                                             <img src="../@libroDeseado.Libros.foto" style="width:100%; height:100%" />
                                                         </td>
                                                         <td>@libroDeseado.Libros.titulo</td>
-                                                        <td>@libroDeseado.Libros.Generos.nombre</td>
-                                                        <td>@libroDeseado.Libros.Autores.apellidos @libroDeseado.Libros.Autores.nombres</td>
-                                                        <td>@libroDeseado.fechaHora.ToShortDateString()</td>
-                                                        <td>
+                                                        <td style="text-align:center">@libroDeseado.Libros.Generos.nombre</td>
+                                                        <td style="text-align:center">@libroDeseado.Libros.Autores.apellidos @libroDeseado.Libros.Autores.nombres</td>
+                                                        <td style="text-align:center">@libroDeseado.fechaHora.ToShortDateString()</td>
+                                                        <td style="text-align:center">
                                                             <form action=@Url.Action("Index", "Libro") enctype="multipart/form-data" method="get" role="form">
                                                                 <input type="text" value="@libroDeseado.codigoLibro" id="cod" name="cod" hidden />
-                                                                <button type="submit" class="btn btn-default btn-lg">
+                                                                <button type="submit" class="btn btn-default btn-sm">
                                                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
                                                                     </span>
                                                                 </button>
                                                             </form>
                                                         </td>
-                                                        <td>
+                                                        <td style="text-align:center">
                                                             <form action=@Url.Action("EliminarDeseado", "CuentaUsuario") enctype="multipart/form-data" method="post" role="form">
                                                                 <input type="text" value="@libroDeseado.codigoLibro" id="codLibro" name="codLibro" hidden />
-                                                                <button type="submit" class="btn btn-default btn-lg">
+                                                                <button type="submit" class="btn btn-default btn-sm">
                                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true">
                                                                     </span>
                                                                 </button>
@@ -287,8 +292,7 @@
                         </div>
                         <!-- END INPUT GROUPS -->
                     </div>
-                </div>
-            </div>
+                
         </div>
         <!-- END MAIN CONTENT -->
     </div>

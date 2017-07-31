@@ -34,8 +34,8 @@ namespace webVentaLibros.Controllers
             //intercambios contreados en el mes actual
             ViewBag.totalIntercambiosConcretados = (from intercambio in bd.Intercambios
                                                     where intercambio.idEstado == 3
-                                                    && intercambio.fechaHora.Year == DateTime.Now.Year
-                                                    && intercambio.fechaHora.Month == DateTime.Now.Month
+                                                    && intercambio.fechaHora.Value.Year == DateTime.Now.Year
+                                                    && intercambio.fechaHora.Value.Month == DateTime.Now.Month
                                                     select intercambio).Count();
 
             //pedidos pagados por el cliente pendientes para envio (los 5 mas antiguos en fecha de pedido)

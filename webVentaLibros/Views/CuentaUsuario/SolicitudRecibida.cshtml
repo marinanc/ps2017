@@ -21,6 +21,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../css/font-awesome.min.css">
 
+    <!--KLOROFIL-->
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/owl.carousel.css">
     <link rel="stylesheet" href="../style.css">
@@ -136,16 +140,22 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            @Html.ActionLink("Home", "Index", "Home")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
+                            @Html.ActionLink("Volver a Principal", "Index", "Home")
                         </li>
                         <li class="active">
+                            @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
+                        </li>
+                        <li>
                             @Html.ActionLink("Solicitudes", "SolicitudesIntercambio", "CuentaUsuario")
                         </li>
                         <li>
                             @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mi lista de deseados", "MiListaDeseados", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mis compras", "MisCompras", "CuentaUsuario")
                         </li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
@@ -154,177 +164,177 @@
         </div>
     </div> <!-- End mainmenu area -->
 
-    <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">SOLICITUD RECIBIDA</h3>
+                    </div>
+                    <div class="panel-body">
+                        
 
-                </div>
-                <div class="col-md-12">
-                    <div class="product-content-right">
 
-
-                        <div class="row">
-                            @if (ViewBag.libroOfrecido != null)
-                            {
-                                foreach (var libro in ViewBag.libroOfrecido)
+                            <div class="row">
+                                @if (ViewBag.libroOfrecido != null)
                                 {
-                                    <div class="col-md-6">
-                                        <div class="panel panel-primary">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">
-                                                    Ofrece...
-                                                </h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="col-sm-6">
-                                                    <div class="product-images">
-                                                        <div class="product-main-img">
-                                                            <img src="../@libro.foto" alt="">
-                                                        </div>
-                                                    </div>
+                                    foreach (var libro in ViewBag.libroOfrecido)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+                                                        Ofrece...
+                                                    </h3>
                                                 </div>
-
-                                                <div class="col-sm-6">
-                                                    <div class="product-inner">
-                                                        <h2 class="product-name">@libro.titulo</h2>
-
-                                                        <div class="product-inner-category">
-                                                            <p>Género: @libro.Generos.nombre</p>
-                                                            <p>Autor: @libro.autor</p>
-                                                        </div>
-
-                                                        <div role="tabpanel">
-                                                            <ul class="product-tab" role="tablist">
-                                                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-                                                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
-                                                            </ul>
-                                                            <div class="tab-content">
-                                                                <div role="tabpanel" class="tab-pane fade in active" id="home">
-
-                                                                    <p>
-                                                                        @libro.descripcion
-                                                                    </p>
-
-
-                                                                </div>
-                                                                <div role="tabpanel" class="tab-pane fade" id="profile">
-                                                                    <h2>Usuario</h2>
-                                                                    <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
-                                                                    <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
-                                                                    <!--
-                                                                    <p><label>Calificacion:</label> </p>
-                                                                    -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            @if (ViewBag.miLibro != null)
-                            {
-                                foreach (var libro in ViewBag.miLibro)
-                                {
-
-                                    <div class="col-md-6">
-                                        <div class="panel panel-primary">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">
-                                                    Mi libro
-                                                </h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="col-sm-6">
-                                                    <div class="product-images">
-                                                        <div class="product-main-img">
-                                                            <img src="../@libro.foto" alt="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <div class="product-inner">
-                                                        <h2 class="product-name">@libro.titulo</h2>
-
-
-                                                        <div class="product-inner-category">
-                                                            <p>Género: @libro.Generos.nombre</p>
-                                                            <p>Autor: @libro.autor</p>
-                                                        </div>
-
-                                                        <div role="tabpanel">
-                                                            <ul class="product-tab" role="tablist">
-                                                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
-                                                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
-                                                            </ul>
-                                                            <div class="tab-content">
-                                                                <div role="tabpanel" class="tab-pane fade in active" id="home">
-
-                                                                    <p>
-                                                                        @libro.descripcion
-                                                                    </p>
-
-                                                                </div>
-                                                                <div role="tabpanel" class="tab-pane fade" id="profile">
-                                                                    <h2>Usuario</h2>
-                                                                    <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
-                                                                    <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
-                                                                    <!--
-                                                                    <p><label>Calificacion:</label> </p>
-                                                                    -->
-
-                                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="col-sm-6">
+                                                        <div class="product-images">
+                                                            <div class="product-main-img">
+                                                                <img src="../@libro.foto" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="product-inner">
+                                                            <h2 class="product-name">@libro.titulo</h2>
+
+                                                            <div class="product-inner-category">
+                                                                <p>Género: @libro.Generos.nombre</p>
+                                                                <p>Autor: @libro.autor</p>
+                                                            </div>
+
+                                                            <div role="tabpanel">
+                                                                <ul class="product-tab" role="tablist">
+                                                                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
+                                                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div role="tabpanel" class="tab-pane fade in active" id="home">
+
+                                                                        <p>
+                                                                            @libro.descripcion
+                                                                        </p>
+
+
+                                                                    </div>
+                                                                    <div role="tabpanel" class="tab-pane fade" id="profile">
+                                                                        <h2>Usuario</h2>
+                                                                        <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
+                                                                        <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
+                                                                        <!--
+                                                                        <p><label>Calificacion:</label> </p>
+                                                                        -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
-                            }
-                        </div>
-
-                        <br />
-                        <br />
-                        <div class="row">
-                            @if (ViewBag.libroOfrecido != null)
-                            {
-                                foreach (var libro in ViewBag.libroOfrecido)
+                                @if (ViewBag.miLibro != null)
                                 {
-                                    <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                                    foreach (var libro in ViewBag.miLibro)
+                                    {
+
                                         <div class="col-md-6">
-                                            <form style="text-align:center" action=@Url.Action("AceptarIntercambio","CuentaUsuario") method="POST" role="form">
-                                                <input type="text" name="idPublicacion1" value="@ViewBag.idMiPublicacion" hidden />
-                                                <input type="text" name="idPublicacion2" value="@libro.idPublicacion" hidden />
-                                                <button type="submit" class="btn-info">Aceptar intercambio</button>
-                                            </form>
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+                                                        Mi libro
+                                                    </h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="col-sm-6">
+                                                        <div class="product-images">
+                                                            <div class="product-main-img">
+                                                                <img src="../@libro.foto" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="product-inner">
+                                                            <h2 class="product-name">@libro.titulo</h2>
+
+
+                                                            <div class="product-inner-category">
+                                                                <p>Género: @libro.Generos.nombre</p>
+                                                                <p>Autor: @libro.autor</p>
+                                                            </div>
+
+                                                            <div role="tabpanel">
+                                                                <ul class="product-tab" role="tablist">
+                                                                    <li role="presentation" class="active"><a href="#home2" aria-controls="home" role="tab" data-toggle="tab">Descripción</a></li>
+                                                                    <li role="presentation"><a href="#profile2" aria-controls="profile" role="tab" data-toggle="tab">Datos del usuario</a></li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div role="tabpanel" class="tab-pane fade in active" id="home2">
+
+                                                                        <p>
+                                                                            @libro.descripcion
+                                                                        </p>
+
+                                                                    </div>
+                                                                    <div role="tabpanel" class="tab-pane fade" id="profile2">
+                                                                        <h2>Usuario</h2>
+                                                                        <p><label>Ubicación:</label> @libro.Usuarios.Localidades.nombre, @libro.Usuarios.Provincias.nombre</p>
+                                                                        <p><label>Nombre:</label> @libro.Usuarios.nombreUsuario</p>
+                                                                        <!--
+                                                                        <p><label>Calificacion:</label> </p>
+                                                                        -->
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <form style="text-align:center" action=@Url.Action("CancelarIntercambio","CuentaUsuario") method="POST" role="form">
-                                                <input type="text" name="idPublicacion1" value="@ViewBag.idMiPublicacion" hidden />
-                                                <input type="text" name="idPublicacion2" value="@libro.idPublicacion" hidden />
-                                                <button type="submit" class="btn-info">Cancelar intercambio</button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    }
                                 }
-                            }
-                        </div>
+                            </div>
+
+                            <br />
+                            <br />
+                            <div class="row">
+                                @if (ViewBag.libroOfrecido != null)
+                                {
+                                    foreach (var libro in ViewBag.libroOfrecido)
+                                    {
+                                        <div class="col-md-6 col-md-offset-3" style="text-align:center">
+                                            <div class="col-md-6">
+                                                <form style="text-align:center" action=@Url.Action("AceptarIntercambio","CuentaUsuario") method="POST" role="form">
+                                                    <input type="text" name="idPublicacion1" value="@ViewBag.idMiPublicacion" hidden />
+                                                    <input type="text" name="idPublicacion2" value="@libro.idPublicacion" hidden />
+                                                    <button type="submit" class="btn-info">Aceptar intercambio</button>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <form style="text-align:center" action=@Url.Action("CancelarIntercambio","CuentaUsuario") method="POST" role="form">
+                                                    <input type="text" name="idPublicacion1" value="@ViewBag.idMiPublicacion" hidden />
+                                                    <input type="text" name="idPublicacion2" value="@libro.idPublicacion" hidden />
+                                                    <button type="submit" class="btn-info">Cancelar intercambio</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
 
 
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>

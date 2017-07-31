@@ -175,19 +175,6 @@
       <Association Name="EstadosIntercambio_Intercambios" Member="Intercambios" ThisKey="idEstado" OtherKey="idEstado" Type="Intercambios" />
     </Type>
   </Table>
-  <Table Name="dbo.Intercambios" Member="Intercambios">
-    <Type Name="Intercambios">
-      <Column Name="idPublicacionUsuario1" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="idPublicacionUsuario2" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="calificacionUsuario1" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="calificacionUsuario2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="idEstado" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="EstadosIntercambio_Intercambios" Member="EstadosIntercambio" ThisKey="idEstado" OtherKey="idEstado" Type="EstadosIntercambio" IsForeignKey="true" />
-      <Association Name="PublicacionIntercambio_Intercambios" Member="PublicacionIntercambio" ThisKey="idPublicacionUsuario1" OtherKey="idPublicacion" Type="PublicacionIntercambio" IsForeignKey="true" />
-      <Association Name="PublicacionIntercambio_Intercambios1" Member="PublicacionIntercambio1" ThisKey="idPublicacionUsuario2" OtherKey="idPublicacion" Type="PublicacionIntercambio" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.EstadosPedido" Member="EstadosPedido">
     <Type Name="EstadosPedido">
       <Column Name="idEstado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -259,6 +246,17 @@
       <Column Name="idTipoMensaje" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="TipoMensajeUsuario_MensajeUsuario" Member="TipoMensajeUsuario" ThisKey="idTipoMensaje" OtherKey="idTipoMensaje" Type="TipoMensajeUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Intercambios" Member="Intercambios">
+    <Type Name="Intercambios">
+      <Column Name="idPublicacionUsuario1" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idPublicacionUsuario2" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="fechaHora" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="idEstado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="EstadosIntercambio_Intercambios" Member="EstadosIntercambio" ThisKey="idEstado" OtherKey="idEstado" Type="EstadosIntercambio" IsForeignKey="true" />
+      <Association Name="PublicacionIntercambio_Intercambios" Member="PublicacionIntercambio" ThisKey="idPublicacionUsuario1" OtherKey="idPublicacion" Type="PublicacionIntercambio" IsForeignKey="true" />
+      <Association Name="PublicacionIntercambio_Intercambios1" Member="PublicacionIntercambio1" ThisKey="idPublicacionUsuario2" OtherKey="idPublicacion" Type="PublicacionIntercambio" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

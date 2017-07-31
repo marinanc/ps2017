@@ -21,6 +21,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../css/font-awesome.min.css">
 
+    <!--KLOROFIL-->
+    <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/owl.carousel.css">
     <link rel="stylesheet" href="../style.css">
@@ -136,7 +140,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            @Html.ActionLink("Home", "Index", "Home")
+                            @Html.ActionLink("Volver a Principal", "Index", "Home")
                         </li>
                         <li>
                             @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
@@ -147,6 +151,12 @@
                         <li>
                             @Html.ActionLink("Mis publicaciones", "MisPublicacionesActivas", "CuentaUsuario")
                         </li>
+                        <li>
+                            @Html.ActionLink("Mi lista de deseados", "MiListaDeseados", "CuentaUsuario")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Mis compras", "MisCompras", "CuentaUsuario")
+                        </li>
                         <li><a href="#">Contacto</a></li>
                     </ul>
                 </div>
@@ -154,15 +164,15 @@
         </div>
     </div> <!-- End mainmenu area -->
 
-    <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Datos del intercambio aceptado</h3>
+                    </div>
 
-                </div>
-                <div class="col-md-12">
-                    <div class="product-content-right">
+                    <div class="panel-body">
 
 
                         <div class="row">
@@ -248,7 +258,7 @@
                                                 {
                                                     <h3 class="panel-title">Ofrece...</h3>
                                                 }
-                                                
+
                                             </div>
                                             <div class="panel-body">
                                                 <div class="col-sm-6">
@@ -318,9 +328,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <form style="text-align:center" action=@Url.Action("IntercambioNoRealizado", "CuentaUsuario") method="POST" role="form">
-                                            <input type="text" name="idPublicacion1" value="@intercambio.idPublicacionUsuario1" hidden />
-                                            <input type="text" name="idPublicacion2" value="@intercambio.idPublicacionUsuario2" hidden />
-                                            <button type="submit" class="btn-info">Intercambio fallido</button>
+                                                <input type="text" name="idPublicacion1" value="@intercambio.idPublicacionUsuario1" hidden />
+                                                <input type="text" name="idPublicacion2" value="@intercambio.idPublicacionUsuario2" hidden />
+                                                <button type="submit" class="btn-info">Intercambio fallido</button>
                                             </form>
                                         </div>
                                     </div>
@@ -329,11 +339,11 @@
                         </div>
 
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
@@ -385,8 +395,6 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-
-    
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
