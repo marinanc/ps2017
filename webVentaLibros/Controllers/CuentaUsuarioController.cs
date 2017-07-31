@@ -120,6 +120,46 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("MisPublicacionesActivas");
         }
 
+        [HttpPost]
+        public ActionResult EliminarPublicacion(int idPublicacion)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            var publicacionEliminar = (from publicacion in bd.PublicacionIntercambio
+                                       where publicacion.idPublicacion == idPublicacion
+                                       && publicacion.idEstado == 1
+                                       select publicacion).ToList();
+
+            //tambien tengo que eliminar los intercambios solicitados que no aún no han sido aceptados
+            var intercambioInvolucrado = (from intercambio in bd.Intercambios
+                                          where (intercambio.idPublicacionUsuario1 == idPublicacion ||
+                                          intercambio.idPublicacionUsuario2 == idPublicacion) &&
+                                          intercambio.idEstado == 1
+                                          select intercambio).ToList();
+
+            foreach (var intercambio in intercambioInvolucrado)
+            {
+                bd.Intercambios.DeleteOnSubmit(intercambio);
+            }
+            foreach (var publicacion in publicacionEliminar)
+            {
+                bd.PublicacionIntercambio.DeleteOnSubmit(publicacion);
+            }          
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Se ha eliminado su publicación.";
+            }
+            catch(Exception e)
+            {
+                TempData["Message"] = "No se ha eliminado su publicación. Verifique que no este asociado a ningun intercambio pendiente de confirmación";
+            }
+
+            return RedirectToAction("MisPublicacionesActivas");
+        }
+
         [HttpGet]
         public ActionResult ModificarIntercambio(int idPublicacion)
         {
