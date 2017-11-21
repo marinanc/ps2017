@@ -86,11 +86,11 @@
                                         var ffin = Convert.ToDateTime("01/" + var_mesSiguiente + "/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
                                     }
                                     <li>@Html.ActionLink("Ventas", "ReporteVentas", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
-                                    <li>@Html.ActionLink("Ventas", "ReportesVarios", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
+                                    <li>@Html.ActionLink("Varios", "ReportesVarios", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="Admin/Mensajes" class=""><i class="lnr lnr-alarm"></i> <span>Mensajes</span></a></li>
+                        <li><a href="../Admin/Mensajes" class=""><i class="lnr lnr-alarm"></i> <span>Mensajes</span></a></li>
                         <li>
                             <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Páginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesPaginas" class="collapse ">

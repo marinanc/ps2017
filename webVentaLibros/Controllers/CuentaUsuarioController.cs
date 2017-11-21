@@ -783,5 +783,59 @@ namespace webVentaLibros.Controllers
                                   select compra).ToList();
             return View();
         }
+
+        [HttpGet]
+        public ActionResult EnviarReclamo(int idPedido)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            /*
+            ViewBag.pedidoReclamo = (from pedido in bd.Pedidos
+                                     where pedido.idPedido == idPedido
+                                     select pedido).ToList();
+            */
+            ViewBag.codigoPedido = idPedido;
+
+            ViewBag.detallePedido = (from detalle in bd.DetallePorPedido
+                                      where  detalle.idPedido == idPedido
+                                      select detalle).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EnviarReclamo(int idPedido, string mensaje, string email)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var pedidoReclamado = (from pedido in bd.Pedidos
+                                       where pedido.idPedido == idPedido
+                                       select pedido).ToList();
+
+            Reclamos reclamado = new Reclamos
+            {
+                idPedido = idPedido,
+                mensaje = mensaje,
+                mail = email,
+                fecha = DateTime.Now
+                
+            };
+            
+            foreach(var p in pedidoReclamado)
+            {
+                p.idEstadoPedido = 6; //cambia el estado del pedido a RECLAMADO
+            }
+
+            try { 
+                bd.Reclamos.InsertOnSubmit(reclamado);
+                bd.SubmitChanges();
+                TempData["Message"] = "Se ha enviado su reclamo. Nos pondemos en contacto con ud vía email";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo registrar su reclamo. Intentelo nuevamente";
+            }
+            return RedirectToAction("MisCompras");
+        }
     }
 }

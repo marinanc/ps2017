@@ -186,6 +186,7 @@
     <Compile Include="Models\PedidoModel.cs" />
     <Compile Include="Models\ProvinciaModel.cs" />
     <Compile Include="Models\PublicacionIntercambioModel.cs" />
+    <Compile Include="Models\ReclamoModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -658,6 +659,7 @@
     <Content Include="Views\Catalogo\LoMasVendido.cshtml" />
     <Content Include="Views\Catalogo\MejoresCalificados.cshtml" />
     <Content Include="Views\Catalogo\LoMasDeseado.cshtml" />
+    <Content Include="Views\CuentaUsuario\EnviarReclamo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,8 @@
-﻿@{
-    ViewBag.Title = "MisCompras";
+﻿
+@{
+    ViewBag.Title = "EnviarReclamo";
 }
+
 @using webVentaLibros.Models;
 @using WebMatrix.WebData;
 
@@ -8,7 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MiCuenta - MisCompras</title>
+    <title>Intercambios - Mis publicaciones</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -43,79 +45,12 @@
     </script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-    <script>
-        'use strict';
-        var $ = jQuery;
-        $.getScript("https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/r-2.1.1/rg-1.0.0/rr-1.2.0/sc-1.4.2/se-1.2.2/datatables.min.js", function () {
-            /*
-            $('#example').DataTable({
-                "paging": true,
-                "ordering": true,
-                "info": false,
 
-            });
-            */
-            var table = $('#example').DataTable({
-                "columnDefs": [
-                    { "visible": false, "targets": 2 }
-                ],
-                "order": [[2, 'asc']],
-                "displayLength": 25,
-                "drawCallback": function (settings) {
-                    var api = this.api();
-                    var rows = api.rows({ page: 'current' }).nodes();
-                    var last = null;
-
-                    api.column(2, { page: 'current' }).data().each(function (group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="7">' + group + '</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    });
-                },
-                "language": {
-
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                }
-            });
-
-            // Order by the grouping
-            $('#example tbody').on('click', 'tr.group', function () {
-                var currentOrder = table.order()[0];
-                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
-                    table.order([2, 'desc']).draw();
-                }
-                else {
-                    table.order([2, 'asc']).draw();
-                }
-            });
-        });
-
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js">
     </script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -208,7 +143,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            @Html.ActionLink("Home", "Index", "Home")
+                            @Html.ActionLink("Volver a Principal", "Index", "Home")
                         </li>
                         <li>
                             @Html.ActionLink("Panel de control", "MiCuenta", "CuentaUsuario")
@@ -236,111 +171,108 @@
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
-                
-                    
-                        <!-- INPUT GROUPS -->
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Mis compras</h3>
-                            </div>
 
-
-                            <!--TABLA CON LISTADO DE PUBLICACIONES-->
-                            <div class="panel-body">
-
-                                
-                                    
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <table id="example" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Libro</th>
-                                                        <th>Titulo</th>
-                                                        <th>#Pedido</th>
-                                                        <th style="text-align:center">Cantidad</th>
-                                                        <th style="text-align:center">Precio unitario</th>
-                                                        <th style="text-align:center">Fecha</th>
-                                                        <th style="text-align:center">Estado</th>
-                                                        <th style="text-align:center">Cancelar</th>
-                                                        <th style="text-align:center">Reclamo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Libro</th>
-                                                        <th>Titulo</th>
-                                                        <th>#Pedido</th>
-                                                        <th style="text-align:center">Cantidad</th>
-                                                        <th style="text-align:center">Precio unitario</th>
-                                                        <th style="text-align:center">Fecha</th>
-                                                        <th style="text-align:center">Estado</th>
-                                                        <th style="text-align:center">Cancelar</th>
-                                                        <th style="text-align:center">Reclamo</th>
-
-                                                    </tr>
-                                                </tfoot>
-                                                <tbody>
-
-                                                    @foreach (var pedido in ViewBag.misCompras)
-                                                    {
-                                                        foreach(var detalle in pedido.DetallePorPedido) { 
+                <!-- INPUT GROUPS -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="page-title">Enviar reclamo de compra</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--Datos del pedido-->
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend style="text-align:center">Compra</legend>
+                                        <!--TABLA CON OPINIONES DE OTROS USUARIOS-->
+                                        @if (ViewBag.detallePedido.Count != 0)
+                                        {
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading" style="text-align:center; height:50px">
+                                                    <h4>
+                                                        Detalle de la compra #@ViewBag.codigoPedido
+                                                    </h4>
+                                                </div>
+                                                <table class="table table-fixed">
+                                                    <thead>
                                                         <tr>
-                                                            
-
-                                                                <td style="width: 50px; height: 70px">
-                                                                    <img src="../@detalle.Libros.foto" style="width:100%; height:100%" />
-                                                                </td>
-                                                                <td>@detalle.Libros.titulo</td>
-                                                                <td>Pedido #@pedido.idPedido</td>
-                                                                <td style="text-align:center">@detalle.cantidad</td>
-                                                                <td style="text-align:center">@detalle.precioUnitario</td>
-                                                                
-                                                            
-                                                            <td style="text-align:center">@pedido.fechaHora</td>
-                                                            <td style="text-align:center">@pedido.EstadosPedido.nombre</td>
-
-                                                            <td style="text-align:center">
-                                                                @if(pedido.idEstadoPedido < 4) { 
-                                                                <form action=@Url.Action("CancelarPedido", "CuentaUsuario") enctype="multipart/form-data" method="post" role="form">
-                                                                    <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
-                                                                    <button type="submit" class="btn btn-default btn-lg">
-                                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true">
-                                                                        </span>
-                                                                    </button>
-                                                                </form>
-                                                                }
-                                                            </td>
-
-                                                            <td style="text-align:center">
-                                                                <form action=@Url.Action("EnviarReclamo", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
-                                                                    <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
-                                                                    <button type="submit" class="btn btn-default btn-lg">
-                                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true">
-                                                                        </span>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
+                                                            <th class="col-xs-7">Libro</th>
+                                                            <th class="col-xs-2" style="text-align:center">Cantidad</th>
+                                                            <th class="col-xs-3" style="text-align:center">Precio (ARS)</th>
                                                         </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!--Tengo que recorrer los detalles del pedido ¿como?-->
+                                                        @foreach (var detalle in ViewBag.detallePedido)
+                                                        {
+                                                            <tr>
+                                                                <td class="col-xs-7">@detalle.Libros.titulo</td>
+                                                                <td class="col-xs-2" style="text-align:center">@detalle.cantidad</td>
+                                                                <td class="col-xs-3" style="text-align:center">$@detalle.precioUnitario</td>
+                                                            </tr>
                                                         }
-                                                    }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            //mostrar que no ha realizado ninguna calificacion
+                                            <h3>Error: no hay items en esta compra</h3>
+                                        }
 
-                                                </tbody>
-                                            </table>
+                                    </fieldset>
+                                </div>
+                                <!--Fin datos del pedido-->
+                                <!--Formulario de reclamo-->
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>Reclamo</legend>
+                                        <div class="well well-sm">
+                                            <form action=@Url.Action("EnviarReclamo","CuentaUsuario") method="POST" role="form">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+
+                                                        <div class="form-group">
+                                                            <label for="email">
+                                                                Email
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-envelope"></span>
+                                                                </span>
+                                                                <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese email para contactarnos" required="required" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="reclamo">
+                                                                Mensaje
+                                                            </label>
+                                                            <textarea name="mensaje" id="mensaje" class="form-control" rows="9" cols="25" required="required"
+                                                                      placeholder="Ingrese su reclamo"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                                                            <input type="text" id="idPedido" name="idPedido" value="@ViewBag.codigoPedido" hidden />
+                                                            Enviar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </div>
-                                
-
-
+                                    </fieldset>
+                                </div>
+                                <!--Fin formuarlario de reclamo-->
                             </div>
-
-                            <!--FIN LISTADO PUBLICACIONES-->
-
                         </div>
-                        <!-- END INPUT GROUPS -->
-                    
-                
+                    </div>
+                </div>
+               
+                <!-- END INPUT GROUPS -->
             </div>
+
         </div>
         <!-- END MAIN CONTENT -->
     </div>
@@ -402,18 +334,18 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <!-- jQuery sticky menu -->
-    <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/jquery.sticky.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/jquery.sticky.js"></script>
 
     <!-- jQuery easing -->
-    <script src="~/js/jquery.easing.1.3.min.js"></script>
+    <script src="../js/jquery.easing.1.3.min.js"></script>
 
     <!-- Main Script -->
-    <script src="~/js/main.js"></script>
+    <script src="../js/main.js"></script>
 
     <!-- Slider -->
-    <script type="text/javascript" src="~/js/bxslider.min.js"></script>
-    <script type="text/javascript" src="~/js/script.slider.js"></script>
+    <script type="text/javascript" src="../js/bxslider.min.js"></script>
+    <script type="text/javascript" src="../js/script.slider.js"></script>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -430,3 +362,6 @@
         </div>
     }
 </body>
+
+
+
