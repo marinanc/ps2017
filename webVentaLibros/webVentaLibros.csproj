@@ -660,6 +660,10 @@
     <Content Include="Views\Catalogo\MejoresCalificados.cshtml" />
     <Content Include="Views\Catalogo\LoMasDeseado.cshtml" />
     <Content Include="Views\CuentaUsuario\EnviarReclamo.cshtml" />
+    <Content Include="Views\Admin\Reclamos.cshtml" />
+    <Content Include="Views\Admin\Pedidos.cshtml" />
+    <Content Include="Views\Admin\VerPedido.cshtml" />
+    <Content Include="Views\Cart\CompraFinalizada.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

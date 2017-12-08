@@ -542,6 +542,17 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("Mensajes");
         }
 
+        [Authorize (Roles = "Administrador")]
+        public ActionResult Reclamos()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.reclamos = (from reclamo in bd.Reclamos
+                                select reclamo).ToList();
+
+            return View();
+        }
+
         [Authorize(Roles = "Administrador")]
         public ActionResult ReporteVentas(DateTime inicio, DateTime fin)
         {
@@ -627,6 +638,45 @@ namespace webVentaLibros.Controllers
             ViewBag.cantidadLibrosSinStock = (from libro in bd.Libros
                                               where libro.stock == 0
                                               select libro).Count();
+
+            return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult Pedidos()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.pedidosPendientes = (from pedido in bd.Pedidos
+                                         where pedido.idEstadoPedido != 5 ||
+                                         pedido.idEstadoPedido != 6
+                                         select pedido).ToList();
+
+            ViewBag.pedidosEntregados = (from pedido in bd.Pedidos
+                                         where pedido.idEstadoPedido == 5
+                                         select pedido).ToList();
+            return View();
+        }
+
+        public ActionResult VerPedido(int idPedido)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            double total = 0;
+
+            ViewBag.pedido = (from pedido in bd.Pedidos
+                                          where pedido.idPedido == idPedido
+                                          select pedido).ToList().FirstOrDefault();
+
+            ViewBag.detalle = (from detalle in bd.DetallePorPedido
+                               where detalle.idPedido == idPedido
+                               select detalle).ToList();
+
+            foreach(var libro in ViewBag.detalle)
+            {
+                total = total + Convert.ToDouble(libro.cantidad) * Convert.ToDouble(libro.precioUnitario);
+            }
+
+            ViewBag.total = total;
 
             return View();
         }

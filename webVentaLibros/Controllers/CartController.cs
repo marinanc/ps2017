@@ -214,6 +214,7 @@ namespace webVentaLibros.Controllers
         {
 
             var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
 
             string nombreProvincia = (from provincia in bd.Provincias
                                       where provincia.idProvincia == idProvincia
@@ -248,7 +249,82 @@ namespace webVentaLibros.Controllers
                 ViewBag.total = totalCompra;
                 ViewBag.cantidad = cantidad;
             }
+
+            Pedidos nuevoPedido = new Pedidos
+            {
+                idUsuario = idUsuario,
+                fechaHora = DateTime.Now,
+                fechaEntrega = DateTime.Now.AddDays(10),
+                direccionEntrega = direccion,
+                idLocalidadEntrega = idLocalidad,
+                idProvinciaEntrega = idProvincia,
+                idEstadoPedido = 1, //en espera de pago
+                codigoPostalEntrega = codigoPostal,
+            };
+
+            try
+            {
+                bd.Pedidos.InsertOnSubmit(nuevoPedido);
+                bd.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo ingresar el pedido";
+            }
+
+            var ultimoPedido = (from pedido in bd.Pedidos
+                                where pedido.idUsuario == idUsuario
+                                orderby pedido.fechaHora descending
+                                select pedido).FirstOrDefault();
+
+            if (Session["carrito"] != null)
+            {
+                foreach (var item in Session["carrito"] as List<CarritoItem>)
+                {
+                    DetallePorPedido detalle = new DetallePorPedido
+                    {
+                        idPedido = ultimoPedido.idPedido,
+                        codigoLibro = item.Libro.codigoBarra,
+                        cantidad = item.Cantidad,
+                        precioUnitario = Convert.ToDecimal(item.Libro.precio)
+                    };
+
+                    bd.DetallePorPedido.InsertOnSubmit(detalle);
+                }
+                bd.SubmitChanges();
+            }
+
             return View();
+        }
+
+        public ActionResult CompraFinalizada(int collection_id, string collection_status, string preference_id, string external_reference, string payment_type, int? merchant_order_id)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            var ultimoPedido = (from pedido in bd.Pedidos
+                                where pedido.idUsuario == idUsuario
+                                orderby pedido.fechaEntrega descending
+                                select pedido).FirstOrDefault();
+
+            //if (collection_status == "success")
+            //{
+                ultimoPedido.idEstadoPedido = 2;
+            Session["carrito"] = null;
+
+                try
+                {
+                    bd.SubmitChanges();
+                    TempData["Message"] = "Gracias por su compra";
+                }
+                catch (Exception e)
+                {
+                    TempData["Message"] = "No se pudo registrar el pago";
+                }
+            //}
+            //return View();
+
+            RedirectToAction("MisCompras","CuentaUsuario");
         }
 
         private int getIndex(string codLibro)

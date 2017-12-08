@@ -82,8 +82,16 @@
                                         int var_mesActual = DateTime.Now.Month; // obtengo el mes actual
                                         int var_anio = DateTime.Now.Year; // obtengo el año actual
                                         int var_mesSiguiente = DateTime.Now.Month + 1; // obtengo el mes siguiente
-                                        var finicio = Convert.ToDateTime("01/" + var_mesActual + "/" + var_anio);// pongo el 1 porque siempre es el primer día obvio
-                                        var ffin = Convert.ToDateTime("01/" + var_mesSiguiente + "/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
+                                        var ffin = Convert.ToDateTime("01/01/1900");
+                                        var finicio = Convert.ToDateTime("01/" + var_mesActual + "/" + var_anio);// pongo el 1 porque siempre es el primer día
+                                        if(var_mesActual == 12)
+                                        {
+                                            ffin = Convert.ToDateTime("01/" + "01/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
+                                        }
+                                        else
+                                        {
+                                            ffin = Convert.ToDateTime("01/" + var_mesSiguiente + "/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
+                                        }
                                     }
                                     <li>@Html.ActionLink("Ventas", "ReporteVentas", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
                                     <li>@Html.ActionLink("Varios", "ReportesVarios", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
@@ -201,7 +209,7 @@
                                                             </td>
                                                             <td class="col-xs-2" style="text-align:center">@pedido.fechaHora.ToShortDateString()</td>
                                                             <td>
-                                                                <form action=@Url.Action("DatosDePedido", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
+                                                                <form action=@Url.Action("VerPedido", "Admin") enctype="multipart/form-data" method="get" role="form">
                                                                     <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
                                                                     <button type="submit" class="btn btn-default btn-sm">
                                                                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
@@ -215,7 +223,7 @@
                                             </table>
                                         </div>
                                             <div class="btn-group">
-                                                <form action=@Url.Action("MisCalificaciones", "CuentaUsuario") enctype="multipart/form-data" method="GET" role="form">
+                                                <form action=@Url.Action("Pedidos", "Admin") enctype="multipart/form-data" method="GET" role="form">
                                                     <button type="submit" class="btn btn-primary">Ver más</button>
                                                 </form>
                                             </div>
@@ -224,8 +232,8 @@
                                     }
                                     else
                                     {
-                                        //mostrar que no ha realizado ninguna calificacion
-                                        <h3>Aún no ha calificado ningún libro</h3>
+                                        //
+                                        <h3>No hay pedidos pendientes</h3>
                                     }
                                     <!--FIN pedidos pendientes-->
 
@@ -235,7 +243,7 @@
                                 <!--listado libros con stock minimo-->
                                 <div class="col-md-7">
 
-                                    <!--TABLA CON pedidos pendientes de envio-->
+                                    <!--TABLA CON libros con stock minimo-->
                                     @if (ViewBag.librosStockMinimo.Count != 0)
                                     {
                                         <div class="panel panel-primary">
@@ -251,7 +259,7 @@
                                                         <th class="col-xs-2">ISBN</th>
                                                         <th class="col-xs-6">Titulo</th>
                                                         <th class="col-xs-2">Stock</th>
-                                                        <th class="col-xs-1" style="text-align:center">Ver</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -262,15 +270,7 @@
                                                             <td class="col-xs-2">@libro.codigoBarra</td>
                                                             <td class="col-xs-6">@libro.titulo</td>
                                                             <td class="col-xs-1">@libro.stock</td>
-                                                            <td>
-                                                                <form action=@Url.Action("DatosDePedido", "CuentaUsuario") enctype="multipart/form-data" method="get" role="form">
-                                                                    <input type="text" value="@libro.codigoBarra" id="idPedido" name="idPedido" hidden />
-                                                                    <button type="submit" class="btn btn-default btn-sm">
-                                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true">
-                                                                        </span>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
+                                                           
                                                         </tr>
                                                     }
                                                 </tbody>
