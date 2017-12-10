@@ -105,6 +105,12 @@ namespace webVentaLibros.Models
     partial void InsertReclamos(Reclamos instance);
     partial void UpdateReclamos(Reclamos instance);
     partial void DeleteReclamos(Reclamos instance);
+    partial void InsertTipoDescuento(TipoDescuento instance);
+    partial void UpdateTipoDescuento(TipoDescuento instance);
+    partial void DeleteTipoDescuento(TipoDescuento instance);
+    partial void InsertDescuentos(Descuentos instance);
+    partial void UpdateDescuentos(Descuentos instance);
+    partial void DeleteDescuentos(Descuentos instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -334,6 +340,22 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<Reclamos>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TipoDescuento> TipoDescuento
+		{
+			get
+			{
+				return this.GetTable<TipoDescuento>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Descuentos> Descuentos
+		{
+			get
+			{
+				return this.GetTable<Descuentos>();
 			}
 		}
 	}
@@ -5952,6 +5974,367 @@ namespace webVentaLibros.Models
 						this._idPedido = default(int);
 					}
 					this.SendPropertyChanged("Pedidos");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoDescuento")]
+	public partial class TipoDescuento : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idTipo;
+		
+		private string _tipo;
+		
+		private EntitySet<Descuentos> _Descuentos;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidTipoChanging(int value);
+    partial void OnidTipoChanged();
+    partial void OntipoChanging(string value);
+    partial void OntipoChanged();
+    #endregion
+		
+		public TipoDescuento()
+		{
+			this._Descuentos = new EntitySet<Descuentos>(new Action<Descuentos>(this.attach_Descuentos), new Action<Descuentos>(this.detach_Descuentos));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idTipo", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idTipo
+		{
+			get
+			{
+				return this._idTipo;
+			}
+			set
+			{
+				if ((this._idTipo != value))
+				{
+					this.OnidTipoChanging(value);
+					this.SendPropertyChanging();
+					this._idTipo = value;
+					this.SendPropertyChanged("idTipo");
+					this.OnidTipoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tipo", DbType="NVarChar(30) NOT NULL", CanBeNull=false)]
+		public string tipo
+		{
+			get
+			{
+				return this._tipo;
+			}
+			set
+			{
+				if ((this._tipo != value))
+				{
+					this.OntipoChanging(value);
+					this.SendPropertyChanging();
+					this._tipo = value;
+					this.SendPropertyChanged("tipo");
+					this.OntipoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDescuento_Descuentos", Storage="_Descuentos", ThisKey="idTipo", OtherKey="idTipo")]
+		public EntitySet<Descuentos> Descuentos
+		{
+			get
+			{
+				return this._Descuentos;
+			}
+			set
+			{
+				this._Descuentos.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Descuentos(Descuentos entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoDescuento = this;
+		}
+		
+		private void detach_Descuentos(Descuentos entity)
+		{
+			this.SendPropertyChanging();
+			entity.TipoDescuento = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Descuentos")]
+	public partial class Descuentos : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idDescuento;
+		
+		private string _codigo;
+		
+		private int _idTipo;
+		
+		private System.Nullable<System.DateTime> _fecha;
+		
+		private System.Nullable<int> _validez;
+		
+		private System.Nullable<System.DateTime> _fechaExpiracion;
+		
+		private System.Nullable<int> _descuento;
+		
+		private EntityRef<TipoDescuento> _TipoDescuento;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidDescuentoChanging(int value);
+    partial void OnidDescuentoChanged();
+    partial void OncodigoChanging(string value);
+    partial void OncodigoChanged();
+    partial void OnidTipoChanging(int value);
+    partial void OnidTipoChanged();
+    partial void OnfechaChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaChanged();
+    partial void OnvalidezChanging(System.Nullable<int> value);
+    partial void OnvalidezChanged();
+    partial void OnfechaExpiracionChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaExpiracionChanged();
+    partial void OndescuentoChanging(System.Nullable<int> value);
+    partial void OndescuentoChanged();
+    #endregion
+		
+		public Descuentos()
+		{
+			this._TipoDescuento = default(EntityRef<TipoDescuento>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idDescuento", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idDescuento
+		{
+			get
+			{
+				return this._idDescuento;
+			}
+			set
+			{
+				if ((this._idDescuento != value))
+				{
+					this.OnidDescuentoChanging(value);
+					this.SendPropertyChanging();
+					this._idDescuento = value;
+					this.SendPropertyChanged("idDescuento");
+					this.OnidDescuentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codigo", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string codigo
+		{
+			get
+			{
+				return this._codigo;
+			}
+			set
+			{
+				if ((this._codigo != value))
+				{
+					this.OncodigoChanging(value);
+					this.SendPropertyChanging();
+					this._codigo = value;
+					this.SendPropertyChanged("codigo");
+					this.OncodigoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idTipo", DbType="Int NOT NULL")]
+		public int idTipo
+		{
+			get
+			{
+				return this._idTipo;
+			}
+			set
+			{
+				if ((this._idTipo != value))
+				{
+					if (this._TipoDescuento.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidTipoChanging(value);
+					this.SendPropertyChanging();
+					this._idTipo = value;
+					this.SendPropertyChanged("idTipo");
+					this.OnidTipoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fecha", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fecha
+		{
+			get
+			{
+				return this._fecha;
+			}
+			set
+			{
+				if ((this._fecha != value))
+				{
+					this.OnfechaChanging(value);
+					this.SendPropertyChanging();
+					this._fecha = value;
+					this.SendPropertyChanged("fecha");
+					this.OnfechaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_validez", DbType="Int")]
+		public System.Nullable<int> validez
+		{
+			get
+			{
+				return this._validez;
+			}
+			set
+			{
+				if ((this._validez != value))
+				{
+					this.OnvalidezChanging(value);
+					this.SendPropertyChanging();
+					this._validez = value;
+					this.SendPropertyChanged("validez");
+					this.OnvalidezChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaExpiracion", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fechaExpiracion
+		{
+			get
+			{
+				return this._fechaExpiracion;
+			}
+			set
+			{
+				if ((this._fechaExpiracion != value))
+				{
+					this.OnfechaExpiracionChanging(value);
+					this.SendPropertyChanging();
+					this._fechaExpiracion = value;
+					this.SendPropertyChanged("fechaExpiracion");
+					this.OnfechaExpiracionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_descuento", DbType="Int")]
+		public System.Nullable<int> descuento
+		{
+			get
+			{
+				return this._descuento;
+			}
+			set
+			{
+				if ((this._descuento != value))
+				{
+					this.OndescuentoChanging(value);
+					this.SendPropertyChanging();
+					this._descuento = value;
+					this.SendPropertyChanged("descuento");
+					this.OndescuentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TipoDescuento_Descuentos", Storage="_TipoDescuento", ThisKey="idTipo", OtherKey="idTipo", IsForeignKey=true)]
+		public TipoDescuento TipoDescuento
+		{
+			get
+			{
+				return this._TipoDescuento.Entity;
+			}
+			set
+			{
+				TipoDescuento previousValue = this._TipoDescuento.Entity;
+				if (((previousValue != value) 
+							|| (this._TipoDescuento.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TipoDescuento.Entity = null;
+						previousValue.Descuentos.Remove(this);
+					}
+					this._TipoDescuento.Entity = value;
+					if ((value != null))
+					{
+						value.Descuentos.Add(this);
+						this._idTipo = value.idTipo;
+					}
+					else
+					{
+						this._idTipo = default(int);
+					}
+					this.SendPropertyChanged("TipoDescuento");
 				}
 			}
 		}

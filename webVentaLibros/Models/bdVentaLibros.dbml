@@ -270,4 +270,23 @@
       <Association Name="Pedidos_Reclamos" Member="Pedidos" ThisKey="idPedido" OtherKey="idPedido" Type="Pedidos" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.TipoDescuento" Member="TipoDescuento">
+    <Type Name="TipoDescuento">
+      <Column Name="idTipo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tipo" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoDescuento_Descuentos" Member="Descuentos" ThisKey="idTipo" OtherKey="idTipo" Type="Descuentos" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Descuentos" Member="Descuentos">
+    <Type Name="Descuentos">
+      <Column Name="idDescuento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codigo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="idTipo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="validez" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fechaExpiracion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="descuento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TipoDescuento_Descuentos" Member="TipoDescuento" ThisKey="idTipo" OtherKey="idTipo" Type="TipoDescuento" IsForeignKey="true" />
+    </Type>
+  </Table>
 </Database>

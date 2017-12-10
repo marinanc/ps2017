@@ -297,7 +297,7 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
-        public ActionResult CompraFinalizada(int collection_id, string collection_status, string preference_id, string external_reference, string payment_type, int? merchant_order_id)
+        public ActionResult CompraFinalizada(int? collection_id, string collection_status, string preference_id, string external_reference, string payment_type, int? merchant_order_id)
         {
             var bd = new bdVentaLibrosDataContext();
             int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
@@ -322,9 +322,8 @@ namespace webVentaLibros.Controllers
                     TempData["Message"] = "No se pudo registrar el pago";
                 }
             //}
-            //return View();
+            return View();
 
-            RedirectToAction("MisCompras","CuentaUsuario");
         }
 
         private int getIndex(string codLibro)

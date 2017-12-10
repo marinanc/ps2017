@@ -176,6 +176,7 @@
     <Compile Include="Models\CalificacionPorLibroModel.cs" />
     <Compile Include="Models\CarritoItem.cs" />
     <Compile Include="Models\DatosEnvioModel.cs" />
+    <Compile Include="Models\DescuentosModel.cs" />
     <Compile Include="Models\DetallePorPedidoModel.cs" />
     <Compile Include="Models\EditorialModel.cs" />
     <Compile Include="Models\GeneroModel.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Models\ProvinciaModel.cs" />
     <Compile Include="Models\PublicacionIntercambioModel.cs" />
     <Compile Include="Models\ReclamoModel.cs" />
+    <Compile Include="Models\TipoDescuentoModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -664,6 +666,7 @@
     <Content Include="Views\Admin\Pedidos.cshtml" />
     <Content Include="Views\Admin\VerPedido.cshtml" />
     <Content Include="Views\Cart\CompraFinalizada.cshtml" />
+    <Content Include="Views\Admin\Descuentos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -542,7 +542,7 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("Mensajes");
         }
 
-        [Authorize (Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Reclamos()
         {
             var bd = new bdVentaLibrosDataContext();
@@ -572,7 +572,7 @@ namespace webVentaLibros.Controllers
             {
                 foreach (var venta in ViewBag.ventasPeriodo)
                 {
-                    foreach(var detalle in venta.DetallePorPedido)
+                    foreach (var detalle in venta.DetallePorPedido)
                     {
                         totalIngresos = totalIngresos + (Convert.ToDouble(detalle.precioUnitario) * detalle.cantidad);
                         totalLibrosVendidos = totalLibrosVendidos + detalle.cantidad;
@@ -658,20 +658,21 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         public ActionResult VerPedido(int idPedido)
         {
             var bd = new bdVentaLibrosDataContext();
             double total = 0;
 
             ViewBag.pedido = (from pedido in bd.Pedidos
-                                          where pedido.idPedido == idPedido
-                                          select pedido).ToList().FirstOrDefault();
+                              where pedido.idPedido == idPedido
+                              select pedido).ToList().FirstOrDefault();
 
             ViewBag.detalle = (from detalle in bd.DetallePorPedido
                                where detalle.idPedido == idPedido
                                select detalle).ToList();
 
-            foreach(var libro in ViewBag.detalle)
+            foreach (var libro in ViewBag.detalle)
             {
                 total = total + Convert.ToDouble(libro.cantidad) * Convert.ToDouble(libro.precioUnitario);
             }
@@ -679,6 +680,113 @@ namespace webVentaLibros.Controllers
             ViewBag.total = total;
 
             return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public ActionResult Descuentos()
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            ViewBag.descuentos = (from descuento in bd.Descuentos
+                                  where descuento.validez != 0
+                                  select descuento).ToList();
+
+            return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public ActionResult Descuentos(int? descuento1, int? descuento2, DateTime expiracion, string codigoDescuento)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            
+            var tipoDescuento = 1;
+            var cantidadDescuento = descuento1;
+
+            if (descuento2 != null)
+            {
+                tipoDescuento = 2;
+                cantidadDescuento = descuento2;
+            }
+
+            if (!verificarCodigoDescuento(codigoDescuento))
+            {
+                Descuentos descuento = new Descuentos
+                {
+                    codigo = codigoDescuento,
+                    idTipo = tipoDescuento,
+                    fecha = DateTime.Now,
+                    validez = 1, // 1 = valido, 0 = no valido
+                    fechaExpiracion = expiracion,
+                    descuento = cantidadDescuento
+                };
+
+                try
+                {
+                    bd.Descuentos.InsertOnSubmit(descuento);
+                    bd.SubmitChanges();
+                    TempData["Message"] = "Se ha agregado el código de descuento";
+                }
+                catch (Exception e)
+                {
+                    TempData["Message"] = "No se pudo agregar el código de descuento";
+                }
+            }
+            else
+            {
+                TempData["Message"] = "El codigo ingresado ya existe y esta vigente";
+            }
+
+            ViewBag.descuentos = (from descuento in bd.Descuentos
+                                  where descuento.validez != 0
+                                  select descuento).ToList();
+
+            return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult EliminarDescuento(int idDescuento)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var descuento = (from d in bd.Descuentos
+                           where d.idDescuento == idDescuento
+                           select d).ToList();
+
+            foreach (var d in descuento)
+            {
+                bd.Descuentos.DeleteOnSubmit(d);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Código de descuento eliminado";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo eliminar el código de descuento";
+            }
+
+            return RedirectToAction("Descuentos");
+        }
+
+        private bool verificarCodigoDescuento(string codigo)
+        {
+            bool existe = false;
+            var bd = new bdVentaLibrosDataContext();
+
+            var codigos = (from descuento in bd.Descuentos
+                           where descuento.codigo == codigo
+                           select descuento).Count();
+
+            if (codigos != 0)
+            {
+                existe = true;
+            }
+
+            return existe;
         }
     }
 }
