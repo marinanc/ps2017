@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Checkout - Venta de Libros</title>
+    <title>Datos de envío y descuento - Venta de Libros</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -27,12 +27,6 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 
@@ -192,8 +186,7 @@
                     <div class="product-content-right">
                         <div class="woocommerce">
 
-                            <form enctype="multipart/form-data" action=@Url.Action("Checkout","Cart") method="get" role="form">
-
+                            <form enctype="multipart/form-data" action=@Url.Action("Checkout","Cart") method="post" role="form">
                                 <div id="customer_details" class="col2-set">
 
                                     <!--Datos del usuario logueado-->
@@ -244,7 +237,7 @@
 
                                                                 @if (ViewData["localidades"] != null)
                                                                 {
-                                                                    @Html.DropDownList("idLocalidad", ViewData["localidades"] as List<SelectListItem>, new { @class = "form-control" , @style = "height:42px"})
+                                                                    @Html.DropDownList("idLocalidad", ViewData["localidades"] as List<SelectListItem>, new { @class = "form-control", @style = "height:42px" })
                                                                 }
 
                                                             </div>
@@ -400,4 +393,3 @@
         });
     </script>
 </body>
-

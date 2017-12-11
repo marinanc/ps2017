@@ -143,7 +143,7 @@ namespace webVentaLibros.Controllers
                                   select usuario;
 
             Usuarios us = usuarioLogueado.FirstOrDefault();
-            ViewBag.usuarioLogueado = usuarioLogueado;
+            ViewBag.usuarioLogueado = usuarioLogueado;            
 
             var listadoProvincias = (from p in bd.Provincias
                                      select new ProvinciaModel
@@ -210,6 +210,7 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult Checkout(string nombreUsuario, string apellidoUsuario, int idProvincia, int idLocalidad, string codigoPostal, string mail, string direccion)
         {
 
@@ -235,6 +236,7 @@ namespace webVentaLibros.Controllers
                 direccion = direccion
             };
 
+            Session["DatosEnvio"] = envio;
             ViewBag.datosEnvio = envio;
 
             double totalCompra = 0;
@@ -260,6 +262,7 @@ namespace webVentaLibros.Controllers
                 idProvinciaEntrega = idProvincia,
                 idEstadoPedido = 1, //en espera de pago
                 codigoPostalEntrega = codigoPostal,
+                total = Convert.ToDecimal(totalCompra)
             };
 
             try
@@ -276,6 +279,7 @@ namespace webVentaLibros.Controllers
                                 where pedido.idUsuario == idUsuario
                                 orderby pedido.fechaHora descending
                                 select pedido).FirstOrDefault();
+            ViewBag.pedido = ultimoPedido;
 
             if (Session["carrito"] != null)
             {
@@ -295,6 +299,82 @@ namespace webVentaLibros.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Checkout(int idDescuento)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+            ViewBag.datosEnvio = (DatosEnvioModel)Session["DatosEnvio"];
+
+            double totalCompra = 0;
+            List<CarritoItem> compra = (List<CarritoItem>)Session["carrito"];
+            int cantidad = compra.Count;
+            if (Session["carrito"] != null)
+            {
+                foreach (var item in Session["carrito"] as List<CarritoItem>)
+                {
+                    totalCompra = totalCompra + (item.Cantidad * item.Libro.precio);
+                }
+                ViewBag.total = totalCompra;
+                ViewBag.cantidad = cantidad;
+            }
+
+            var ultimoPedido = (from pedido in bd.Pedidos
+                                where pedido.idUsuario == idUsuario
+                                orderby pedido.fechaHora descending
+                                select pedido).FirstOrDefault();
+            ViewBag.pedido = ultimoPedido;
+
+            var descuentoAplicable = (from descuento in bd.Descuentos
+                                      where descuento.idDescuento == idDescuento
+                                      select descuento).FirstOrDefault();
+
+            ViewBag.descuento = descuentoAplicable;
+
+            if (idDescuento > 0)
+            {
+                ultimoPedido.idDescuento = descuentoAplicable.idDescuento;
+                if (descuentoAplicable.idTipo == 1)
+                {
+                    ultimoPedido.total = ultimoPedido.total - (ultimoPedido.total * descuentoAplicable.descuento / 100);
+                }
+                else
+                {
+                    ultimoPedido.total = ultimoPedido.total - descuentoAplicable.descuento;
+                }
+
+                try
+                {
+                    bd.SubmitChanges();
+                    TempData["Message"] = "Se ha aplicado el descuento";
+                }
+                catch (Exception e)
+                {
+                    TempData["Message"] = "El código ingresado no es correcto o ha caducado";
+                }
+            }
+
+            return View();
+        }
+
+        public ActionResult AplicarDescuento(string cupon)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            var id = -1;            
+
+            var descuentoElegido = (from descuento in bd.Descuentos
+                              where descuento.validez == 1 &&
+                              descuento.codigo == cupon
+                              select descuento).FirstOrDefault();
+
+            if(descuentoElegido != null)
+            { 
+                id = descuentoElegido.idDescuento;
+            }
+
+            return RedirectToAction("Checkout", new { idDescuento = id});
         }
 
         public ActionResult CompraFinalizada(int? collection_id, string collection_status, string preference_id, string external_reference, string payment_type, int? merchant_order_id)

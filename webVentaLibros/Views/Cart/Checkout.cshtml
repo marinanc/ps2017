@@ -7,15 +7,15 @@
 @{
     int cantidadItems = ViewBag.cantidad;
     string titulos = "";
-    double totalCompra = 0;
+    double totalCompra = Convert.ToDouble(ViewBag.pedido.total);
 
     foreach (var v in Session["carrito"] as List<CarritoItem>)
     {
         titulos = titulos + v.Libro.titulo + " - ";
-        totalCompra = totalCompra + v.Libro.precio;
+        //totalCompra = totalCompra + v.Libro.precio;
     }
 
-    string cadena = "{\"title\":\"" + titulos.ToString() + "\",\"quantity\":" + 1 + ",\"currency_id\":\"ARS\",\"unit_price\":" + ViewBag.total + "}";
+    string cadena = "{\"title\":\"" + titulos.ToString() + "\",\"quantity\":" + 1 + ",\"currency_id\":\"ARS\",\"unit_price\":" + totalCompra + "}";
 
 
     //Vendedor
@@ -34,7 +34,7 @@
         "\"back_urls\": {" +
             "\"success\": \"localhost:4936/Cart/CompraFinalizada\"" +
 
-        "}"+
+        "}" +
 
     "}";
 
@@ -69,12 +69,6 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
 
@@ -208,24 +202,24 @@
 
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Sugerencias</h2>
-                       @if (Session["sugerencias"] != null)
-                       {
-                           int i = 0;
-                           foreach (var libro in Session["sugerencias"] as List<Libros>)
-                           {
-                               if (i < 4)
-                               {
-                                <div class="thubmnail-recent">
-                                    <img src="../@libro.foto" class="recent-thumb" alt="">
-                                    <h2><a href="single-product.html">@libro.titulo</a></h2>
-                                    <div class="product-sidebar-price">
-                                        <ins>ARS$@libro.precio</ins>
+                        @if (Session["sugerencias"] != null)
+                        {
+                            int i = 0;
+                            foreach (var libro in Session["sugerencias"] as List<Libros>)
+                            {
+                                if (i < 4)
+                                {
+                                    <div class="thubmnail-recent">
+                                        <img src="../@libro.foto" class="recent-thumb" alt="">
+                                        <h2><a href="single-product.html">@libro.titulo</a></h2>
+                                        <div class="product-sidebar-price">
+                                            <ins>ARS$@libro.precio</ins>
+                                        </div>
                                     </div>
-                                </div>
-                                   i = i + 1;
-                               }
-                           }
-                       }
+                                    i = i + 1;
+                                }
+                            }
+                        }
                     </div>
                 </div>
 
@@ -233,148 +227,181 @@
                     <div class="product-content-right">
                         <div class="woocommerce">
 
-                            <form enctype="multipart/form-data" action="#" class="checkout" method="post" name="checkout">
 
-                                <div id="customer_details" class="col2-set">
 
-                                    <!--Datos del usuario logueado-->
-                                    @if (ViewBag.datosEnvio != null)
-                                    {
+                            <div id="customer_details" class="col2-set">
 
-                                        <div class="col-md-7 col-md-offset-3">
-                                            <div class="woocommerce-billing-fields">
-                                                <h3>Detalles de facturación</h3>
+                                <!--Datos del usuario logueado-->
+                                @if (ViewBag.datosEnvio != null)
+                                {
 
-                                                <p id="billing_first_name_field" class="form-row form-row-first validate-required">
-                                                    <label class="" for="billing_first_name">
-                                                        Nombre
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.nombreUsuario placeholder="" id="billing_first_name" name="nombreUsuario" class="input-text " disabled>
-                                                </p>
+                                    <div class="col-md-7 col-md-offset-3">
+                                        <div class="woocommerce-billing-fields">
+                                            <h3>Detalles de facturación</h3>
 
-                                                <p id="billing_last_name_field" class="form-row form-row-last validate-required">
-                                                    <label class="" for="billing_last_name">
-                                                        Apellido
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.apellidoUsuario placeholder="" id="billing_last_name" name="apellidoUsuario" class="input-text " disabled>
-                                                </p>
-                                                <div class="clear"></div>
+                                            <p id="billing_first_name_field" class="form-row form-row-first validate-required">
+                                                <label class="" for="billing_first_name">
+                                                    Nombre
+                                                </label>
+                                                <input type="text" value=@ViewBag.datosEnvio.nombreUsuario placeholder="" id="billing_first_name" name="nombreUsuario" class="input-text " disabled>
+                                            </p>
 
-                                                <p id="billing_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
-                                                    <label class="" for="billing_last_name">
-                                                        Provincia
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.provincia placeholder="" id="billing_last_name" name="provincia" class="input-text " disabled>
+                                            <p id="billing_last_name_field" class="form-row form-row-last validate-required">
+                                                <label class="" for="billing_last_name">
+                                                    Apellido
+                                                </label>
+                                                <input type="text" value=@ViewBag.datosEnvio.apellidoUsuario placeholder="" id="billing_last_name" name="apellidoUsuario" class="input-text " disabled>
+                                            </p>
+                                            <div class="clear"></div>
 
-                                                </p>
+                                            <p id="billing_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
+                                                <label class="" for="billing_last_name">
+                                                    Provincia
+                                                </label>
+                                                <input type="text" value=@ViewBag.datosEnvio.provincia placeholder="" id="billing_last_name" name="provincia" class="input-text " disabled>
 
-                                                <p id="billing_city_field" class="form-row form-row-wide address-field validate-required" data-o_class="form-row form-row-wide address-field validate-required">
-                                                    <label class="" for="billing_last_name">
-                                                        Localidad
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.localidad placeholder="" id="billing_last_name" name="localidad" class="input-text " disabled>
+                                            </p>
 
-                                                </p>
+                                            <p id="billing_city_field" class="form-row form-row-wide address-field validate-required" data-o_class="form-row form-row-wide address-field validate-required">
+                                                <label class="" for="billing_last_name">
+                                                    Localidad
+                                                </label>
+                                                <input type="text" value=@ViewBag.datosEnvio.localidad placeholder="" id="billing_last_name" name="localidad" class="input-text " disabled>
 
-                                                <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
-                                                    <label class="" for="billing_address_1">
-                                                        Domicilio
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.direccion id="billing_address_1" name="direccion" class="input-text " disabled>
-                                                </p>
+                                            </p>
 
-                                                <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
-                                                    <label class="" for="billing_postcode">
-                                                        Código Postal
-                                                    </label>
-                                                    <input type="text" value=@ViewBag.datosEnvio.codigoPostal id="billing_postcode" name="codigoPostal" class="input-text " disabled>
-                                                </p>
+                                            <p id="billing_address_1_field" class="form-row form-row-wide address-field validate-required">
+                                                <label class="" for="billing_address_1">
+                                                    Domicilio
+                                                </label>
+                                                <input type="text" value=@ViewBag.datosEnvio.direccion id="billing_address_1" name="direccion" class="input-text " disabled>
+                                            </p>
 
-                                                <div class="clear"></div>
+                                            <p id="billing_postcode_field" class="form-row form-row-last address-field validate-required validate-postcode" data-o_class="form-row form-row-last address-field validate-required validate-postcode">
+                                                <label class="" for="billing_postcode">
+                                                    Código Postal
+                                                </label>
+                                                <input type="text" value=@ViewBag.datosEnvio.codigoPostal id="billing_postcode" name="codigoPostal" class="input-text " disabled>
+                                            </p>
 
-                                                <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
-                                                    <label class="" for="billing_email">
-                                                        Email
-                                                    </label>
-                                                    <input type="email" value=@ViewBag.datosEnvio.mail placeholder="" id="billing_email" name="mail" class="input-text " disabled>
-                                                </p>
-                                                <div class="clear"></div>
-                                            </div>
+                                            <div class="clear"></div>
+
+                                            <p id="billing_email_field" class="form-row form-row-first validate-required validate-email">
+                                                <label class="" for="billing_email">
+                                                    Email
+                                                </label>
+                                                <input type="email" value=@ViewBag.datosEnvio.mail placeholder="" id="billing_email" name="mail" class="input-text " disabled>
+                                            </p>
+                                            <div class="clear"></div>
                                         </div>
+                                    </div>
 
-                                    }
-                                    <!--Fin de los datos del usuario logueado-->
+                                }
+                                <!--Fin de los datos del usuario logueado-->
 
 
-                                </div>
+                            </div>
 
-                                <h3 id="order_review_heading">Tu compra</h3>
+                            <h3 id="order_review_heading">Tu compra</h3>
 
-                                <div id="order_review" style="position: relative;">
-                                    <table class="shop_table">
-                                        <thead>
-                                            <tr>
-                                                <th class="product-name">Libro</th>
-                                                <th class="product-total">Total</th>
+                            <div id="order_review" style="position: relative;">
+                                <table class="shop_table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name">Libro</th>
+                                            <th class="product-total">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Session["carrito"] as List<CarritoItem>)
+                                        {
+                                            <tr class="cart_item">
+                                                <td class="product-name">
+                                                    @item.Libro.titulo <strong class="product-quantity">× @item.Cantidad</strong>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="amount">$@(item.Cantidad * item.Libro.precio)</span>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Session["carrito"] as List<CarritoItem>)
-                                            {
-                                                <tr class="cart_item">
-                                                    <td class="product-name">
-                                                        @item.Libro.titulo <strong class="product-quantity">× @item.Cantidad</strong>
-                                                    </td>
-                                                    <td class="product-total">
-                                                        <span class="amount">$@(item.Cantidad * item.Libro.precio)</span>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                        <tfoot>
+                                        }
+                                    </tbody>
+                                    <tfoot>
 
+                                        <tr class="cart-subtotal">
+                                            <th>Subtotal</th>
+                                            <td>
+                                                <span class="amount">$@ViewBag.total</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="shipping">
+                                            <th>Envio</th>
+                                            <td>
+
+                                                Envio gratis
+                                                <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
+                                            </td>
+                                        </tr>
+                                        @if (ViewBag.descuento != null)
+                                        {
                                             <tr class="cart-subtotal">
-                                                <th>Subtotal</th>
-                                                <td>
-                                                    <span class="amount">$@ViewBag.total</span>
-                                                </td>
+                                                <th>Descuento</th>
+
+                                                @if (ViewBag.descuento.idTipo == 1)
+                                                {
+                                                    <td>
+                                                        - @ViewBag.descuento.descuento %
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        - $@ViewBag.descuento.descuento
+                                                    </td>
+                                                }
+
                                             </tr>
+                                        }
+                                        <tr class="order-total">
+                                            <th>Total</th>
+                                            <td><strong><span class="amount">$@ViewBag.pedido.total</span></strong> </td>
+                                        </tr>
 
-                                            <tr class="shipping">
-                                                <th>Envio</th>
-                                                <td>
+                                    </tfoot>
+                                </table>
 
-                                                    Envio gratis
-                                                    <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
-                                                </td>
-                                            </tr>
+                                @if (ViewBag.descuento == null)
+                                {
+                                <!--DESCUENTO-->
+                                    <form action=@Url.Action("AplicarDescuento","Cart") method="get" role="form">
 
-
-                                            <tr class="order-total">
-                                                <th>Total</th>
-                                                <td><strong><span class="amount">$@ViewBag.total</span></strong> </td>
-                                            </tr>
-
-                                        </tfoot>
-                                    </table>
-
-
-                                    <div id="payment">
-
-
-                                        <div class="form-row place-order" style="text-align:center">
-
-
-                                            <a href="@url" name="MP-Checkout" class="lightblue-M-Ov-ArOn" mp-mode="modal">Pagar con MercadoPago</a>
-
-
+                                        <div class="input-group col-md-8 col-sm-offset-2">
+                                            <span class="input-group-addon" id="basic-addon1">Código</span>
+                                            <input type="text" class="form-control" placeholder="Si posee un código de descuento ingreselo aquí" aria-label="Username" aria-describedby="basic-addon1" name="cupon" id="cupon" required>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-success">Aplicar descuento</button>
+                                            </span>
                                         </div>
+                                    </form>
+                                <!--FIN DESCUENTO-->
+                                }
+                                <br />
+                                <br />
+                                <div id="payment">
 
-                                        <div class="clear"></div>
+                                    <div class="form-row place-order" style="text-align:center">
+
+
+                                        <a href="@url" name="MP-Checkout" class="lightblue-M-Ov-ArOn" mp-mode="modal">Pagar con MercadoPago</a>
+
 
                                     </div>
+
+                                    <div class="clear"></div>
+
                                 </div>
-                            </form>
+                            </div>
+
 
                         </div>
                     </div>
@@ -434,8 +461,6 @@
             </div>
         </div>
     </div> <!-- End footer top area -->
-
-   
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -490,4 +515,15 @@
     <script type="text/javascript">
         (function () { function $MPC_load() { window.$MPC_loaded !== true && (function () { var s = document.createElement("script"); s.type = "text/javascript"; s.async = true; s.src = document.location.protocol + "//secure.mlstatic.com/mptools/render.js"; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); window.$MPC_loaded = true; })(); } window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null; })();
     </script>
+
+    @if (TempData["Message"] != null)
+    {
+
+        <div id="toast-container" class="toast-top-right">
+            <div class="toast toast-info" aria-live="polite" style="display: block;">
+                <button type="button" class="toast-close-button" role="button" onclick="document.getElementById('toast-container').style.display = 'none'">×</button>
+                <div class="toast-message">@TempData["Message"]</div>
+            </div>
+        </div>
+    }
 </body>
