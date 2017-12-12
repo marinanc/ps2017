@@ -5942,6 +5942,12 @@ namespace webVentaLibros.Models
 		
 		private System.Nullable<int> _idDescuento;
 		
+		private string _nombre;
+		
+		private string _apellido;
+		
+		private string _email;
+		
 		private EntitySet<DetallePorPedido> _DetallePorPedido;
 		
 		private EntitySet<Reclamos> _Reclamos;
@@ -5982,6 +5988,12 @@ namespace webVentaLibros.Models
     partial void OntotalChanged();
     partial void OnidDescuentoChanging(System.Nullable<int> value);
     partial void OnidDescuentoChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    partial void OnapellidoChanging(string value);
+    partial void OnapellidoChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
     #endregion
 		
 		public Pedidos()
@@ -6232,6 +6244,66 @@ namespace webVentaLibros.Models
 					this._idDescuento = value;
 					this.SendPropertyChanged("idDescuento");
 					this.OnidDescuentoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="NVarChar(30)")]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_apellido", DbType="NVarChar(30)")]
+		public string apellido
+		{
+			get
+			{
+				return this._apellido;
+			}
+			set
+			{
+				if ((this._apellido != value))
+				{
+					this.OnapellidoChanging(value);
+					this.SendPropertyChanging();
+					this._apellido = value;
+					this.SendPropertyChanged("apellido");
+					this.OnapellidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(30)")]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
 				}
 			}
 		}

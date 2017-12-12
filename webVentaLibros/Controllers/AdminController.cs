@@ -553,6 +553,32 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
+        public ActionResult EliminarReclamo(int idReclamo)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var reclamo = (from r in bd.Reclamos
+                             where r.idReclamo == idReclamo
+                             select r).ToList();
+
+            foreach (var r in reclamo)
+            {
+                bd.Reclamos.DeleteOnSubmit(r);
+            }
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Reclamo solucionado";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo realizar la acción requerida";
+            }
+
+            return RedirectToAction("Reclamos");
+        }
+
         [Authorize(Roles = "Administrador")]
         public ActionResult ReporteVentas(DateTime inicio, DateTime fin)
         {

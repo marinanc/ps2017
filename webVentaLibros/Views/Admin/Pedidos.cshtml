@@ -148,15 +148,13 @@
             <div class="container-fluid">
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right">
-
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>@System.Web.HttpContext.Current.Session["nombreUsuario"]</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="../Admin/Mensajes"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
+
+                                <li>@Html.ActionLink("Cerrar sesión", "Logout", "User")</li>
                             </ul>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -220,18 +218,20 @@
                                                 <table id="example" class="display" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>Fecha</th>  
+                                                            <th style="text-align:center">Fecha</th>  
                                                             <th>Libros x Cantidad</th>                                                          
                                                             <th>#Pedido</th>
-                                                            <th>Ver</th>
+                                                            <th style="text-align:center">Estado</th>
+                                                            <th style="text-align:center">Ver</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>Fecha</th>
+                                                            <th style="text-align:center">Fecha</th>
                                                             <th>Libros x Cantidad</th>
                                                             <th>#Pedido</th>
-                                                            <th>Ver</th>
+                                                            <th style="text-align:center">Estado</th>
+                                                            <th style="text-align:center">Ver</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -249,9 +249,10 @@
                                                                         }
                                                                     </td>                                                                  
                                                                     <td style="text-align:center">#@pedido.idPedido</td>
+                                                                    <td style="text-align:center">@pedido.EstadosPedido.nombre</td>
                                                                     <td style="text-align:center">
                                                                         <form action=@Url.Action("VerPedido", "Admin") enctype="multipart/form-data" method="post" role="form">
-                                                                            <input type="text" id="id" name="id" value="@pedido.idPedido" hidden />
+                                                                            <input type="text" id="idPedido" name="idPedido" value="@pedido.idPedido" hidden />
                                                                             <button type="submit" class="btn btn-default btn-sm">
                                                                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                                                             </button>

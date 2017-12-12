@@ -112,15 +112,13 @@
             <div class="container-fluid">
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right">
-
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>@System.Web.HttpContext.Current.Session["nombreUsuario"]</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="../Admin/Mensajes"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
+
+                                <li>@Html.ActionLink("Cerrar sesión", "Logout", "User")</li>
                             </ul>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -185,42 +183,49 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#Reclamo</th>
-                                                            <th>Nombre</th>
                                                             <th>Email</th>
                                                             <th>Mensaje</th>
                                                             <th>#Pedido</th>
                                                             <th>Fecha</th>
-                                                            <th>Eliminar</th>
+                                                            <th>Ver pedido</th>
+                                                            <th>Solucionado</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
-                                                            <th>#Mensaje</th>
-                                                            <th>Nombre</th>
+                                                            <th>#Reclamo</th>
                                                             <th>Email</th>
                                                             <th>Mensaje</th>
-                                                            <th>Asunto</th>
+                                                            <th>#Pedido</th>
                                                             <th>Fecha</th>
-                                                            <th>Eliminar</th>
+                                                            <th>Ver pedido</th>
+                                                            <th>Solucionado</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
-                                                        @if (ViewBag.mensajes.Count > 0)
+                                                        @if (ViewBag.reclamos.Count > 0)
                                                         {
-                                                            foreach (var mensaje in ViewBag.mensajes)
+                                                            foreach (var reclamo in ViewBag.reclamos)
                                                             {
                                                                 <tr>
-                                                                    <td style="text-align:center">@mensaje.idMensaje</td>
-                                                                    <td style="text-align:center">@mensaje.nombre</td>
-                                                                    <td style="text-align:center">@mensaje.email</td>
-                                                                    <td>@mensaje.mensaje</td>
-                                                                    <td style="text-align:center">@mensaje.TipoMensajeUsuario.nombre</td>
-                                                                    <td style="text-align:center">@mensaje.fechaHora</td>
+                                                                    <td style="text-align:center">@reclamo.idReclamo</td>
+                                                                    <td style="text-align:center">@reclamo.mail</td>
+                                                                    <td>@reclamo.mensaje</td>
+                                                                    <td style="text-align:center">@reclamo.idPedido</td>
+                                                                    <td style="text-align:center">@reclamo.fecha.ToShortDateString()</td>
                                                                     <td style="text-align:center">
-                                                                        <form action=@Url.Action("EliminarMensaje", "Admin") enctype="multipart/form-data" method="post" role="form">
-                                                                            <input type="text" id="id" name="id" value="@mensaje.idMensaje" hidden />
+                                                                        <form action=@Url.Action("VerPedido", "Admin") enctype="multipart/form-data" method="post" role="form">
+                                                                            <input type="text" id="idPedido" name="idPedido" value="@reclamo.idPedido" hidden />
                                                                             <button type="submit" class="btn btn-default btn-sm">
-                                                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+                                                                    <td style="text-align:center">
+                                                                        <form action=@Url.Action("EliminarReclamo", "Admin") enctype="multipart/form-data" method="post" role="form">
+                                                                            <input type="text" id="idReclamo" name="idReclamo" value="@reclamo.idReclamo" hidden />
+                                                                            <button type="submit" class="btn btn-default btn-sm">
+                                                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                                             </button>
                                                                         </form>
                                                                     </td>

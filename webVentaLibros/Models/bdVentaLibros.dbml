@@ -284,6 +284,9 @@
       <Column Name="codigoPostalEntrega" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="total" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
       <Column Name="idDescuento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="apellido" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Association Name="Pedidos_DetallePorPedido" Member="DetallePorPedido" ThisKey="idPedido" OtherKey="idPedido" Type="DetallePorPedido" />
       <Association Name="Pedidos_Reclamos" Member="Reclamos" ThisKey="idPedido" OtherKey="idPedido" Type="Reclamos" />
       <Association Name="Descuentos_Pedidos" Member="Descuentos" ThisKey="idDescuento" OtherKey="idDescuento" Type="Descuentos" IsForeignKey="true" />

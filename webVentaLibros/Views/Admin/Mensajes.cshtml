@@ -112,12 +112,11 @@
             <div class="container-fluid">
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right">
-                        
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>@System.Web.HttpContext.Current.Session["nombreUsuario"]</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="../Admin/Mensajes"><i class="lnr lnr-envelope"></i> <span>Mensajes</span></a></li>
-                                <li><a href="#"><i class="lnr lnr-exit"></i> <span>Cerrar sesión</span></a></li>
+
+                                <li>@Html.ActionLink("Cerrar sesión", "Logout", "User")</li>
                             </ul>
                         </li>
                        

@@ -262,7 +262,10 @@ namespace webVentaLibros.Controllers
                 idProvinciaEntrega = idProvincia,
                 idEstadoPedido = 1, //en espera de pago
                 codigoPostalEntrega = codigoPostal,
-                total = Convert.ToDecimal(totalCompra)
+                total = Convert.ToDecimal(totalCompra),
+                nombre = nombreUsuario,
+                apellido = apellidoUsuario,
+                email = mail
             };
 
             try
