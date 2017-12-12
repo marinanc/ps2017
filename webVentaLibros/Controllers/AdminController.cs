@@ -798,6 +798,52 @@ namespace webVentaLibros.Controllers
             return RedirectToAction("Descuentos");
         }
 
+        [Authorize(Roles = "Administrador")]
+        public ActionResult ActualizarEstadoPedido(int idPedido, int idEstado)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var pedidoElegido = (from pedido in bd.Pedidos
+                                 where pedido.idPedido == idPedido
+                                 select pedido).FirstOrDefault();
+
+            pedidoElegido.idEstadoPedido = idEstado;
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Se actualizo el estado del pedido";
+            }
+            catch(Exception e)
+            {
+                TempData["Message"] = "No se pudo actualizar el estado del pedido";
+            }
+
+            return RedirectToAction("VerPedido",new { idPedido = pedidoElegido.idPedido });
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult EliminarPedido(int idPedido)
+        {
+            var bd = new bdVentaLibrosDataContext();
+
+            var eliminar = (from pedido in bd.Pedidos
+                            where pedido.idPedido == idPedido
+                            select pedido).FirstOrDefault();
+
+            try
+            { 
+                bd.Pedidos.DeleteOnSubmit(eliminar);
+                bd.SubmitChanges();
+                TempData["Message"] = "Pedido eliminado";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo eliminar el pedido";
+            }
+            return RedirectToAction("Pedidos");
+        }
+
         private bool verificarCodigoDescuento(string codigo)
         {
             bool existe = false;
