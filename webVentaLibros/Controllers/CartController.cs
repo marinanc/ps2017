@@ -393,6 +393,7 @@ namespace webVentaLibros.Controllers
             //if (collection_status == "success")
             //{
                 ultimoPedido.idEstadoPedido = 2;
+
             Session["carrito"] = null;
 
                 try

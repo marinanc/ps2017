@@ -232,19 +232,19 @@
                             <!-- INPUT GROUPS -->
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">ACTUALIZAR STOCK DE LIBROS</h3>
+                                    <h3 class="panel-title">Stock de libros</h3>
                                 </div>
 
                                 <!--TABLA CON LISTADO DE LIBROS-->
                                 <div class="panel-body">
-                                    <h3>Lista de Libros</h3>
+                                    
                                     <div class="container">
                                         <div class="row">
 
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <table id="example" class="display" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
@@ -254,9 +254,9 @@
                                                             <th>Género</th>
                                                             <th>Autores</th>
                                                             <th>Editorial</th>
-                                                            <th>Precio</th>
-                                                            <th>Stock actual</th>
-                                                            <th>Ingreso de stock</th>
+                                                            <th style="text-align:center">Precio</th>
+                                                            <th style="text-align:center">Stock actual</th>
+                                                            <th style="text-align:center">Ingreso de stock</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
@@ -267,9 +267,9 @@
                                                             <th>Género</th>
                                                             <th>Autores</th>
                                                             <th>Editorial</th>
-                                                            <th>Precio</th>
-                                                            <th>Stock actual</th>
-                                                            <th>Ingreso de stock</th>
+                                                            <th style="text-align:center">Precio</th>
+                                                            <th style="text-align:center">Stock actual</th>
+                                                            <th style="text-align:center">Ingreso de stock</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -283,9 +283,9 @@
                                                                 <td>@libro.genero</td>
                                                                 <td>@(libro.autor1 + "-" + libro.autor2 + "-" + libro.autor3 + "-" + libro.autor4)</td>
                                                                 <td>@libro.editorial</td>
-                                                                <td>@libro.precio</td>
-                                                                <td>@libro.stock</td>
-                                                                <td>
+                                                                <td style="text-align:center">ARS $@libro.precio</td>
+                                                                <td style="text-align:center">@libro.stock</td>
+                                                                <td style="text-align:center">
                                                                     <form action=@Url.Action("ActualizarStock", "Admin") enctype="multipart/form-data" method="POST" role="form" style="text-align:center">
                                                                         <input type="text" value="@libro.codigoBarra" id="codBarra" name="codBarra" hidden />
                                                                         <input type="number" id="stockIngreso" name="stockIngreso" style="width:75px" maxlength="4" min="@(0 - libro.stock)" required/>

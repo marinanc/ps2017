@@ -129,7 +129,7 @@
         <!-- NAVBAR -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="brand">
-                <a href="Index"><img src="~/img/logo2.png" alt="#" class="img-responsive logo"></a>
+                <a href="Index"><img src="~/img/logo_adm.png" alt="#" class="img-responsive logo"></a>
             </div>
             <div class="container-fluid">
                 <div id="navbar-menu">
@@ -217,14 +217,12 @@
                         <div class="col-md-12">
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">DESCUENTOS</h3>
+                                    <h3 class="panel-title">Nuevo descuento</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="panel">
 
-                                        <h3>Nuevo código de descuento</h3>
-                                        <br />
-                                        <br />
+                                       
                                         <form action=@Url.Action("Descuentos","Admin") enctype="multipart/form-data" method="POST" role="form">
                                             <div class="row form-group">
                                                 <div class="col-md-6">
@@ -239,6 +237,7 @@
                                                                 Porcentaje (0%-100%)
                                                                 <input type="radio" name="tipo" id="porcentaje" />
                                                             </label>
+                                                             |  
                                                             <label>
                                                                 Monto fijo(ARS $0-$500)
                                                                 <input type="radio" name="tipo" id="montoFijo" />
@@ -287,12 +286,13 @@
                                 <!--TABLA CON LISTADO DE CODIGOS DE DESCUENTO-->
                                 <div class="panel-body">
                                     <h3>Códigos vigentes</h3>
+                                    <br />
                                     <div class="container">
                                         <div class="row">
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <table id="example" class="display" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
