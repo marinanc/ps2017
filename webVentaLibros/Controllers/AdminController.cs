@@ -38,9 +38,10 @@ namespace webVentaLibros.Controllers
                                                     && intercambio.fechaHora.Value.Month == DateTime.Now.Month
                                                     select intercambio).Count();
 
-            //pedidos pagados por el cliente pendientes para envio (los 5 mas antiguos en fecha de pedido)
+            //pedidos pendientes para preparacion o envio (los 5 mas antiguos en fecha de pedido)
             ViewBag.pedidosPagados = (from pedido in bd.Pedidos
-                                      where pedido.idEstadoPedido == 2
+                                      where pedido.idEstadoPedido == 2 ||
+                                      pedido.idEstadoPedido == 3
                                       select pedido).OrderBy(x => x.fechaHora).Take(5).ToList();
 
             //libros con stock minimo o menos (los 5 con menos stock)
@@ -827,12 +828,26 @@ namespace webVentaLibros.Controllers
         {
             var bd = new bdVentaLibrosDataContext();
 
+            var detalles = (from detalle in bd.DetallePorPedido
+                           where detalle.idPedido == idPedido
+                           select detalle).ToList();
+            var reclamos = (from reclamo in bd.Reclamos
+                            where reclamo.idPedido == idPedido
+                            select reclamo).ToList();
             var eliminar = (from pedido in bd.Pedidos
                             where pedido.idPedido == idPedido
                             select pedido).FirstOrDefault();
 
             try
             { 
+                foreach(var detalle in detalles)
+                {
+                    bd.DetallePorPedido.DeleteOnSubmit(detalle);
+                }
+                foreach(var reclamo in reclamos)
+                {
+                    bd.Reclamos.DeleteOnSubmit(reclamo);
+                }
                 bd.Pedidos.DeleteOnSubmit(eliminar);
                 bd.SubmitChanges();
                 TempData["Message"] = "Pedido eliminado";

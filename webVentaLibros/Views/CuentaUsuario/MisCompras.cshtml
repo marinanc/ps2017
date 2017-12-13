@@ -117,6 +117,14 @@
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('.cancelar').on("click",function () {
+                $('.alert').show()
+            })
+        });
+    </script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -292,9 +300,9 @@
                                                                     <img src="../@detalle.Libros.foto" style="width:100%; height:100%" />
                                                                 </td>
                                                                 <td>@detalle.Libros.titulo</td>
-                                                                <td>Pedido #@pedido.idPedido</td>
+                                                                <td style="background-color:lightgreen">Pedido #@pedido.idPedido</td>
                                                                 <td style="text-align:center">@detalle.cantidad</td>
-                                                                <td style="text-align:center">@detalle.precioUnitario</td>
+                                                                <td style="text-align:center">ARS $@detalle.precioUnitario</td>
                                                                 
                                                             
                                                             <td style="text-align:center">@pedido.fechaHora</td>
@@ -302,13 +310,12 @@
 
                                                             <td style="text-align:center">
                                                                 @if(pedido.idEstadoPedido < 4) { 
-                                                                <form action=@Url.Action("CancelarPedido", "CuentaUsuario") enctype="multipart/form-data" method="post" role="form">
-                                                                    <input type="text" value="@pedido.idPedido" id="idPedido" name="idPedido" hidden />
-                                                                    <button type="submit" class="btn btn-default btn-lg">
+                                                                
+                                                                    <button type="button" class="btn btn-default btn-lg cancelar">
                                                                         <span class="glyphicon glyphicon-remove" aria-hidden="true">
                                                                         </span>
                                                                     </button>
-                                                                </form>
+                                                                
                                                                 }
                                                             </td>
 
@@ -323,6 +330,12 @@
                                                             </td>
                                                         </tr>
                                                         }
+                                                        <div class="alert alert-danger alert-dismissable" role="alert" style="display:none">
+                                                            ¿Desea cancelar este pedido? <a href=@Url.Action("CancelarPedido", "CuentaUsuario", new { idPedido = pedido.idPedido}) class="alert-link">Si, cancelar pedido</a>
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
                                                     }
 
                                                 </tbody>

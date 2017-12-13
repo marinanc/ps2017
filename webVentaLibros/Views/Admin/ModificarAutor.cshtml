@@ -101,7 +101,7 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="Index" class="active"><i class="lnr lnr-home"></i> <span>Panel de Control</span></a></li>
+                        <li><a href="../Admin/Index" class="active"><i class="lnr lnr-home"></i> <span>Panel de Control</span></a></li>
                         <li>
                             <a href="#subPagesAgregar" data-toggle="collapse" class="collapsed"><i class="lnr lnr-plus-circle"></i> <span>Agregar/Modificar</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesAgregar" class="collapse ">
@@ -113,11 +113,35 @@
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="ActualizarStock" class=""><i class="lnr lnr-sync"></i> <span>Actualizar stock</span></a></li>
-                        <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Reportes</span></a></li>
-                        <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notificaciones</span></a></li>
+                        <li><a href="../Admin/ActualizarStock" class=""><i class="lnr lnr-sync"></i> <span>Actualizar stock</span></a></li>
                         <li>
-                            <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Paginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <a href="#subPagesReportes" data-toggle="collapse" class="collapsed"><i class="lnr lnr-chart-bars"></i> <span>Reportes</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPagesReportes" class="collapse">
+                                <ul class="nav">
+                                    @{
+                                        int var_mesActual = DateTime.Now.Month; // obtengo el mes actual
+                                        int var_anio = DateTime.Now.Year; // obtengo el año actual
+                                        int var_mesSiguiente = DateTime.Now.Month + 1; // obtengo el mes siguiente
+                                        var ffin = Convert.ToDateTime("01/01/1900");
+                                        var finicio = Convert.ToDateTime("01/" + var_mesActual + "/" + var_anio);// pongo el 1 porque siempre es el primer día
+                                        if (var_mesActual == 12)
+                                        {
+                                            ffin = Convert.ToDateTime("01/" + "01/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
+                                        }
+                                        else
+                                        {
+                                            ffin = Convert.ToDateTime("01/" + var_mesSiguiente + "/" + var_anio).AddDays(-1); //resto un día al mes y con esto obtengo el ultimo día
+                                        }
+                                    }
+                                    <li>@Html.ActionLink("Ventas", "ReporteVentas", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
+                                    <li>@Html.ActionLink("Varios", "ReportesVarios", "Admin", new { inicio = finicio, fin = ffin }, null)</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="../Admin/Mensajes" class=""><i class="lnr lnr-alarm"></i> <span>Mensajes</span></a></li>
+                        <li><a href="../Admin/Descuentos" class=""><i class="lnr lnr-gift"></i> <span>Descuentos</span></a></li>
+                        <li>
+                            <a href="#subPagesPaginas" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Páginas</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                             <div id="subPagesPaginas" class="collapse ">
                                 <ul class="nav">
                                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
@@ -126,7 +150,8 @@
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Listados</span></a></li>
+                        <li><a href="../Admin/Pedidos" class=""><i class="lnr lnr-cart"></i> <span>Pedidos</span></a></li>
+                        <li><a href="../Admin/Reclamos" class=""><i class="lnr lnr-warning"></i><span>Reclamos</span></a></li>
                     </ul>
                 </nav>
             </div>

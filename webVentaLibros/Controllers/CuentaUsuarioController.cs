@@ -784,6 +784,32 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
+
+        public ActionResult CancelarPedido(int idPedido)
+        {
+            var bd = new bdVentaLibrosDataContext();
+            int idUsuario = Convert.ToInt32(System.Web.HttpContext.Current.Session["IDUSUARIO"]);
+
+            var pedido = (from p in bd.Pedidos
+                          where p.idPedido == idPedido &&
+                          p.idUsuario == idUsuario
+                          select p).FirstOrDefault();
+
+            pedido.idEstadoPedido = 7;
+
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Pedido cancelado. Nos comunicaremos con ud en la brevedad.";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo cancelar el pedido. Intentelo de nuevo o contactenos via email";
+            }
+
+            return RedirectToAction("MisCompras");
+        }
+
         [HttpGet]
         public ActionResult EnviarReclamo(int idPedido)
         {
