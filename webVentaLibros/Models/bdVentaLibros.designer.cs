@@ -99,9 +99,6 @@ namespace webVentaLibros.Models
     partial void InsertIntercambios(Intercambios instance);
     partial void UpdateIntercambios(Intercambios instance);
     partial void DeleteIntercambios(Intercambios instance);
-    partial void InsertReclamos(Reclamos instance);
-    partial void UpdateReclamos(Reclamos instance);
-    partial void DeleteReclamos(Reclamos instance);
     partial void InsertTipoDescuento(TipoDescuento instance);
     partial void UpdateTipoDescuento(TipoDescuento instance);
     partial void DeleteTipoDescuento(TipoDescuento instance);
@@ -111,6 +108,12 @@ namespace webVentaLibros.Models
     partial void InsertPedidos(Pedidos instance);
     partial void UpdatePedidos(Pedidos instance);
     partial void DeletePedidos(Pedidos instance);
+    partial void InsertReclamos(Reclamos instance);
+    partial void UpdateReclamos(Reclamos instance);
+    partial void DeleteReclamos(Reclamos instance);
+    partial void InsertEstadosReclamo(EstadosReclamo instance);
+    partial void UpdateEstadosReclamo(EstadosReclamo instance);
+    partial void DeleteEstadosReclamo(EstadosReclamo instance);
     #endregion
 		
 		public bdVentaLibrosDataContext() : 
@@ -327,14 +330,6 @@ namespace webVentaLibros.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Reclamos> Reclamos
-		{
-			get
-			{
-				return this.GetTable<Reclamos>();
-			}
-		}
-		
 		public System.Data.Linq.Table<TipoDescuento> TipoDescuento
 		{
 			get
@@ -356,6 +351,22 @@ namespace webVentaLibros.Models
 			get
 			{
 				return this.GetTable<Pedidos>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Reclamos> Reclamos
+		{
+			get
+			{
+				return this.GetTable<Reclamos>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EstadosReclamo> EstadosReclamo
+		{
+			get
+			{
+				return this.GetTable<EstadosReclamo>();
 			}
 		}
 	}
@@ -5326,205 +5337,6 @@ namespace webVentaLibros.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Reclamos")]
-	public partial class Reclamos : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idReclamo;
-		
-		private int _idPedido;
-		
-		private System.Nullable<System.DateTime> _fecha;
-		
-		private string _mensaje;
-		
-		private string _mail;
-		
-		private EntityRef<Pedidos> _Pedidos;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidReclamoChanging(int value);
-    partial void OnidReclamoChanged();
-    partial void OnidPedidoChanging(int value);
-    partial void OnidPedidoChanged();
-    partial void OnfechaChanging(System.Nullable<System.DateTime> value);
-    partial void OnfechaChanged();
-    partial void OnmensajeChanging(string value);
-    partial void OnmensajeChanged();
-    partial void OnmailChanging(string value);
-    partial void OnmailChanged();
-    #endregion
-		
-		public Reclamos()
-		{
-			this._Pedidos = default(EntityRef<Pedidos>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idReclamo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int idReclamo
-		{
-			get
-			{
-				return this._idReclamo;
-			}
-			set
-			{
-				if ((this._idReclamo != value))
-				{
-					this.OnidReclamoChanging(value);
-					this.SendPropertyChanging();
-					this._idReclamo = value;
-					this.SendPropertyChanged("idReclamo");
-					this.OnidReclamoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPedido", DbType="Int NOT NULL")]
-		public int idPedido
-		{
-			get
-			{
-				return this._idPedido;
-			}
-			set
-			{
-				if ((this._idPedido != value))
-				{
-					if (this._Pedidos.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidPedidoChanging(value);
-					this.SendPropertyChanging();
-					this._idPedido = value;
-					this.SendPropertyChanged("idPedido");
-					this.OnidPedidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fecha", DbType="DateTime")]
-		public System.Nullable<System.DateTime> fecha
-		{
-			get
-			{
-				return this._fecha;
-			}
-			set
-			{
-				if ((this._fecha != value))
-				{
-					this.OnfechaChanging(value);
-					this.SendPropertyChanging();
-					this._fecha = value;
-					this.SendPropertyChanged("fecha");
-					this.OnfechaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mensaje", DbType="NVarChar(MAX)")]
-		public string mensaje
-		{
-			get
-			{
-				return this._mensaje;
-			}
-			set
-			{
-				if ((this._mensaje != value))
-				{
-					this.OnmensajeChanging(value);
-					this.SendPropertyChanging();
-					this._mensaje = value;
-					this.SendPropertyChanged("mensaje");
-					this.OnmensajeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mail", DbType="NVarChar(50)")]
-		public string mail
-		{
-			get
-			{
-				return this._mail;
-			}
-			set
-			{
-				if ((this._mail != value))
-				{
-					this.OnmailChanging(value);
-					this.SendPropertyChanging();
-					this._mail = value;
-					this.SendPropertyChanged("mail");
-					this.OnmailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pedidos_Reclamos", Storage="_Pedidos", ThisKey="idPedido", OtherKey="idPedido", IsForeignKey=true)]
-		public Pedidos Pedidos
-		{
-			get
-			{
-				return this._Pedidos.Entity;
-			}
-			set
-			{
-				Pedidos previousValue = this._Pedidos.Entity;
-				if (((previousValue != value) 
-							|| (this._Pedidos.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Pedidos.Entity = null;
-						previousValue.Reclamos.Remove(this);
-					}
-					this._Pedidos.Entity = value;
-					if ((value != null))
-					{
-						value.Reclamos.Add(this);
-						this._idPedido = value.idPedido;
-					}
-					else
-					{
-						this._idPedido = default(int);
-					}
-					this.SendPropertyChanged("Pedidos");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TipoDescuento")]
 	public partial class TipoDescuento : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6546,6 +6358,384 @@ namespace webVentaLibros.Models
 		{
 			this.SendPropertyChanging();
 			entity.Pedidos = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Reclamos")]
+	public partial class Reclamos : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idReclamo;
+		
+		private int _idPedido;
+		
+		private System.Nullable<System.DateTime> _fecha;
+		
+		private string _mensaje;
+		
+		private string _mail;
+		
+		private System.Nullable<int> _idEstado;
+		
+		private EntityRef<Pedidos> _Pedidos;
+		
+		private EntityRef<EstadosReclamo> _EstadosReclamo;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidReclamoChanging(int value);
+    partial void OnidReclamoChanged();
+    partial void OnidPedidoChanging(int value);
+    partial void OnidPedidoChanged();
+    partial void OnfechaChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaChanged();
+    partial void OnmensajeChanging(string value);
+    partial void OnmensajeChanged();
+    partial void OnmailChanging(string value);
+    partial void OnmailChanged();
+    partial void OnidEstadoChanging(System.Nullable<int> value);
+    partial void OnidEstadoChanged();
+    #endregion
+		
+		public Reclamos()
+		{
+			this._Pedidos = default(EntityRef<Pedidos>);
+			this._EstadosReclamo = default(EntityRef<EstadosReclamo>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idReclamo", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idReclamo
+		{
+			get
+			{
+				return this._idReclamo;
+			}
+			set
+			{
+				if ((this._idReclamo != value))
+				{
+					this.OnidReclamoChanging(value);
+					this.SendPropertyChanging();
+					this._idReclamo = value;
+					this.SendPropertyChanged("idReclamo");
+					this.OnidReclamoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPedido", DbType="Int NOT NULL")]
+		public int idPedido
+		{
+			get
+			{
+				return this._idPedido;
+			}
+			set
+			{
+				if ((this._idPedido != value))
+				{
+					if (this._Pedidos.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidPedidoChanging(value);
+					this.SendPropertyChanging();
+					this._idPedido = value;
+					this.SendPropertyChanged("idPedido");
+					this.OnidPedidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fecha", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fecha
+		{
+			get
+			{
+				return this._fecha;
+			}
+			set
+			{
+				if ((this._fecha != value))
+				{
+					this.OnfechaChanging(value);
+					this.SendPropertyChanging();
+					this._fecha = value;
+					this.SendPropertyChanged("fecha");
+					this.OnfechaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mensaje", DbType="NVarChar(MAX)")]
+		public string mensaje
+		{
+			get
+			{
+				return this._mensaje;
+			}
+			set
+			{
+				if ((this._mensaje != value))
+				{
+					this.OnmensajeChanging(value);
+					this.SendPropertyChanging();
+					this._mensaje = value;
+					this.SendPropertyChanged("mensaje");
+					this.OnmensajeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mail", DbType="NVarChar(50)")]
+		public string mail
+		{
+			get
+			{
+				return this._mail;
+			}
+			set
+			{
+				if ((this._mail != value))
+				{
+					this.OnmailChanging(value);
+					this.SendPropertyChanging();
+					this._mail = value;
+					this.SendPropertyChanged("mail");
+					this.OnmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstado", DbType="Int")]
+		public System.Nullable<int> idEstado
+		{
+			get
+			{
+				return this._idEstado;
+			}
+			set
+			{
+				if ((this._idEstado != value))
+				{
+					if (this._EstadosReclamo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidEstadoChanging(value);
+					this.SendPropertyChanging();
+					this._idEstado = value;
+					this.SendPropertyChanged("idEstado");
+					this.OnidEstadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Pedidos_Reclamos", Storage="_Pedidos", ThisKey="idPedido", OtherKey="idPedido", IsForeignKey=true)]
+		public Pedidos Pedidos
+		{
+			get
+			{
+				return this._Pedidos.Entity;
+			}
+			set
+			{
+				Pedidos previousValue = this._Pedidos.Entity;
+				if (((previousValue != value) 
+							|| (this._Pedidos.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Pedidos.Entity = null;
+						previousValue.Reclamos.Remove(this);
+					}
+					this._Pedidos.Entity = value;
+					if ((value != null))
+					{
+						value.Reclamos.Add(this);
+						this._idPedido = value.idPedido;
+					}
+					else
+					{
+						this._idPedido = default(int);
+					}
+					this.SendPropertyChanged("Pedidos");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadosReclamo_Reclamos", Storage="_EstadosReclamo", ThisKey="idEstado", OtherKey="idEstado", IsForeignKey=true)]
+		public EstadosReclamo EstadosReclamo
+		{
+			get
+			{
+				return this._EstadosReclamo.Entity;
+			}
+			set
+			{
+				EstadosReclamo previousValue = this._EstadosReclamo.Entity;
+				if (((previousValue != value) 
+							|| (this._EstadosReclamo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EstadosReclamo.Entity = null;
+						previousValue.Reclamos.Remove(this);
+					}
+					this._EstadosReclamo.Entity = value;
+					if ((value != null))
+					{
+						value.Reclamos.Add(this);
+						this._idEstado = value.idEstado;
+					}
+					else
+					{
+						this._idEstado = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("EstadosReclamo");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EstadosReclamo")]
+	public partial class EstadosReclamo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idEstado;
+		
+		private string _estado;
+		
+		private EntitySet<Reclamos> _Reclamos;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidEstadoChanging(int value);
+    partial void OnidEstadoChanged();
+    partial void OnestadoChanging(string value);
+    partial void OnestadoChanged();
+    #endregion
+		
+		public EstadosReclamo()
+		{
+			this._Reclamos = new EntitySet<Reclamos>(new Action<Reclamos>(this.attach_Reclamos), new Action<Reclamos>(this.detach_Reclamos));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idEstado", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idEstado
+		{
+			get
+			{
+				return this._idEstado;
+			}
+			set
+			{
+				if ((this._idEstado != value))
+				{
+					this.OnidEstadoChanging(value);
+					this.SendPropertyChanging();
+					this._idEstado = value;
+					this.SendPropertyChanged("idEstado");
+					this.OnidEstadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estado", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string estado
+		{
+			get
+			{
+				return this._estado;
+			}
+			set
+			{
+				if ((this._estado != value))
+				{
+					this.OnestadoChanging(value);
+					this.SendPropertyChanging();
+					this._estado = value;
+					this.SendPropertyChanged("estado");
+					this.OnestadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EstadosReclamo_Reclamos", Storage="_Reclamos", ThisKey="idEstado", OtherKey="idEstado")]
+		public EntitySet<Reclamos> Reclamos
+		{
+			get
+			{
+				return this._Reclamos;
+			}
+			set
+			{
+				this._Reclamos.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Reclamos(Reclamos entity)
+		{
+			this.SendPropertyChanging();
+			entity.EstadosReclamo = this;
+		}
+		
+		private void detach_Reclamos(Reclamos entity)
+		{
+			this.SendPropertyChanging();
+			entity.EstadosReclamo = null;
 		}
 	}
 }

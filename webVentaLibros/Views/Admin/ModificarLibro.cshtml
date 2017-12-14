@@ -243,7 +243,7 @@
                             <!-- INPUT GROUPS -->
                             <div class="panel">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">MODIFICAR LIBRO</h3>
+                                    <h3 class="panel-title">Modificar libro</h3>
                                 </div>
                                 <div class="panel-body">
                                     @if (Model != null)
@@ -268,8 +268,7 @@
                                                 <br />
                                                 <br />
                                                 <div class="col-md-6">
-                                                    <br />
-                                                    <br />
+                                  
                                                     <div class="row form-group">
                                                         <div class="col-md-10">
                                                             <div class="input-group">
@@ -314,52 +313,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-10">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon info">3er Autor:</span>
-                                                                <select id="idAutor3" name="idAutor3" class="form-control">
-                                                                    @if (libro.idAutor3 == null)
-                                                                    {
-                                                                        <option value=@null>Elige un autor...</option>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <option value="@libro.idAutor3" selected>@libro.autor3</option>
-                                                                    }
-                                                                    @foreach (var autor in ViewBag.listadoAutores)
-                                                                    {
-                                                                        <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
-                                                                    }
-                                                                </select>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-10">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon info">4to Autor:</span>
-                                                                <select id="idAutor4" name="idAutor4" class="form-control">
-                                                                    @if (libro.idAutor4 == null)
-                                                                    {
-                                                                        <option value=@null>Elige un autor...</option>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <option value="@libro.idAutor4" selected>@libro.autor4</option>
-                                                                    }
-                                                                    @foreach (var autor in ViewBag.listadoAutores)
-                                                                    {
-                                                                        <option value="@autor.idAutor">@(autor.apellidoAutor + ", " + autor.nombreAutor)</option>
-                                                                    }
-                                                                </select>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
+                                                    
                                                     <div class="row form-group">
                                                         <div class="col-md-10">
                                                             <div class="input-group">
@@ -383,14 +337,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-10">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon info">Año de edición:</span>
-                                                                <input type="number" min="1000" max="@DateTime.Now.Year" id="edicion" name="edicion" value="@libro.edicion" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
                                                     <div class="row form-group">
                                                         <div class="col-md-10">
@@ -408,6 +354,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    
+                                                    
+
+                                                    
                                                 </div>
 
                                                 <div class="col-md-6">
@@ -416,6 +369,15 @@
                                                             <div class="input-group">
                                                                 <span class="input-group-addon info">Cant. páginas</span>
                                                                 <input type="number" min="1" id="paginas" name="paginas" value="@libro.paginas" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group">
+                                                        <div class="col-md-10">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon info">Año de edición:</span>
+                                                                <input type="number" min="1000" max="@DateTime.Now.Year" id="edicion" name="edicion" value="@libro.edicion" />
                                                             </div>
                                                         </div>
                                                     </div>

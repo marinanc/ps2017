@@ -350,10 +350,15 @@ namespace webVentaLibros.Controllers
                 autor.apellidos = autorElegido.apellidoAutor;
                 autor.nombres = autorElegido.nombreAutor;
             }
-
-            bd.SubmitChanges();
-            TempData["Message"] = "Autor modificado!";
-
+            try
+            {
+                bd.SubmitChanges();
+                TempData["Message"] = "Autor modificado";
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "No se pudo modificar los datos del autor. Intentelo nuevamente";
+            }
             return RedirectToAction("AgregarAutor");
         }
 
@@ -554,17 +559,17 @@ namespace webVentaLibros.Controllers
             return View();
         }
 
-        public ActionResult EliminarReclamo(int idReclamo)
+        public ActionResult ReclamoSolucionado(int idReclamo)
         {
             var bd = new bdVentaLibrosDataContext();
 
             var reclamo = (from r in bd.Reclamos
-                             where r.idReclamo == idReclamo
-                             select r).ToList();
+                           where r.idReclamo == idReclamo
+                           select r).ToList();
 
             foreach (var r in reclamo)
             {
-                bd.Reclamos.DeleteOnSubmit(r);
+                r.idEstado = 2;
             }
 
             try
@@ -630,6 +635,7 @@ namespace webVentaLibros.Controllers
                                           group genero by genero.nombre into g
                                           orderby g.Count() descending
                                           select g.First()).Take(3).ToList();
+
             return View();
         }
 
@@ -727,7 +733,7 @@ namespace webVentaLibros.Controllers
         public ActionResult Descuentos(int? descuento1, int? descuento2, DateTime expiracion, string codigoDescuento)
         {
             var bd = new bdVentaLibrosDataContext();
-            
+
             var tipoDescuento = 1;
             var cantidadDescuento = descuento1;
 
@@ -778,8 +784,8 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             var descuento = (from d in bd.Descuentos
-                           where d.idDescuento == idDescuento
-                           select d).ToList();
+                             where d.idDescuento == idDescuento
+                             select d).ToList();
 
             foreach (var d in descuento)
             {
@@ -815,12 +821,12 @@ namespace webVentaLibros.Controllers
                 bd.SubmitChanges();
                 TempData["Message"] = "Se actualizo el estado del pedido";
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 TempData["Message"] = "No se pudo actualizar el estado del pedido";
             }
 
-            return RedirectToAction("VerPedido",new { idPedido = pedidoElegido.idPedido });
+            return RedirectToAction("VerPedido", new { idPedido = pedidoElegido.idPedido });
         }
 
         [Authorize(Roles = "Administrador")]
@@ -829,8 +835,8 @@ namespace webVentaLibros.Controllers
             var bd = new bdVentaLibrosDataContext();
 
             var detalles = (from detalle in bd.DetallePorPedido
-                           where detalle.idPedido == idPedido
-                           select detalle).ToList();
+                            where detalle.idPedido == idPedido
+                            select detalle).ToList();
             var reclamos = (from reclamo in bd.Reclamos
                             where reclamo.idPedido == idPedido
                             select reclamo).ToList();
@@ -839,12 +845,12 @@ namespace webVentaLibros.Controllers
                             select pedido).FirstOrDefault();
 
             try
-            { 
-                foreach(var detalle in detalles)
+            {
+                foreach (var detalle in detalles)
                 {
                     bd.DetallePorPedido.DeleteOnSubmit(detalle);
                 }
-                foreach(var reclamo in reclamos)
+                foreach (var reclamo in reclamos)
                 {
                     bd.Reclamos.DeleteOnSubmit(reclamo);
                 }

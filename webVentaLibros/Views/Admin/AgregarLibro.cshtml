@@ -454,9 +454,10 @@
                                                             <th>Título</th>
                                                             <th>Género</th>
                                                             <th>Autores</th>
-                                                            <th>Editorial</th>
-                                                            <th>Precio</th>
-                                                            <th>Modificar</th>
+                                                            <th style="text-align:center">Editorial</th>
+                                                            <th style="text-align:center">Precio</th>
+                                                            <th style="text-align:center">Modificar</th>
+                                                            <th style="text-align:center">Eliminar</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
@@ -465,9 +466,10 @@
                                                             <th>Título</th>
                                                             <th>Género</th>
                                                             <th>Autores</th>
-                                                            <th>Editorial</th>
-                                                            <th>Precio</th>
-                                                            <th>Modificar</th>
+                                                            <th style="text-align:center">Editorial</th>
+                                                            <th style="text-align:center">Precio</th>
+                                                            <th style="text-align:center">Modificar</th>
+                                                            <th style="text-align:center">Eliminar</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -479,9 +481,9 @@
                                                                 <td>@libro.titulo</td>
                                                                 <td>@libro.genero</td>
                                                                 <td>@(libro.autor1 + "-" + libro.autor2 + "-" + libro.autor3 + "-" + libro.autor4)</td>
-                                                                <td>@libro.editorial</td>
-                                                                <td>@libro.precio</td>
-                                                                <td>
+                                                                <td style="text-align:center">@libro.editorial</td>
+                                                                <td style="text-align:center">ARS $@libro.precio</td>
+                                                                <td style="text-align:center">
                                                                     <form action=@Url.Action("ModificarLibro", "Admin") enctype="multipart/form-data" method="GET" role="form">
                                                                         <input type="text" value="@libro.codigoBarra" id="codBarra" name="codBarra" hidden />
                                                                         <button type="submit" class="btn btn-default btn-lg">
@@ -489,6 +491,12 @@
                                                                             </span>
                                                                         </button>
                                                                     </form>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <button type="button" class="btn btn-default btn-lg">
+                                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                                                                        </span>
+                                                                    </button>
                                                                 </td>
                                                             </tr>
                                                         }
